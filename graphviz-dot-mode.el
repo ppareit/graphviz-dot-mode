@@ -1,6 +1,6 @@
 ;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
 
-;; Copyright (C) 2002 - 2011 Pieter Pareit <pieter.pareit@gmail.com>
+;; Copyright (C) 2002 - 2012 Pieter Pareit <pieter.pareit@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -21,10 +21,10 @@
 ;;          Rubens Ramos <rubensr AT users.sourceforge.net>
 ;;          Eric Anderson http://www.ece.cmu.edu/~andersoe/
 ;; Maintainer: Pieter Pareit <pieter.pareit@gmail.com>
-;; Homepage: http://users.skynet.be/ppareit/projects/graphviz-dot-mode/graphviz-dot-mode.html
+;; Homepage: http://ppareit.github.com/graphviz-dot-mode/
 ;; Created: 28 Oct 2002
-;; Last modified: 09 march 2011
-;; Version: 0.3.7
+;; Last modified: 27 june 2012
+;; Version: 0.3.8
 ;; Keywords: mode dot dot-language dotlanguage graphviz graphs att
 
 ;;; Commentary:
@@ -57,6 +57,8 @@
 
 ;;; History:
 
+;; Version 0.3.8 new home
+;; 27/06/2012: * put graphviz-dot-mode into git, updated links
 ;; Version 0.3.7 Tim Allen
 ;; 09/03/2011: * fix spaces in file names when compiling
 ;; Version 0.3.6 maintenance
