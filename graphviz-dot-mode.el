@@ -944,5 +944,6 @@ buffer is saved before the command is executed."
 (add-to-list 'auto-mode-alist '("\\.dot\\'" . graphviz-dot-mode))
 (add-to-list 'auto-mode-alist '("\\.gv\\'" . graphviz-dot-mode))
 
+(provide 'graphviz-dot-mode)
 ;;; graphviz-dot-mode.el ends here
 
