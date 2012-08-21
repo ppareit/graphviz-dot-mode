@@ -23,8 +23,8 @@
 ;; Maintainer: Pieter Pareit <pieter.pareit@gmail.com>
 ;; Homepage: http://ppareit.github.com/graphviz-dot-mode/
 ;; Created: 28 Oct 2002
-;; Last modified: 27 june 2012
-;; Version: 0.3.8
+;; Last modified: 21 Aug 2012
+;; Version: 0.3.9
 ;; Keywords: mode dot dot-language dotlanguage graphviz graphs att
 
 ;;; Commentary:
