@@ -57,6 +57,8 @@
 
 ;;; History:
 
+;; Version 0.3.9 Titus Barik <titus AT barik.net>
+;; 28/08/2012: * compile-command uses -ofile instead of >
 ;; Version 0.3.8 new home
 ;; 27/06/2012: * put graphviz-dot-mode into git, updated links
 ;; Version 0.3.7 Tim Allen
