@@ -531,7 +531,7 @@ Turning on Graphviz Dot mode calls the value of the variable
        (concat graphviz-dot-dot-program
                " -T" graphviz-dot-preview-extension " "
                "\"" buffer-file-name "\""
-               " > \""
+               " -o\""
                (file-name-sans-extension
                 buffer-file-name)
                "." graphviz-dot-preview-extension "\""))) 
