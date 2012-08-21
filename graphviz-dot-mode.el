@@ -23,8 +23,8 @@
 ;; Maintainer: Pieter Pareit <pieter.pareit@gmail.com>
 ;; Homepage: http://ppareit.github.com/graphviz-dot-mode/
 ;; Created: 28 Oct 2002
-;; Last modified: 27 june 2012
-;; Version: 0.3.8
+;; Last modified: 21 Aug 2012
+;; Version: 0.3.9
 ;; Keywords: mode dot dot-language dotlanguage graphviz graphs att
 
 ;;; Commentary:
@@ -57,6 +57,8 @@
 
 ;;; History:
 
+;; Version 0.3.9 Titus Barik <titus AT barik.net>
+;; 28/08/2012: * compile-command uses -ofile instead of >
 ;; Version 0.3.8 new home
 ;; 27/06/2012: * put graphviz-dot-mode into git, updated links
 ;; Version 0.3.7 Tim Allen
@@ -531,7 +533,7 @@ Turning on Graphviz Dot mode calls the value of the variable
        (concat graphviz-dot-dot-program
                " -T" graphviz-dot-preview-extension " "
                "\"" buffer-file-name "\""
-               " > \""
+               " -o\""
                (file-name-sans-extension
                 buffer-file-name)
                "." graphviz-dot-preview-extension "\""))) 
