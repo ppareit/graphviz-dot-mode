@@ -471,7 +471,7 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
   "Major mode for the dot language. \\<graphviz-dot-mode-map> 
 TAB indents for graph lines. 
 
-\\[graphviz-dot-indent-graph]\t- Indentaion function.
+\\[graphviz-dot-indent-graph]\t- Indentation function.
 \\[graphviz-dot-preview]\t- Previews graph in a buffer.
 \\[graphviz-dot-view]\t- Views graph in an external viewer.
 \\[graphviz-dot-indent-line]\t- Indents current line of code.
