@@ -660,7 +660,11 @@ See variable `compilation-parse-errors-functions' for interface."
     ;; block closing, deindent relative to previous line
     (indent-line-to (save-excursion
                       (forward-line -1)
-                      (max 0 (- (current-indentation) graphviz-dot-indent-width)))))
+                      (if (looking-at "\\(^.*{[^}]*$\\)")
+                          ;; previous line opened a block
+                          ;; use same indentation
+                          (current-indentation)
+                        (max 0 (- (current-indentation) graphviz-dot-indent-width))))))
    ;; other cases need to look at previous lines
    (t
     (indent-line-to (save-excursion
