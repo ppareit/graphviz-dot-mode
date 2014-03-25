@@ -466,6 +466,12 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
      (0 font-lock-variable-name-face)))
   "Keyword highlighting specification for `graphviz-dot-mode'.")
 
+;;cygwin support
+(defvar graphviz-on-cygwin
+  (and (string= (getenv "OS") "Windows_NT") 
+        (fboundp 'cygwin-convert-file-name-to-windows) )
+  "Detects if emacs is running on Windows and supports cygwin path conversions")
+
 ;;;###autoload
 (defun graphviz-dot-mode ()
   "Major mode for the dot language. \\<graphviz-dot-mode-map> 
@@ -529,14 +535,22 @@ Turning on Graphviz Dot mode calls the value of the variable
   ;; RR - If user is running this in the scratch buffer, there is no
   ;; buffer file name...
   (if (buffer-file-name)
-      (set (make-local-variable 'compile-command) 
-       (concat graphviz-dot-dot-program
-               " -T" graphviz-dot-preview-extension " "
-               "\"" buffer-file-name "\""
-               " -o\""
-               (file-name-sans-extension
-                buffer-file-name)
-               "." graphviz-dot-preview-extension "\""))) 
+      (let ((real-buffer-file-name 
+             (if graphviz-on-cygwin 
+                 (cygwin-convert-file-name-to-windows buffer-file-name) 
+               buffer-file-name))
+            (real-buffer-file-name-sans-extension
+             (if graphviz-on-cygwin
+                 (cygwin-convert-file-name-to-windows 
+                  (file-name-sans-extension buffer-file-name))
+               (file-name-sans-extension buffer-file-name))))
+        (set (make-local-variable 'compile-command) 
+             (concat graphviz-dot-dot-program
+                     " -T" graphviz-dot-preview-extension " "
+                     "\"" real-buffer-file-name "\""
+                     " -o\""
+                     real-buffer-file-name-sans-extension
+                     "." graphviz-dot-preview-extension "\"")))) 
   (set (make-local-variable 'compilation-parse-errors-function)
        'graphviz-dot-compilation-parse-errors)
   (if dot-menu
@@ -827,20 +841,23 @@ loaded in GNU Emacs, and `image-formats-alist' for XEmacs."
 is executed. If `graphviz-dot-save-before-view' is set, the current
 buffer is saved before the command is executed."
   (interactive)
-  (let ((cmd (if graphviz-dot-view-edit-command
-                 (if (string-match "XEmacs" emacs-version)
-                     (read-shell-command "View command: " 
-                                         (format graphviz-dot-view-command
-                                                 (buffer-file-name)))
-                   (read-from-minibuffer "View command: " 
-                                         (format graphviz-dot-view-command
-                                                 (buffer-file-name))))
-               (format graphviz-dot-view-command (buffer-file-name)))))
-    (if graphviz-dot-save-before-view 
-        (save-buffer))
-    (setq novaproc (start-process-shell-command
-                    (downcase mode-name) nil cmd))
-    (message (format "Executing `%s'..." cmd))))
+  (let ((real-buffer-file-name (if graphviz-on-cygwin
+                                   (cygwin-convert-file-name-to-windows buffer-file-name)
+                                 buffer-file-name)))
+    (let ((cmd (if graphviz-dot-view-edit-command
+                   (if (string-match "XEmacs" emacs-version)
+                       (read-shell-command "View command: " 
+                                           (format graphviz-dot-view-command
+                                                   real-buffer-file-name))
+                     (read-from-minibuffer "View command: " 
+                                           (format graphviz-dot-view-command
+                                                   real-buffer-file-name)))
+                 (format graphviz-dot-view-command real-buffer-file-name))))
+      (if graphviz-dot-save-before-view 
+          (save-buffer))
+      (setq novaproc (start-process-shell-command
+                      (downcase mode-name) nil cmd))
+      (message (format "Executing `%s'..." cmd)))))
 
 ;;;;
 ;;;; Completion
