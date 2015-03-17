@@ -396,13 +396,13 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
   (mapcar 'symbol-name graphviz-dot-colors-list))
 
 (defvar graphviz-attr-keywords
-  (mapcar '(lambda (elm) (cons elm 0)) graphviz-dot-attr-keywords))
+  (mapcar #'(lambda (elm) (cons elm 0)) graphviz-dot-attr-keywords))
 
 (defvar graphviz-value-keywords
-  (mapcar '(lambda (elm) (cons elm 0)) graphviz-dot-value-keywords))
+  (mapcar #'(lambda (elm) (cons elm 0)) graphviz-dot-value-keywords))
 
 (defvar graphviz-color-keywords
-  (mapcar '(lambda (elm) (cons elm 0)) graphviz-dot-color-keywords))
+  (mapcar #'(lambda (elm) (cons elm 0)) graphviz-dot-color-keywords))
 
 ;;; Key map
 (defvar graphviz-dot-mode-map ()
@@ -900,8 +900,8 @@ buffer is saved before the command is executed."
                                      (graphviz-dot-get-keywords))))
          (match (if graphviz-dot-toggle-completions
                     "" (try-completion
-                        graphviz-dot-str (mapcar '(lambda (elm)
-                                                    (cons elm 0)) allcomp)))))
+                        graphviz-dot-str (mapcar #'(lambda (elm)
+                                                     (cons elm 0)) allcomp)))))
     ;; Delete old string
     (delete-region b e)
     
