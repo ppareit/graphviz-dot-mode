@@ -630,9 +630,9 @@ See variable `compilation-parse-errors-functions' for interface."
 ;;;; Indentation
 ;;;;
 (defun graphviz-dot-uncomment-region (begin end)
-	"Uncomments a region of code."
-	(interactive "r")
-	(comment-region begin end '(4)))
+  "Uncomments a region of code."
+  (interactive "r")
+  (comment-region begin end '(4)))
 
 (defun graphviz-dot-indent-line ()
   "Indent current line of dot code."
@@ -646,7 +646,7 @@ See variable `compilation-parse-errors-functions' for interface."
   "Return current line's indentation"
   (interactive)
   (message "Current indentation is %d."
-	   (current-indentation))
+           (current-indentation))
   (current-indentation))
 
 (defun graphviz-dot-real-indent-line ()
@@ -692,10 +692,10 @@ See variable `compilation-parse-errors-functions' for interface."
                        (t
                         ;; default case, indent the
                         ;; same as previous NON-BLANK line
-			;; (or the first line, if there are no previous non-blank lines)
-			(while (and (< (point-min) (point))
-				    (looking-at "^\[ \t\]*$"))
-			  (forward-line -1))
+                        ;; (or the first line, if there are no previous non-blank lines)
+                        (while (and (< (point-min) (point))
+                                    (looking-at "^\[ \t\]*$"))
+                          (forward-line -1))
                         (current-indentation)) ))) )))
 
 (defun graphviz-dot-indent-graph ()
@@ -792,8 +792,8 @@ loaded in GNU Emacs, and `image-formats-alist' for XEmacs."
     (if (string-match "XEmacs" emacs-version)
         ;; things are easier in XEmacs...
         (find-file-other-window (concat (file-name-sans-extension
-					 buffer-file-name)
-					"." graphviz-dot-preview-extension))
+                                         buffer-file-name)
+                                        "." graphviz-dot-preview-extension))
       ;; run through all the extensions for images
       (let ((l image-file-name-extensions))
         (while
