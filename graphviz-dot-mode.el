@@ -23,8 +23,8 @@
 ;; Maintainer: Pieter Pareit <pieter.pareit@gmail.com>
 ;; Homepage: http://ppareit.github.com/graphviz-dot-mode/
 ;; Created: 28 Oct 2002
-;; Last modified: 21 Aug 2012
-;; Version: 0.3.9
+;; Last modified: 25 May 2015
+;; Version: 0.3.10
 ;; Keywords: mode dot dot-language dotlanguage graphviz graphs att
 
 ;;; Commentary:
@@ -57,6 +57,9 @@
 
 ;;; History:
 
+;; Version 0.3.10 Kevin Ryde
+;; 25/05/2015: * shell-quote-argument for safety
+;;             * use read-shell-command whenever available, don't set novaproc
 ;; Version 0.3.9 Titus Barik <titus AT barik.net>
 ;; 28/08/2012: * compile-command uses -ofile instead of >
 ;; Version 0.3.8 new home
@@ -139,7 +142,7 @@
 
 ;;; Code:
 
-(defconst graphviz-dot-mode-version "0.3.6"
+(defconst graphviz-dot-mode-version "0.3.10"
   "Version of `graphviz-dot-mode.el'.")
 
 (defgroup graphviz nil
@@ -532,11 +535,11 @@ Turning on Graphviz Dot mode calls the value of the variable
       (set (make-local-variable 'compile-command)
        (concat graphviz-dot-dot-program
                " -T" graphviz-dot-preview-extension " "
-               "\"" buffer-file-name "\""
-               " -o\""
-               (file-name-sans-extension
-                buffer-file-name)
-               "." graphviz-dot-preview-extension "\"")))
+               (shell-quote-argument buffer-file-name)
+               " -o "
+               (shell-quote-argument
+                (concat (file-name-sans-extension buffer-file-name)
+                        "." graphviz-dot-preview-extension)))))
   (set (make-local-variable 'compilation-parse-errors-function)
        'graphviz-dot-compilation-parse-errors)
   (if dot-menu
@@ -828,18 +831,19 @@ is executed. If `graphviz-dot-save-before-view' is set, the current
 buffer is saved before the command is executed."
   (interactive)
   (let ((cmd (if graphviz-dot-view-edit-command
-                 (if (string-match "XEmacs" emacs-version)
+                 (if (fboundp 'read-shell-command)
                      (read-shell-command "View command: "
                                          (format graphviz-dot-view-command
-                                                 (buffer-file-name)))
+                                                 (shell-quote-argument (buffer-file-name))))
+                   ;; read-shell-command not available in GNU Emacs 21
                    (read-from-minibuffer "View command: "
                                          (format graphviz-dot-view-command
-                                                 (buffer-file-name))))
-               (format graphviz-dot-view-command (buffer-file-name)))))
+                                                 (shell-quote-argument (buffer-file-name)))))
+               (format graphviz-dot-view-command
+                       (shell-quote-argument (buffer-file-name))))))
     (if graphviz-dot-save-before-view
         (save-buffer))
-    (setq novaproc (start-process-shell-command
-                    (downcase mode-name) nil cmd))
+    (start-process-shell-command (downcase mode-name) nil cmd)
     (message (format "Executing `%s'..." cmd))))
 
 ;;;;
