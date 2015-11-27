@@ -956,7 +956,7 @@ buffer is saved before the command is executed."
 (add-to-list 'auto-mode-alist '("\\.gv\\'" . graphviz-dot-mode))
 
 (eval-after-load 'org-mode
-    (add-to-list 'org-src-lang-modes  '("dot" . graphviz-dot)))
+    '(add-to-list 'org-src-lang-modes  '("dot" . graphviz-dot)))
 
 (provide 'graphviz-dot-mode)
 ;;; graphviz-dot-mode.el ends here
