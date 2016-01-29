@@ -142,6 +142,8 @@
 
 ;;; Code:
 
+(require 'subr-x)
+
 (defconst graphviz-dot-mode-version "0.3.10"
   "Version of `graphviz-dot-mode.el'.")
 
@@ -220,6 +222,17 @@ completion, a buffer will display all completions."
   "*Non-nil means that the completion buffer is automatically deleted when a
 key is pressed."
   :type 'boolean
+  :group 'graphviz)
+
+(defcustom graphviz-dot-auto-preview-on-save nil
+  "*Determines if saving the buffer should automatically trigger preview."
+  :type 'boolean
+  :group 'graphviz)
+
+(defcustom graphviz-dot-revert-delay 300
+  "*Amount of time to sleep for before attempting to display the
+  rendered image."
+  :type 'number
   :group 'graphviz)
 
 (defcustom graphviz-dot-attr-keywords
@@ -461,6 +474,10 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
      ;; if I change the next car to "1"...
      (0 font-lock-variable-name-face)))
   "Keyword highlighting specification for `graphviz-dot-mode'.")
+
+(defun graphviz-output-file-name (f-name)
+  (concat (file-name-sans-extension f-name)
+          "." graphviz-dot-preview-extension))
 
 (defun graphviz-compile-command (f-name)
   (when f-name
@@ -763,47 +780,49 @@ then indent this and each subgraph in it."
            (not (graphviz-dot-comment-or-string-p)))
       (graphviz-dot-newline-and-indent)))
 
-;;;;
-;;;; Preview
-;;;;
+(defun graphviz-compile-warning-msg ()
+  (set-buffer "*compilation*")
+  (goto-char (point-min))
+  (save-match-data
+    (when (re-search-forward "^\\(Warning: .+\\)$" nil t)
+      (match-string-no-properties 1))))
+
+;;;###autoload
 (defun graphviz-dot-preview ()
-  "Shows an example of the current dot file in an emacs buffer.
-This assumes that we are running GNU Emacs or XEmacs under a windowing system.
-See `image-file-name-extensions' for customizing the files that can be
-loaded in GNU Emacs, and `image-formats-alist' for XEmacs."
   (interactive)
-  ;; unsafe to compile ourself, ask it to the user
-  (if (buffer-modified-p)
-      (message "Buffer needs to be compiled.")
-    (if (string-match "XEmacs" emacs-version)
-        ;; things are easier in XEmacs...
-        (find-file-other-window (concat (file-name-sans-extension
-                                         buffer-file-name)
-                                        "." graphviz-dot-preview-extension))
-      ;; run through all the extensions for images
-      (let ((l image-file-name-extensions))
-        (while
-            (let ((f (concat (file-name-sans-extension (buffer-file-name))
-                             "."
-                             (car l))))
-              ;; see if a file matches, might be best also to check
-              ;; if file is up to date TODO:PP
-              (if (file-exists-p f)
-                  (progn (auto-image-file-mode 1)
-                         ;; OK, this is ugly, I would need to
-                         ;; know how I can reload a file in an existing buffer
-                         (if (get-buffer "*preview*")
-                             (kill-buffer "*preview*"))
-                         (set-buffer (find-file-noselect f))
-                         (rename-buffer "*preview*")
-                         (display-buffer (get-buffer "*preview*"))
-                         ;; stop iterating
-                         '())
-                ;; will stop iterating when l is nil
-                (setq l (cdr l)))))
-      ;; each extension tested and nothing found, let user know
-      (when (eq l '())
-        (message "No image found."))))))
+  (save-buffer)
+  (let ((windows (window-list))
+        (f-name (graphviz-output-file-name (buffer-file-name)))
+        (warn-msg (string-trim (shell-command-to-string compile-command))))
+    (if (string-match-p "^Warning: .+ line \\([0-9]+\\)" warn-msg)
+        (message warn-msg)
+      (progn
+        (sleep-for 0 graphviz-dot-revert-delay)
+        (when (= (length windows) 1)
+          (split-window-sensibly))
+        (with-selected-window (selected-window)
+          (switch-to-buffer-other-window (find-file-noselect f-name t))
+          ;; I get "changed on disk; really edit the buffer?" prompt w/o this
+          (sleep-for 0 50)
+          (revert-buffer t t))))))
+
+;;;###autoload
+(defun graphviz-turn-on-live-preview ()
+  "Turns on live preview on save."
+  (interactive)
+  (setq graphviz-dot-auto-preview-on-save t)
+  (add-hook 'after-save-hook 'graphviz-live-reload-hook))
+
+;;;###autoload
+(defun graphviz-turn-off-live-preview ()
+  "Turns off live preview on save."
+  (interactive)
+  (setq graphviz-dot-auto-preview-on-save nil)
+  (remove-hook 'after-save-hook 'graphviz-live-reload-hook))
+
+(defun graphviz-live-reload-hook ()
+  (when (and (eq major-mode 'graphviz-dot-mode) graphviz-dot-auto-preview-on-save)
+    (graphviz-dot-preview)))
 
 ;;;;
 ;;;; View
