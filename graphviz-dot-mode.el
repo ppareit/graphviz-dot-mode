@@ -408,11 +408,7 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
   (mapcar #'(lambda (elm) (cons elm 0)) graphviz-dot-color-keywords))
 
 ;;; Key map
-(defvar graphviz-dot-mode-map ()
-  "Keymap used in Graphviz Dot mode.")
-
-(if graphviz-dot-mode-map
-    ()
+(defvar graphviz-dot-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map "\r"       'electric-graphviz-dot-terminate-line)
     (define-key map "{"        'electric-graphviz-dot-open-brace)
@@ -425,28 +421,25 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
     (define-key map "\C-cv"    'graphviz-dot-view)
     (define-key map "\C-c\C-c" 'comment-region)
     (define-key map "\C-c\C-u" 'graphviz-dot-uncomment-region)
-    (setq graphviz-dot-mode-map map)
-    ))
+    (setq graphviz-dot-mode-map map))
+  "Keymap used in Graphviz Dot mode.")
 
 ;;; Syntax table
-(defvar graphviz-dot-mode-syntax-table nil
-  "Syntax table for `graphviz-dot-mode'.")
-
-(if graphviz-dot-mode-syntax-table
-    ()
+(defvar graphviz-dot-mode-syntax-table
   (let ((st (make-syntax-table)))
     (modify-syntax-entry ?/  ". 124b" st)
     (modify-syntax-entry ?*  ". 23"   st)
     (modify-syntax-entry ?\n "> b"    st)
+    (modify-syntax-entry ?#  "< b"    st)
     (modify-syntax-entry ?=  "."      st)
     (modify-syntax-entry ?_  "_"      st)
     (modify-syntax-entry ?-  "_"      st)
     (modify-syntax-entry ?>  "."      st)
     (modify-syntax-entry ?[  "(]"     st)
-    (modify-syntax-entry ?]  ")["     st)
+                         (modify-syntax-entry ?]  ")["     st)
     (modify-syntax-entry ?\" "\""     st)
-    (setq graphviz-dot-mode-syntax-table st)
-  ))
+    (setq graphviz-dot-mode-syntax-table st))
+  "Syntax table for `graphviz-dot-mode'.")
 
 (defvar graphviz-dot-font-lock-keywords
   `(("\\(:?di\\|sub\\)?graph \\(\\sw+\\)"
@@ -469,8 +462,18 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
      (0 font-lock-variable-name-face)))
   "Keyword highlighting specification for `graphviz-dot-mode'.")
 
+(defun graphviz-compile-command (f-name)
+  (when f-name
+    (setq compile-command
+          (concat graphviz-dot-dot-program
+                  " -T" graphviz-dot-preview-extension " "
+                  (shell-quote-argument f-name)
+                  " -o "
+                  (shell-quote-argument
+                   (graphviz-output-file-name f-name))))))
+
 ;;;###autoload
-(defun graphviz-dot-mode ()
+(define-derived-mode graphviz-dot-mode prog-mode "dot"
   "Major mode for the dot language. \\<graphviz-dot-mode-map>
 TAB indents for graph lines.
 
@@ -515,37 +518,17 @@ This mode can be customized by running \\[graphviz-dot-customize].
 
 Turning on Graphviz Dot mode calls the value of the variable
 `graphviz-dot-mode-hook' with no args, if that value is non-nil."
-  (interactive)
-  (kill-all-local-variables)
-  (use-local-map graphviz-dot-mode-map)
-  (setq major-mode 'graphviz-dot-mode)
-  (setq mode-name "dot")
-  (setq local-abbrev-table graphviz-dot-mode-abbrev-table)
-  (set-syntax-table graphviz-dot-mode-syntax-table)
-  (set (make-local-variable 'indent-line-function) 'graphviz-dot-indent-line)
-  (set (make-local-variable 'comment-start) "//")
-  (set (make-local-variable 'comment-start-skip) "/\\*+ *\\|//+ *")
-  (modify-syntax-entry ?# "< b" graphviz-dot-mode-syntax-table)
-  (modify-syntax-entry ?\n "> b" graphviz-dot-mode-syntax-table)
-  (set (make-local-variable 'font-lock-defaults)
-       '(graphviz-dot-font-lock-keywords))
-  ;; RR - If user is running this in the scratch buffer, there is no
-  ;; buffer file name...
-  (if (buffer-file-name)
-      (set (make-local-variable 'compile-command)
-       (concat graphviz-dot-dot-program
-               " -T" graphviz-dot-preview-extension " "
-               (shell-quote-argument buffer-file-name)
-               " -o "
-               (shell-quote-argument
-                (concat (file-name-sans-extension buffer-file-name)
-                        "." graphviz-dot-preview-extension)))))
-  (set (make-local-variable 'compilation-parse-errors-function)
-       'graphviz-dot-compilation-parse-errors)
-  (if dot-menu
-      (easy-menu-add dot-menu))
-  (run-hooks 'graphviz-dot-mode-hook)
-  )
+  (setq-local font-lock-defaults '(graphviz-dot-font-lock-keywords))
+  (setq-local comment-start "//")
+  (setq-local comment-start-skip "/\\*+ *\\|//+ *")
+  (setq-local indent-line-function 'graphviz-dot-indent-line)
+  (when (buffer-file-name)
+    (setq-local compile-command
+                (graphviz-compile-command (buffer-file-name))))
+  (setq-local compilation-parse-errors-function 'graphviz-dot-compilation-parse-errors)
+  (when dot-menu (easy-menu-add dot-menu))
+  (add-hook 'after-save-hook 'graphviz-live-reload-hook)
+  (run-hooks 'graphviz-dot-mode-hook))
 
 ;;;; Menu definitions
 
