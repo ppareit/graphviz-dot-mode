@@ -57,6 +57,9 @@
 
 ;;; History:
 
+;; Version 0.3.11 Olli Piepponen
+;; 29/01/2016: * use define-derived-mode for the mode-definition
+;;             * add support for a auto-loading live preview work flow
 ;; Version 0.3.10 Kevin Ryde
 ;; 25/05/2015: * shell-quote-argument for safety
 ;;             * use read-shell-command whenever available, don't set novaproc
