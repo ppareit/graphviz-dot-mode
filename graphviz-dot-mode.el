@@ -168,6 +168,12 @@
   :type 'string
   :group 'graphviz)
 
+(defcustom graphviz-dot-layout-programs
+  '("dot" "neato" "fdp" "sfdp" "twopi" "twopi" "circo")
+  "*List of layout programs for the user to choose from."
+  :type 'list
+  :group 'graphviz)
+
 (defcustom graphviz-dot-view-command "doted %s"
   "*External program to run on the buffer. You can use `%s' in this string,
 and it will be substituted by the buffer name."
@@ -954,6 +960,12 @@ buffer is saved before the command is executed."
                  (delete-window
                   (get-buffer-window (get-buffer "*Completions*"))))
              )))))
+
+(defun graphviz-dot-set-layout ()
+  "Changes the value of `graphviz-dot-dot-program'."
+  (interactive)
+  (setq graphviz-dot-dot-program
+        (completing-read "Layout: " graphviz-dot-layout-programs)))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.dot\\'" . graphviz-dot-mode))
