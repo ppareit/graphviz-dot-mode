@@ -699,6 +699,12 @@ See variable `compilation-parse-errors-functions' for interface."
                         (while (and (< (point-min) (point))
                                     (looking-at "^\[ \t\]*$"))
                           (forward-line -1))
+                        ;; if we find a closing square bracket, don't indent
+                        ;; to the level of its attributes, but instead
+                        ;; find the opening bracket and indent to that
+                        (if (looking-at ".*\\].*")
+                            (while (not (looking-at ".*\\[.*"))
+                              (forward-line -1)))
                         (current-indentation)) ))) )))
 
 (defun graphviz-dot-indent-graph ()
