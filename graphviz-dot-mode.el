@@ -186,7 +186,7 @@ the command."
   :type 'boolean
   :group 'graphviz)
 
-(defcustom graphviz-dot-indent-width default-tab-width
+(defcustom graphviz-dot-indent-width tab-width
   "*Indentation width in Graphviz Dot mode buffers."
   :type 'integer
   :group 'graphviz)
