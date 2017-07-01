@@ -1,0 +1,240 @@
+\input texinfo   @c -*-texinfo-*-
+@comment %**start of header
+@setfilename graphviz-dot-mode.info
+@comment created under Texinfo 6.4
+@set PACKAGE @code{graphviz-dot-mode}
+@set AUTHOR Pieter Pareit
+@set VERSION 0.3.10
+@set RELEASED 25 May 2015
+@set SWCYEARS 2002-2015
+@set PACURL @url{http://ppareit.github.com/graphviz-dot-mode}
+@set PACSRC @code{graphviz-dot-mode.el}
+
+@set TITLE @value{PACKAGE} Manual
+@settitle @value{TITLE}
+@set EDITION @value{VERSION}.a
+@set EDITOR Daniel Birket
+
+@set TEXINFO @acronym{GNU} Texinfo v6.4
+@set EMACS Emacs v25.2.1
+@set PANDOC Pandoc v1.19.2.1
+@comment %**end of header
+
+@copying
+@cindex copyright (manual)
+Copyright @copyright{} 2017 @value{EDITOR}.
+
+@quotation
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the @acronym{GNU} Free Documentation License,
+Version 1.3 or any later version published by the Free Software
+Foundation; with no Invariant Sections, with no Front-Cover Texts, and
+with no Back-Cover Texts.  A copy of the license is included in the
+section entitled @cite{@acronym{GNU} Free Documentation License}.
+@end quotation
+
+This is the @cite{@value{TITLE}}, edition @value{EDITION}, by
+@value{EDITOR}, updated @today{}, which describes how to install and
+use the Emacs Lisp software package @value{PACKAGE}, version
+@value{VERSION}, released @value{RELEASED}, which was written by and
+Copyright @copyright{} @value{SWCYEARS} @value{AUTHOR}, et al.  (See
+@value{PACURL})
+
+This manual is based upon (and frequently copied verbatim from) the
+documentation in the @value{PACSRC} source code, which begins with:
+
+@cindex copyright (software)
+@lisp
+;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
+
+;; Copyright (C) 2002 - 2012 Pieter Pareit <pieter.pareit@@gmail.com>
+
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 2 of
+;; the License, or (at your option) any later version.
+
+;; This program is distributed in the hope that it will be
+;; useful, but WITHOUT ANY WARRANTY; without even the implied
+;; warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+;; PURPOSE.  See the GNU General Public License for more details.
+@dots{}
+
+;; Authors: Pieter Pareit <pieter.pareit@@gmail.com>
+;;          Rubens Ramos <rubensr AT users.sourceforge.net>
+;;          Eric Anderson http://www.ece.cmu.edu/~andersoe/
+;; Maintainer: Pieter Pareit <pieter.pareit@@gmail.com>
+;; Homepage: http://ppareit.github.com/graphviz-dot-mode/
+;; Created: 28 Oct 2002
+;; Last modified: 25 May 2015
+;; Version: 0.3.10
+;; Keywords: mode dot dot-language dotlanguage graphviz graphs att
+@end lisp
+
+@ifinfo
+This @command{info} file was composed using @value{EMACS}, by Richard
+M. Stallman, et al. (See @url{https://www.gnu.org/software/emacs/})
+and compiled from @file{.texinfo} source with @value{TEXINFO}, by
+Richard M. Stallman, et al. (See
+@url{https://www.gnu.org/software/texinfo/})
+@end ifinfo
+@iftex
+This document was composed using @value{EMACS}, by Richard
+M. Stallman, et al. (See @url{https://www.gnu.org/software/emacs/})
+and compiled from @file{.texinfo} source with @value{TEXINFO} and
+typeset using @TeX{} by Donald Knuth, et al. (See
+@url{https://www.gnu.org/software/texinfo/})
+@end iftex
+@ifhtml
+This @acronym{HTML} document was composed using @value{EMACS}, by
+Richard M. Stallman, et al. (See
+@url{https://www.gnu.org/software/emacs/}) and compiled from
+@file{.texinfo} source with @value{TEXINFO}, by Richard M. Stallman,
+et al. (See @url{https://www.gnu.org/software/texinfo/})
+@end ifhtml
+@ifdocbook
+This document was composed using @value{EMACS}, by Richard
+M. Stallman, et al. (See @url{https://www.gnu.org/software/emacs/})
+and compiled from @file{.texinfo} source with @value{TEXINFO} to
+@command{docbook} format, then converted to this format using
+@value{PANDOC} by John MacFarlane, et al.  The indices are not
+included in this format. (See
+@url{https://www.gnu.org/software/texinfo/} and
+@url{http://pandoc.org})
+@end ifdocbook
+
+Graphviz is by @acronym{AT&T} Labs Research.  (See @url{http://graphviz.org})
+@end copying
+
+@dircategory Emacs editing modes
+@direntry
+* Graphviz DOT mode: (graphviz-dot-mode).       Emacs mode for Graphviz format.
+@end direntry
+
+@titlepage
+@title @value{TITLE}
+@subtitle @value{EDITION}
+@author @value{PACKAGE} by @value{AUTHOR}
+@author this document by @value{EDITOR}
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@contents
+
+@ifnotdocbook
+@ifnottex
+@node Top
+@top @value{TITLE}
+This manual describes how to install and use @value{PACKAGE}, an
+Emacs package for working with @cite{Graphviz} DOT-format files.
+
+@ifinfo
+In @command{info}, type @kbd{3} to jump to the chapter on using
+@value{PACKAGE}.
+@end ifinfo
+
+@insertcopying
+@end ifnottex
+@end ifnotdocbook
+
+@menu
+* Introduction::                About @cite{Graphviz} and @value{PACKAGE}.
+* Installing::                  How to Get and Install @value{PACKAGE}.
+* Using::                       Hot to Use @value{PACKAGE}
+* Customizing::                 How to customize @value{PACKAGE}.
+* Development::                 How to help improve @value{PACKAGE}.
+
+Appendices:
+* @acronym{GNU} General Public License 2.0::  License of @value{PACKAGE}.
+* @acronym{GNU} Free Documentation License::  License of this document.
+
+Indexes:
+* Concept Index::               Index of Concepts.
+* Key Index::                   Index of @value{PACKAGE}Key Bindings.
+* Variable Index::              Index of @value{PACKAGE}Variables.
+* Function Index::              Index of @value{PACKAGE}Functions.
+* Program Index::               Index of Referenced Programs.
+@end menu
+
+@node Introduction
+@chapter Introduction
+@cindex introduction
+This manual describes how to install and use @value{PACKAGE}, an Emacs
+package for working with @cite{Graphviz} DOT-format files.  The
+features of this package help the user to create @file{.dot} or
+@file{.gv} files with syntax compatible with the separate
+@cite{Graphviz} package and use @cite{Graphviz} to convert these
+files to diagrams. (See @url{http://graphviz.org})
+
+@pindex Emacs
+The powerful text editor, Emacs, created in 1976 by Richard Stallman,
+is highly extensible and has a large ecosystem of extensions like this
+one created over 40 years.  @acronym{GNU} Emacs is described at
+@uref{https://www.gnu.org/software/emacs/}.
+
+@node Installing
+@chapter Installing
+@cindex installing
+
+@node Using
+@chapter Using
+@cindex using
+
+@node Customizing
+@chapter Customizing
+@cindex customizing
+
+@node Development
+@chapter Development
+@cindex development
+
+@node @acronym{GNU} General Public License 2.0
+@unnumbered @acronym{GNU} General Public License 2.0
+@cindex license (software)
+@cindex @acronym{GNU} General Public License 2.0
+
+@include gpl-2.0.texi
+
+@c @node @acronym{GNU} General Public License 3.0
+@c @unnumbered @acronym{GNU} General Public License 3.0
+@c @cindex license (updated)
+@c @cindex @acronym{GNU} General Public License 3.0
+@c 
+@c @include gpl.texi
+@c 
+@node @acronym{GNU} Free Documentation License
+@unnumbered @acronym{GNU} Free Documentation License
+@cindex license (manual)
+@cindex @acronym{GNU} Free Documentation License
+
+@include fdl.texi
+
+@ifnotdocbook
+@node Concept Index
+@unnumbered Concept Index
+@cindex concept index @samp{;-)}
+@printindex cp
+
+@node Key Index
+@unnumbered Key Index
+@cindex key index
+@printindex ky
+
+@node Variable Index
+@unnumbered Variable Index
+@cindex variable index
+@printindex vr
+
+@node Function Index
+@unnumbered Function Index
+@cindex function index
+@printindex fn
+
+@node Program Index
+@unnumbered Program Index
+@cindex program index
+@printindex pg
+@end ifnotdocbook
+@bye
