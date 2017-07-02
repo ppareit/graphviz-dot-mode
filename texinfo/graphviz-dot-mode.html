@@ -111,8 +111,12 @@ ul.no-bullet {list-style: none}
 
 <ul class="no-bullet">
   <li><a name="toc-Introduction-1" href="#Introduction">1 Introduction</a></li>
-  <li><a name="toc-Installing-1" href="#Installing">2 Installing</a></li>
-  <li><a name="toc-Using-graphviz_002ddot_002dmode-1" href="#Using-graphviz_002ddot_002dmode">3 Using <code>graphviz-dot-mode</code></a></li>
+  <li><a name="toc-Installing-1" href="#Installing">2 Installing</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Recommended-Installation-1" href="#Recommended-Installation">2.1 Recommended Installation</a></li>
+    <li><a name="toc-Manual-Installation-1" href="#Manual-Installation">2.2 Manual Installation</a></li>
+  </ul></li>
+  <li><a name="toc-Using-1" href="#Using">3 Using</a></li>
   <li><a name="toc-Customizing-1" href="#Customizing">4 Customizing</a></li>
   <li><a name="toc-Development-1" href="#Development">5 Development</a></li>
   <li><a name="toc-GNU-General-Public-License-2_002e0-1" href="#GNU-General-Public-License-2_002e0"><acronym>GNU</acronym> General Public License 2.0</a></li>
@@ -200,15 +204,21 @@ et al. (See <a href="https://www.gnu.org/software/texinfo/">https://www.gnu.org/
 <a name="index-introduction"></a>
 <p>This manual describes how to install and use <code>graphviz-dot-mode</code>, an Emacs
 package for working with <cite>Graphviz</cite> DOT-format files.  The
-features of this package help the user to create <samp>.dot</samp> or
-<samp>.gv</samp> files with syntax compatible with the separate
-<cite>Graphviz</cite> package and use <cite>Graphviz</cite> to convert these
-files to diagrams. (See <a href="http://graphviz.org">http://graphviz.org</a>)
+features of this package help you to create <samp>.dot</samp> or <samp>.gv</samp>
+files using syntax compatible with the separate <cite>Graphviz</cite> package
+and use <cite>Graphviz</cite> to convert these files to diagrams.
+</p>
+<a name="index-Graphiz"></a>
+<p><cite>Graphviz</cite> is a set of open source graph visualization tools
+created by <acronym>AT&amp;T</acronym> Labs Research.  A <em>graph</em> is a way of
+representing information as a network of connected <em>nodes</em> and
+<em>edges</em>. <cite>Graphviz</cite> is documented at
+<a href="http://graphviz.org">http://graphviz.org</a>.
 </p>
 <a name="index-Emacs"></a>
-<p>The powerful text editor, Emacs, created in 1976 by Richard Stallman,
-is highly extensible and has a large ecosystem of extensions like this
-one created over 40 years.  <acronym>GNU</acronym> Emacs is described at
+<p>The powerful text editor, Emacs, was created in 1976 by Richard Stallman,
+is highly extensible and has a large ecosystem of extensions like this one
+one created over 40 years.  <acronym>GNU</acronym> Emacs is documented at
 <a href="https://www.gnu.org/software/emacs/">https://www.gnu.org/software/emacs/</a>.
 </p>
 <hr>
@@ -216,12 +226,88 @@ one created over 40 years.  <acronym>GNU</acronym> Emacs is described at
 <a name="Installing-1"></a>
 <h2 class="chapter">2 Installing</h2>
 <a name="index-installing"></a>
+<p>This chapter describes how to install <code>graphviz-dot-mode</code>.
+</p>
 
 <hr>
-<a name="Using-graphviz_002ddot_002dmode"></a>
-<a name="Using-graphviz_002ddot_002dmode-1"></a>
-<h2 class="chapter">3 Using <code>graphviz-dot-mode</code></h2>
-<a name="index-using-graphviz_002ddot_002dmode"></a>
+<a name="Recommended-Installation"></a>
+<a name="Recommended-Installation-1"></a>
+<h3 class="section">2.1 Recommended Installation</h3>
+<a name="index-recommended-installation"></a>
+<a name="index-installation_002c-the-easy-way"></a>
+<a name="index-package_002eel_002c-installing-with"></a>
+<a name="index-MELPA-Stable_002c-installing-from"></a>
+<a name="index-package_002eel"></a>
+<p>The recommended way to install the package <code>graphviz-dot-mode</code> is to
+use <code>package.el</code>, which has been integrated with Emacs since
+version 24.  (It is included in version 23, but must be initialized.)
+</p>
+<a name="index-add_002dto_002dlist"></a>
+<a name="index-package_002darchives"></a>
+<p>To install <code>graphviz-dot-mode</code>, first add the MELPA Stable archive to the
+list of archives used by <code>package.el</code> (if it is not alrady there)
+by adding the following lines to your <samp>.emacs</samp>,
+<samp>.emacs.d/init.el</samp>, or other Emacs startup file and restarting
+Emacs (or just evaluate the statements):
+</p>
+<div class="lisp">
+<pre class="lisp">(require 'package)
+(add-to-list 'package-archives
+             '(&quot;melpa-stable&quot; . &quot;https://stable.melpa.org/packages/&quot;))
+             
+(package-initialize)
+</pre></div>
+
+<a name="index-package_002dinstall"></a>
+<p>Then, after restarting Emacs (or otherwise evaluating the above
+statements), type the following command:
+</p>
+<p><kbd>M-x package-install <span class="key">RET</span> graphviz-dot-mode <span class="key">RET</span></kbd>.
+</p>
+<p>When installed using the package manager this way, <code>graphviz-dot-mode</code>
+will be used automatically for file names ending in either <samp>.dot</samp>
+or <samp>.gv</samp>.
+</p>
+<p>You may browse the 1500+ other Emacs packages in the MELPA-Stable
+archive at <a href="http://stable.melpa.org/">http://stable.melpa.org/</a> or by typing <kbd>M-x
+list-packages <span class="key">RET</span></kbd> (after adding it to your package-archives
+list, above).
+</p>
+<hr>
+<a name="Manual-Installation"></a>
+<a name="Manual-Installation-1"></a>
+<h3 class="section">2.2 Manual Installation</h3>
+<a name="index-manual-installation"></a>
+<a name="index-installation_002c-the-hard-way"></a>
+<p>You can manually download and install <code>graphviz-dot-mode</code>.
+</p>
+<p>First, download <samp>graphviz-dot-mode.el</samp> from:
+</p>
+<p><a href="http://ppareit.github.com/graphviz-dot-mode">http://ppareit.github.com/graphviz-dot-mode</a>
+</p>
+<p>Then save the file where Emacs can find it in a directory listed in your
+<code>load-path</code> like <samp>/usr/local/share/emacs/site-lisp</samp>.
+</p>
+<a name="index-autoload"></a>
+<a name="index-add_002dto_002dlist-1"></a>
+<a name="index-auto_002dmode_002dalist"></a>
+<p>Then configure <code>graphviz-dot-mode</code> to load automatically by adding the
+following to your <samp>.emacs</samp>, <samp>.emacs.d/init.el</samp>, or other
+Emacs startup file:
+</p>
+<div class="lisp">
+<pre class="lisp">(autoload 'graphviz-dot-mode
+          &quot;graphviz-dot-mode&quot;
+          &quot;Major mode for editing Graphviz DOT files&quot; t)
+(add-to-list 'auto-mode-alist '(&quot;\\.dot\\'&quot; . graphviz-dot-mode))
+(add-to-list 'auto-mode-alist '(&quot;\\.gv\\'&quot; . graphviz-dot-mode))
+</pre></div>
+
+<hr>
+<a name="Using"></a>
+<a name="Using-1"></a>
+<h2 class="chapter">3 Using</h2>
+<a name="index-using"></a>
 
 <hr>
 <a name="Customizing"></a>
@@ -1093,7 +1179,11 @@ to permit their use in free software.
  &nbsp; 
 <a class="summary-letter" href="#Concept-Index_cp_letter-L"><b>L</b></a>
  &nbsp; 
+<a class="summary-letter" href="#Concept-Index_cp_letter-M"><b>M</b></a>
+ &nbsp; 
 <a class="summary-letter" href="#Concept-Index_cp_letter-P"><b>P</b></a>
+ &nbsp; 
+<a class="summary-letter" href="#Concept-Index_cp_letter-R"><b>R</b></a>
  &nbsp; 
 <a class="summary-letter" href="#Concept-Index_cp_letter-U"><b>U</b></a>
  &nbsp; 
@@ -1120,6 +1210,8 @@ to permit their use in free software.
 <tr><td></td><td valign="top"><a href="#index-GNU-General-Public-License-2_002e0"><acronym>GNU</acronym> General Public License 2.0</a>:</td><td>&nbsp;</td><td valign="top"><a href="#GNU-General-Public-License-2_002e0"><acronym>GNU</acronym> General Public License 2.0</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-I">I</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-installation_002c-the-easy-way">installation, the easy way</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-installation_002c-the-hard-way">installation, the hard way</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Manual-Installation">Manual Installation</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-installing">installing</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Installing">Installing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-introduction">introduction</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Introduction">Introduction</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
@@ -1130,11 +1222,19 @@ to permit their use in free software.
 <tr><td></td><td valign="top"><a href="#index-license-_0028manual_0029">license (manual)</a>:</td><td>&nbsp;</td><td valign="top"><a href="#GNU-Free-Documentation-License"><acronym>GNU</acronym> Free Documentation License</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-license-_0028software_0029">license (software)</a>:</td><td>&nbsp;</td><td valign="top"><a href="#GNU-General-Public-License-2_002e0"><acronym>GNU</acronym> General Public License 2.0</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
+<tr><th><a name="Concept-Index_cp_letter-M">M</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-manual-installation">manual installation</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Manual-Installation">Manual Installation</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-MELPA-Stable_002c-installing-from">MELPA Stable, installing from</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
+<tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-P">P</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-package_002eel_002c-installing-with"><code>package.el</code>, installing with</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-program-index">program index</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Program-Index">Program Index</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
+<tr><th><a name="Concept-Index_cp_letter-R">R</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-recommended-installation">recommended installation</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
+<tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-U">U</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-using-graphviz_002ddot_002dmode">using <code>graphviz-dot-mode</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using-graphviz_002ddot_002dmode">Using <code>graphviz-dot-mode</code></a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-using">using</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using">Using</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Concept-Index_cp_letter-V">V</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-variable-index">variable index</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Variable-Index">Variable Index</a></td></tr>
@@ -1154,7 +1254,11 @@ to permit their use in free software.
  &nbsp; 
 <a class="summary-letter" href="#Concept-Index_cp_letter-L"><b>L</b></a>
  &nbsp; 
+<a class="summary-letter" href="#Concept-Index_cp_letter-M"><b>M</b></a>
+ &nbsp; 
 <a class="summary-letter" href="#Concept-Index_cp_letter-P"><b>P</b></a>
+ &nbsp; 
+<a class="summary-letter" href="#Concept-Index_cp_letter-R"><b>R</b></a>
  &nbsp; 
 <a class="summary-letter" href="#Concept-Index_cp_letter-U"><b>U</b></a>
  &nbsp; 
@@ -1173,12 +1277,55 @@ to permit their use in free software.
 <a name="Variable-Index-1"></a>
 <h2 class="unnumbered">Variable Index</h2>
 <a name="index-variable-index"></a>
+<table><tr><th valign="top">Jump to: &nbsp; </th><td><a class="summary-letter" href="#Variable-Index_vr_letter-A"><b>A</b></a>
+ &nbsp; 
+<a class="summary-letter" href="#Variable-Index_vr_letter-P"><b>P</b></a>
+ &nbsp; 
+</td></tr></table>
+<table class="index-vr" border="0">
+<tr><td></td><th align="left">Index Entry</th><td>&nbsp;</td><th align="left"> Section</th></tr>
+<tr><td colspan="4"> <hr></td></tr>
+<tr><th><a name="Variable-Index_vr_letter-A">A</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-auto_002dmode_002dalist"><code>auto-mode-alist</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Manual-Installation">Manual Installation</a></td></tr>
+<tr><td colspan="4"> <hr></td></tr>
+<tr><th><a name="Variable-Index_vr_letter-P">P</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-package_002darchives"><code>package-archives</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
+<tr><td colspan="4"> <hr></td></tr>
+</table>
+<table><tr><th valign="top">Jump to: &nbsp; </th><td><a class="summary-letter" href="#Variable-Index_vr_letter-A"><b>A</b></a>
+ &nbsp; 
+<a class="summary-letter" href="#Variable-Index_vr_letter-P"><b>P</b></a>
+ &nbsp; 
+</td></tr></table>
 
 <hr>
 <a name="Function-Index"></a>
 <a name="Function-Index-1"></a>
 <h2 class="unnumbered">Function Index</h2>
 <a name="index-function-index"></a>
+<table><tr><th valign="top">Jump to: &nbsp; </th><td><a class="summary-letter" href="#Function-Index_fn_letter-A"><b>A</b></a>
+ &nbsp; 
+<a class="summary-letter" href="#Function-Index_fn_letter-P"><b>P</b></a>
+ &nbsp; 
+</td></tr></table>
+<table class="index-fn" border="0">
+<tr><td></td><th align="left">Index Entry</th><td>&nbsp;</td><th align="left"> Section</th></tr>
+<tr><td colspan="4"> <hr></td></tr>
+<tr><th><a name="Function-Index_fn_letter-A">A</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-add_002dto_002dlist"><code>add-to-list</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-add_002dto_002dlist-1"><code>add-to-list</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Manual-Installation">Manual Installation</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-autoload"><code>autoload</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Manual-Installation">Manual Installation</a></td></tr>
+<tr><td colspan="4"> <hr></td></tr>
+<tr><th><a name="Function-Index_fn_letter-P">P</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-package_002dinstall"><code>package-install</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-package_002eel"><code>package.el</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
+<tr><td colspan="4"> <hr></td></tr>
+</table>
+<table><tr><th valign="top">Jump to: &nbsp; </th><td><a class="summary-letter" href="#Function-Index_fn_letter-A"><b>A</b></a>
+ &nbsp; 
+<a class="summary-letter" href="#Function-Index_fn_letter-P"><b>P</b></a>
+ &nbsp; 
+</td></tr></table>
 
 <hr>
 <a name="Program-Index"></a>
@@ -1187,6 +1334,8 @@ to permit their use in free software.
 <a name="index-program-index"></a>
 <table><tr><th valign="top">Jump to: &nbsp; </th><td><a class="summary-letter" href="#Program-Index_pg_letter-E"><b>E</b></a>
  &nbsp; 
+<a class="summary-letter" href="#Program-Index_pg_letter-G"><b>G</b></a>
+ &nbsp; 
 </td></tr></table>
 <table class="index-pg" border="0">
 <tr><td></td><th align="left">Index Entry</th><td>&nbsp;</td><th align="left"> Section</th></tr>
@@ -1194,8 +1343,13 @@ to permit their use in free software.
 <tr><th><a name="Program-Index_pg_letter-E">E</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Emacs"><code>Emacs</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Introduction">Introduction</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
+<tr><th><a name="Program-Index_pg_letter-G">G</a></th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Graphiz"><code>Graphiz</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Introduction">Introduction</a></td></tr>
+<tr><td colspan="4"> <hr></td></tr>
 </table>
 <table><tr><th valign="top">Jump to: &nbsp; </th><td><a class="summary-letter" href="#Program-Index_pg_letter-E"><b>E</b></a>
+ &nbsp; 
+<a class="summary-letter" href="#Program-Index_pg_letter-G"><b>G</b></a>
  &nbsp; 
 </td></tr></table>
 <hr>

@@ -37,7 +37,7 @@ This is the @cite{@value{TITLE}}, edition @value{EDITION}, by
 @value{EDITOR}, updated @today{}, which describes how to install and
 use the Emacs Lisp software package @value{PACKAGE}, version
 @value{VERSION}, released @value{RELEASED}, which was written by and
-Copyright @copyright{} @value{SWCYEARS} @value{AUTHOR}, et al.  (See
+Copyright @copyright{} @value{SWCYEARS} @value{AUTHOR}, et al@.  (See
 @value{PACURL})
 
 This manual is based upon (and frequently copied verbatim from) the
@@ -75,14 +75,14 @@ documentation in the @value{PACSRC} source code, which begins with:
 This @command{info} file was composed using @value{EMACS}, by Richard
 M. Stallman, et al. (See @url{https://www.gnu.org/software/emacs/})
 and compiled from @file{.texinfo} source with @value{TEXINFO}, by
-Richard M. Stallman, et al. (See
+Richard M. Stallman, et al@.  (See
 @url{https://www.gnu.org/software/texinfo/})
 @end ifinfo
 @iftex
 This document was composed using @value{EMACS}, by Richard
 M. Stallman, et al. (See @url{https://www.gnu.org/software/emacs/})
 and compiled from @file{.texinfo} source with @value{TEXINFO} and
-typeset using @TeX{} by Donald Knuth, et al. (See
+typeset using @TeX{} by Donald Knuth, et al@. (See
 @url{https://www.gnu.org/software/texinfo/})
 @end iftex
 @ifhtml
@@ -90,15 +90,15 @@ This @acronym{HTML} document was composed using @value{EMACS}, by
 Richard M. Stallman, et al. (See
 @url{https://www.gnu.org/software/emacs/}) and compiled from
 @file{.texinfo} source with @value{TEXINFO}, by Richard M. Stallman,
-et al. (See @url{https://www.gnu.org/software/texinfo/})
+et al@. (See @url{https://www.gnu.org/software/texinfo/})
 @end ifhtml
 @ifdocbook
 This document was composed using @value{EMACS}, by Richard
 M. Stallman, et al. (See @url{https://www.gnu.org/software/emacs/})
 and compiled from @file{.texinfo} source with @value{TEXINFO} to
 @command{docbook} format, then converted to this format using
-@value{PANDOC} by John MacFarlane, et al.  The indices are not
-included in this format. (See
+@value{PANDOC} by John MacFarlane, et al@.  The indices are not
+included in this format.  (See
 @url{https://www.gnu.org/software/texinfo/} and
 @url{http://pandoc.org})
 @end ifdocbook
@@ -114,8 +114,8 @@ Graphviz is by @acronym{AT&T} Labs Research.  (See @url{http://graphviz.org})
 @titlepage
 @title @value{TITLE}
 @subtitle @value{EDITION}
-@author @value{PACKAGE} by @value{AUTHOR}
-@author this document by @value{EDITOR}
+@author @value{PACKAGE} by @value{AUTHOR}, et al.
+@author manual by @value{EDITOR}
 @page
 @vskip 0pt plus 1filll
 @insertcopying
@@ -163,20 +163,102 @@ Indexes:
 @cindex introduction
 This manual describes how to install and use @value{PACKAGE}, an Emacs
 package for working with @cite{Graphviz} DOT-format files.  The
-features of this package help the user to create @file{.dot} or
-@file{.gv} files with syntax compatible with the separate
-@cite{Graphviz} package and use @cite{Graphviz} to convert these
-files to diagrams. (See @url{http://graphviz.org})
+features of this package help you to create @file{.dot} or @file{.gv}
+files using syntax compatible with the separate @cite{Graphviz} package
+and use @cite{Graphviz} to convert these files to diagrams.
+
+@pindex Graphiz
+@cite{Graphviz} is a set of open source graph visualization tools
+created by @acronym{AT&T} Labs Research.  A @emph{graph} is a way of
+representing information as a network of connected @emph{nodes} and
+@emph{edges}. @cite{Graphviz} is documented at
+@url{http://graphviz.org}.
 
 @pindex Emacs
-The powerful text editor, Emacs, created in 1976 by Richard Stallman,
-is highly extensible and has a large ecosystem of extensions like this
-one created over 40 years.  @acronym{GNU} Emacs is described at
+The powerful text editor, Emacs, was created in 1976 by Richard Stallman,
+is highly extensible and has a large ecosystem of extensions like this one
+one created over 40 years.  @acronym{GNU} Emacs is documented at
 @uref{https://www.gnu.org/software/emacs/}.
 
 @node Installing
 @chapter Installing
 @cindex installing
+This chapter describes how to install @value{PACKAGE}.
+
+@menu
+* Recommended Installation::    Install the easy way.
+* Manual Installation::         Install the hard way.
+@end menu
+
+@node Recommended Installation
+@section Recommended Installation
+@cindex recommended installation
+@cindex installation, the easy way
+@cindex @code{package.el}, installing with
+@cindex MELPA Stable, installing from
+@findex package.el
+The recommended way to install the package @value{PACKAGE} is to
+use @code{package.el}, which has been integrated with Emacs since
+version 24.  (It is included in version 23, but must be initialized.)
+
+@findex add-to-list
+@vindex package-archives
+To install @value{PACKAGE}, first add the MELPA Stable archive to the
+list of archives used by @code{package.el} (if it is not alrady there)
+by adding the following lines to your @file{.emacs},
+@file{.emacs.d/init.el}, or other Emacs startup file and restarting
+Emacs (or just evaluate the statements):
+
+@lisp
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/"))
+             
+(package-initialize)
+@end lisp
+
+@findex package-install
+Then, after restarting Emacs (or otherwise evaluating the above
+statements), type the following command:
+
+@kbd{M-x package-install @key{RET} graphviz-dot-mode @key{RET}}.
+
+When installed using the package manager this way, @value{PACKAGE}
+will be used automatically for file names ending in either @file{.dot}
+or @file{.gv}.
+
+You may browse the 1500+ other Emacs packages in the MELPA-Stable
+archive at @uref{http://stable.melpa.org/} or by typing @kbd{M-x
+list-packages @key{RET}} (after adding it to your package-archives
+list, above).
+
+@node Manual Installation
+@section Manual Installation
+@cindex manual installation
+@cindex installation, the hard way
+You can manually download and install @value{PACKAGE}.
+
+First, download @file{graphviz-dot-mode.el} from:
+
+@url{http://ppareit.github.com/graphviz-dot-mode}
+
+Then save the file where Emacs can find it in a directory listed in your
+@code{load-path} like @file{/usr/local/share/emacs/site-lisp}.
+
+@findex autoload
+@findex add-to-list
+@vindex auto-mode-alist
+Then configure @value{PACKAGE} to load automatically by adding the
+following to your @file{.emacs}, @file{.emacs.d/init.el}, or other
+Emacs startup file:
+
+@lisp
+(autoload 'graphviz-dot-mode
+          "graphviz-dot-mode"
+          "Major mode for editing Graphviz DOT files" t)
+(add-to-list 'auto-mode-alist '("\\.dot\\'" . graphviz-dot-mode))
+(add-to-list 'auto-mode-alist '("\\.gv\\'" . graphviz-dot-mode))
+@end lisp
 
 @node Using
 @chapter Using
