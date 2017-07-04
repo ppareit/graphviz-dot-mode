@@ -23,6 +23,7 @@ help:
 	# make ps
 	# make txt
 	# make docbook
+	# make adoc
 	# make epub	# lacks index
 	# make md	# lacks index
 	#
@@ -41,6 +42,8 @@ ps: graphviz-dot-mode.ps
 txt: graphviz-dot-mode.txt
 
 docbook: graphviz-dot-mode.xml
+
+adoc: graphviz-dot-mode.adoc
 
 epub: graphviz-dot-mode.epub
 
@@ -71,18 +74,20 @@ graphviz-dot-mode.txt: ${SOURCE} ${INCLUDE}
 graphviz-dot-mode.xml: ${SOURCE} ${INCLUDE} graphviz-dot-mode.info
 	$(TEXI2ANY) --docbook $<
 
-# index entries are not handled correctly in epub version
-graphviz-dot-mode.epub: graphviz-dot-mode.xml
-	$(PANDOC) -s -t epub -o $@ -f docbook $<
+# index entries are not handled correctly in docbook-derived formats below
+graphviz-dot-mode.adoc: graphviz-dot-mode.xml
+	$(PANDOC) -t asciidoc -o $@ -f docbook $<
 
-# index entries are not handled correctly in markdown version
+graphviz-dot-mode.epub: graphviz-dot-mode.xml
+	$(PANDOC) -t epub -o $@ -f docbook $<
+
 graphviz-dot-mode.md: graphviz-dot-mode.xml
-	$(PANDOC) -s -t markdown_strict -o $@ -f docbook $<
+	$(PANDOC) -t markdown_strict -o $@ -f docbook $<
 
 clean:
 	rm *.aux *.toc *.log || true
 	rm *.cp *.cps *.vr *.vrs *.fn *.fns *.ky *.kys *.pg *.pgs || true
-	rm graphviz-dot-mode.dvi graphviz-dot-mode.ps || true
+	rm graphviz-dot-mode.dvi graphviz-dot-mode.ps graphviz-dot-mode.adoc || true
 	rm graphviz-dot-mode.xml graphviz-dot-mode.epub graphviz-dot-mode.md || true
 	rm graphviz-dot-mode.html graphviz-dot-mode.txt graphviz-dot-mode.pdf || true
 	rm graphviz-dot-mode.info graphviz-dot-mode.info.gz || true
