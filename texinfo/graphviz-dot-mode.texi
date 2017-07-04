@@ -7,7 +7,8 @@
 @set VERSION 0.3.10
 @set RELEASED 25 May 2015
 @set SWCYEARS 2002-2015
-@set PACURL @uref{http://ppareit.github.com/graphviz-dot-mode}
+@set PACURL @uref{http://ppareit.github.io/graphviz-dot-mode/}
+@set SRCURL @uref{https://github.com/ppareit/graphviz-dot-mode}
 @set PACSRC @code{graphviz-dot-mode.el}
 
 @set TITLE @value{PACKAGE} Manual
@@ -18,11 +19,14 @@
 @end documentdescription
 @set EDITION @value{VERSION}.a
 @set EDITOR Daniel Birket
+@set DOCURL @uref{https://github.com/daniel-birket/graphviz-dot-mode}
 
 @set TEXINFO @cite{@acronym{GNU} Texinfo v6.4}
 @set EMACS @cite{Emacs v25.2.1}
 @set PANDOC @cite{Pandoc v1.19.2.1}
 @comment %**end of header
+@syncodeindex vr fn
+@syncodeindex ky cp
 
 @copying
 @cindex copyright (manual)
@@ -147,17 +151,11 @@ In @command{info}, type @kbd{3} to jump to the chapter on using
 * Installing::                  How to Get and Install @value{PACKAGE}.
 * Using @value{PACKAGE}::       Hot to Use @value{PACKAGE}
 * Customizing::                 How to customize @value{PACKAGE}.
-* Development::                 How to help improve @value{PACKAGE}.
-
-Appendices:
+* Credits::
 * @acronym{GNU} General Public License 2.0::  License of @value{PACKAGE}.
 * @acronym{GNU} Free Documentation License::  License of this document.
-
-* Key Index::
-* Variable Index::
-* Function Index::
-* Program Index::
-* Concept Index::
+* Functions & Variables::
+* Keys and Concepts::
 @end menu
 
 @node Introduction
@@ -203,16 +201,14 @@ This chapter describes how to install @value{PACKAGE}.
 @cindex @code{package.el}, installing with
 @cindex MELPA Stable, installing from
 The recommended way to install the package @value{PACKAGE} is to
-use @code{package.el}, which has been integrated with Emacs since
-version 24.  (It is included in version 23, but must be initialized.)
+use @code{package.el} and @kbd{M-x package-install}.
 
 @vindex package-archives
 @findex package-initialize
 To install @value{PACKAGE}, first add the MELPA Stable archive to the
 list of archives used by @code{package.el} (if it is not alrady there)
-by adding the following lines to your @file{.emacs},
-@file{.emacs.d/init.el}, or other Emacs startup file and restarting
-Emacs (or just evaluate the statements):
+by adding the following lines to your @file{.emacs} or other Emacs
+startup file. Then restart Emacs.
 
 @lisp
 (require 'package)
@@ -222,47 +218,28 @@ Emacs (or just evaluate the statements):
 (package-initialize)
 @end lisp
 
+(For more detailed and comprehensive instructions about using MELPA,
+please see @uref{https://melpa.org/#/getting-started}.)
+
 @findex package-install
-Then, after restarting Emacs (or otherwise evaluating the above
-statements), type the following command:
+After restarting Emacs, type the following to install @value{PACKAGE}.
 
 @kbd{M-x package-install @key{RET} graphviz-dot-mode @key{RET}}.
 
-When installed using the package manager this way, @value{PACKAGE}
-will be used automatically for file names ending in either @file{.dot}
+When installed this way using the package manager, @value{PACKAGE}
+will be activated automatically for file names ending in either @file{.dot}
 or @file{.gv}.
-
-You may browse the 1500+ other Emacs packages in the MELPA-Stable
-archive at @uref{http://stable.melpa.org/} or by typing @kbd{M-x
-list-packages @key{RET}} (after adding it to your package-archives
-list, above).
 
 @node Manual Installation
 @section Manual Installation
 @cindex manual installation
 @cindex installation, the hard way
-You can manually download and install @value{PACKAGE}.
+You can manually download and install @value{PACKAGE}, but it is best
+to use the recommended method above if you don't already know how to
+manually install an Emacs program.
 
-First, download @file{graphviz-dot-mode.el} from:
-
-@uref{http://ppareit.github.com/graphviz-dot-mode}
-
-Then save the file where Emacs can find it in a directory listed in your
-@code{load-path} like @file{/usr/local/share/emacs/site-lisp}.
-
-@findex autoload
-@vindex auto-mode-alist
-Then configure @value{PACKAGE} to load automatically by adding the
-following to your @file{.emacs}, @file{.emacs.d/init.el}, or other
-Emacs startup file:
-
-@lisp
-(autoload 'graphviz-dot-mode
-          "graphviz-dot-mode"
-          "Major mode for editing Graphviz DOT files" t)
-(add-to-list 'auto-mode-alist '("\\.dot\\'" . graphviz-dot-mode))
-(add-to-list 'auto-mode-alist '("\\.gv\\'" . graphviz-dot-mode))
-@end lisp
+You may download @file{graphviz-dot-mode.el} from@*@value{PACURL} and
+follow the instructions there.
 
 @node Using @value{PACKAGE}
 @chapter Using @value{PACKAGE}
@@ -282,27 +259,39 @@ This section describes how to use compile and view
 functions. @xref{Compile & View Variables}.
 
 @table @asis
-@item @kbd{C-c p} @code{graphviz-dot-preview}
-@findex graphviz-dot-preview
-@vindex image-file-name-extensions
-@vindex image-formats-alist
-This command shows the output of the current dot file visited by the
-@cite{Emacs} buffer, provided that @cite{@acronym{GNU} Emacs} or
-@cite{XEmacs} is running on a graphical display capable of displaying
-the graphic file output by @command{dot}.
-
-See @code{image-file-name-extensions} in @cite{@acronym{GNU} Emacs} or
-@code{image-formats-alist} in @cite{XEmacs} to customize the graphic
-files that can be displayed.
-
 @item @kbd{C-c c} @code{compile}
+@kindex @kbd{C-c c}
 @findex compile
 This command compiles the current dot file visited by the @cite{Emacs}
 buffer. The output file is in the same directory and has the extension
 determined by the variable @code{graphviz-dot-preview-extension}.
 
+@item @kbd{C-x '} or @code{next-error}
+@kindex @kbd{C-x '}
+@findex next-error
+This command will jump to the location in the source file of the next
+error from the most recent compile. Use @kbd{C-c c} to compile first.
+
+@item @kbd{C-c p} @code{graphviz-dot-preview}
+@kindex @kbd{C-c p}
+@findex graphviz-dot-preview
+@cindex preview
+@vindex image-file-name-extensions
+@vindex image-formats-alist
+This command compiles and then (if it compiled successfully) shows the
+output of the current dot file visited by the @cite{Emacs} buffer,
+provided that @cite{@acronym{GNU} Emacs} or @cite{XEmacs} is running
+on a graphical display capable of displaying the graphic file output
+by @command{dot}.
+
+See @code{image-file-name-extensions} in @cite{@acronym{GNU} Emacs} or
+@code{image-formats-alist} in @cite{XEmacs} to customize the graphic
+files that can be displayed.
+
 @item @kbd{C-c v} @code{graphviz-dot-view}
+@kindex @kbd{C-c v}
 @findex graphviz-dot-view
+@cindex external viewer
 @vindex graphviz-dot-view-edit-command
 @vindex graphviz-dot-save-before-view
 This command invokes an external viewer specified by the variable
@@ -321,61 +310,76 @@ list of @cite{Graphviz} viewers and editors.)
 @cindex editing
 This section describes how to edit with @value{PACKAGE}.
 @xref{Editing Variables}.
-
+@subsection Indenting
+@cindex indenting
 @table @asis
 @item @kbd{C-M-q} @code{graphviz-dot-indent-graph}
+@kindex @kbd{C-M-q}
 @findex graphviz-dot-indent-graph
 This command will indent the graph, diagraph, or subgraph at point and
 any subgraph within it.
 
 @item @kbd{@key{TAB}}
-Indent.
+@kindex @kbd{@key{TAB}}
+This key will indent the line.
 
 @item @kbd{@key{RET}} @code{electric-graphviz-dot-terminate-line}
+@kindex @kbd{@key{RET}}
 @findex electric-graphviz-dot-terminate-line
 If the variable @code{graphviz-dot-auto-indent-on-newline} is
 @code{t}, @kbd{@key{RET}} will insert a newline and indent the next line.
 
 @item @kbd{@{} @code{electric-graphviz-dot-open-brace}
+@kindex @kbd{@{}
 @findex electric-graphviz-dot-open-brace
 If the variable @code{graphviz-dot-auto-indent-on-braces} is
 @code{t}, @kbd{@{} will insert a @kbd{@{}, newline and indent the next line.
 
 @item @kbd{@}} @code{electric-graphviz-dot-close-brace}
+@kindex @kbd{@}}
 @findex electric-graphviz-dot-close-brace
 If the variable @code{graphviz-dot-auto-indent-on-braces} is
 @code{t}, @kbd{@}} will insert a @kbd{@}}, newline and indent the next line.
 
 @item @kbd{;} @code{electric-graphviz-dot-semi}
+@kindex @kbd{;}
 @findex electric-graphviz-dot-semi
 If the variable @code{graphviz-dot-auto-indent-on-semi} is
 @code{t}, @kbd{;} will insert a @kbd{;}, newline and indent the next line.
 @end table
 @subsection Completion
-@xref{Completion Variables}
-
 @table @asis
 @item @kbd{M-t} @code{graphviz-dot-complete-word}
+@kindex @kbd{M-t}
 @findex graphviz-dot-complete-word
 This command will complete the attribute or value keyword at point. If
 more than one completion is possible, a list is displayed in the
 minbuffer.
 @end table
 
+@xref{Completion Variables}
+
 @subsection Commenting
+@cindex commenting
 
 @table @asis
-@item @kbd{M-;}
-Insert new comment line.
+@item @kbd{M-;} @code{comment-dwim}
+@kindex @kbd{M-;}
+@findex comment-dwim
+This command will insert a new comment line.
 
-@item @kbd{M-j}
-Indent new comment line.
+@item @kbd{M-j} @code{comment-indent-newline}
+@kindex @kbd{M-j}
+@findex comment-indent-newline
+This command will insert and indent a new comment line.
 
 @item @kbd{C-c C-c} @code{comment-region}
+@kindex @kbd{C-c C-c}
 @findex comment-region
 This command will comment-out the region.
 
 @item @kbd{C-c C-u} @code{graphviz-dot-uncomment-region}
+@kindex @kbd{C-c C-u}
 @findex graphviz-dot-uncomment-region
 This command will un-comment the region.
 @end table
@@ -388,6 +392,7 @@ You may customize variables by typing
 
 @table @kbd
 @item M-x graphviz-dot-customize @key{RET}
+@kindex M-x graphviz-dot-customize @key{RET}
 @findex graphviz-dot-customize
 This function invokes the Emacs customization facility to allow you to
 view and change the @value{PACKAGE} variables below.
@@ -409,6 +414,8 @@ This section describes variables related to compiling and viewing.
 
 @vtable @code
 @item graphviz-dot-dot-program
+@kindex @kbd{C-c c}
+@findex compile
 string, default: ``dot''
 
 This variable determines the command name (and path, if necessary)
@@ -416,6 +423,8 @@ used to invoke the @cite{Graphviz} @command{dot} program. The @kbd{C-c
 c} @code{compile} function invokes this command.
 
 @item graphviz-dot-preview-extension
+@findex compile
+@kindex @kbd{C-c p}
 @findex graphviz-dot-preview
 string, default ``png''
 
@@ -426,6 +435,7 @@ functions. The format for the compile command is
 @command{dot -T<extension> <filename>.dot > <filename>.<extension>}
 
 @item graphviz-dot-save-before-view
+@kindex @kbd{C-c v}
 @findex graphviz-dot-view
 boolean, default @code{t}
 
@@ -435,6 +445,7 @@ external dot-file viewer command. Set this boolean variable to
 @code{t} (true) or @code{nil} (false).
 
 @item graphviz-dot-view-command
+@kindex @kbd{C-c v}
 @findex graphviz-dot-view
 string, default: ``doted %s''
 
@@ -448,6 +459,7 @@ this string.
 list of @cite{Graphviz} viewers and editors.)
 
 @item graphviz-dot-view-edit-command
+@kindex @kbd{C-c v}
 @findex graphviz-dot-view
 @vindex graphviz-dot-view-command
 boolean, default: @code{nil}
@@ -478,7 +490,9 @@ This subsection describes variables related to indenting.
 
 @vtable @code
 @item graphviz-dot-auto-indent-on-braces
+@kbd{@{}
 @findex electric-graphviz-dot-open-brace
+@kbd{@}}
 @findex electric-graphviz-dot-close-brace
 boolean, default @code{nil}
 
@@ -489,6 +503,7 @@ This variable controls whether the functions
 @code{nil} (false).
 
 @item graphviz-dot-auto-indent-on-newline
+@kindex @kbd{@key{RET}}
 @findex electric-graphviz-dot-terminate-line
 boolean, default @code{t}
 
@@ -498,6 +513,7 @@ terminated with a newline. Set this boolean variable to @code{t}
 (true) or @code{nil} (false).
 
 @item graphviz-dot-auto-indent-on-semi
+@kindex @kbd{;}
 @findex electric-graphviz-dot-semi
 boolean, default @code{t}
 
@@ -527,6 +543,7 @@ deleted when a key is pressed. Set this boolean variable to @code{t}
 (true) or @code{nil} (false).
 
 @item graphviz-dot-toggle-completions
+@kindex @kbd{M-t}
 @findex graphviz-dot-complete-word
 boolean, default: @code{nil}
 
@@ -582,20 +599,9 @@ This variable determins which functions are called when
 @end lisp
 @end vtable
 
-@node Development
-@chapter Development
-@cindex development
-This section is about the development of @value{PACKAGE}.
-
-@menu
-* Credits::
-* Maintenance::
-* Known Issues::
-* Version History::
-@end menu
-
 @node Credits
-@section Credits
+@chapter Credits
+@cindex credits
 @value{PACKAGE} was written by:
 @itemize
 @item Pieter Pareit @email{pieter.pareit@@gmail.com}
@@ -603,128 +609,15 @@ This section is about the development of @value{PACKAGE}.
 @item Eric Anderson @uref{http://www.ece.cmu.edu/~andersoe/}
 @end itemize
 
-Other contributors are noted in the version history, below.
-@node Maintenance
-@section Maintenance
-The source code is maintained by Pieter Pareit
-(@email{pieter.pareit@@gmail.com}) on GitHub at @value{PACURL}. Please
-send software issues to the issue tracker there.
+Other contributors are noted in the version history in the
+@value{PACSRC} file and the commit history on GitHub.
 
-This manual is maintained by Daniel Birket
-(@email{danielb@@birket.com}) on GitHub at
-@uref{https://github.com/daniel-birket/graphviz-dot-mode}. Please send
-manual errata to the issue tracker there.
+The source code is maintained on GitHub at @value{SRCURL} by Pieter
+Pareit (@email{pieter.pareit@@gmail.com}). Please email software
+comments, suggestions and corrections there.
 
-@node Known Issues
-@section Known Issues
-@cindex known issues
-This section echoes some issues noted in the @value{VERSION} source
-code.
-
-@table @strong
-@item parse errors
-Cleanup the mess of graphviz-dot-compilation-parse-errors.
-@item electric indentation
-Electric indentation is fundamentally broken, because @{...@} are also
-used for record nodes. You could argue, I suppose, that any diagrams
-don't need those, but it would be worth having a note (and it makes
-sense that the default is now for electric indentation to be off).
-@item comment lines
-Lines that start with # are comments, lines that start with one or more
-whitespaces and then a # should give an error.
-@end table
-
-@node Version History
-@section Version History
-@cindex version history
-The version history from the @value{VERSION} source code is below. See
-also the commit history on GitHub.
-@lisp
-;;; History:
-
-;; Version 0.3.10 Kevin Ryde
-;; 25/05/2015: * shell-quote-argument for safety
-;;             * use read-shell-command whenever available, don't set novaproc
-;; Version 0.3.9 Titus Barik <titus AT barik.net>
-;; 28/08/2012: * compile-command uses -ofile instead of >
-;; Version 0.3.8 new home
-;; 27/06/2012: * put graphviz-dot-mode into git, updated links
-;; Version 0.3.7 Tim Allen
-;; 09/03/2011: * fix spaces in file names when compiling
-;; Version 0.3.6 maintenance
-;; 19/02/2011: * .gv is the new extension  (Pander)
-;;             * comments can start with # (Pander)
-;;             * highlight of new keywords (Pander)
-;; Version 0.3.5 bug (or at least feature I dislike) fix
-;; 11/11/2010:  Eric Anderson http://www.ece.cmu.edu/~andersoe/
-;;             * Preserve indentation across blank (whitespace-only) lines
-;; Version 0.3.4 bug fixes
-;; 24/02/2005: * fixed a bug in graphviz-dot-preview
-;; Version 0.3.3 bug fixes
-;; 13/02/2005: Reuben Thomas <rrt AT sc3d.org>
-;;             * add graphviz-dot-indent-width
-;; Version 0.3.2 bug fixes
-;; 25/03/2004: Rubens Ramos <rubensr AT users.sourceforge.net>
-;;             * semi-colons and brackets are added when electric
-;;               behaviour is disabled.
-;;             * electric characters do not behave electrically inside
-;;               comments or strings.
-;;             * default for electric-braces is disabled now (makes more
-;;               sense I guess).
-;;             * using read-from-minibuffer instead of read-shell-command
-;;               for emacs.
-;;             * Fixed test for easymenu, so that it works on older
-;;               versions of XEmacs.
-;;             * Fixed indentation error when trying to indent last brace
-;;               of an empty graph.
-;;             * region-active-p does not exist in emacs (21.2 at least),
-;;               so removed from code
-;;             * Added uncomment menu option
-;; Version 0.3.1 bug fixes
-;; 03/03/2004: * backward-word needs argument for older emacs
-;; Version 0.3 added features and fixed bugs
-;; 10/01/2004: fixed a bug in graphviz-dot-indent-graph
-;; 08/01/2004: Rubens Ramos <rubensr AT users.sourceforge.net>
-;;             * added customization support
-;;             * Now it works on XEmacs and Emacs
-;;             * Added support to use an external Viewer
-;;             * Now things do not break when dot mode is entered
-;;               when there is no buffer name, but the side effect is
-;;               that in this case, the compilation command is not
-;;               correct.
-;;             * Preview works on XEmacs and emacs.
-;;             * Electric indentation on newline
-;;             * Minor changes to indentation
-;;             * Added keyword completion (but could be A LOT better)
-;;             * There are still a couple of ugly hacks. Look for 'RR'.
-;; Version 0.2 added features
-;; 11/11/2002: added preview support.
-;; 10/11/2002: indent a graph or subgraph at once with C-M-q.
-;; 08/11/2002: relaxed rules for indentation, the may now be extra chars
-;;             after beginning of graph (comment's for example).
-;; Version 0.1.2 bug fixes and naming issues
-;; 06/11/2002: renamed dot-font-lock-defaults to dot-font-lock-keywords.
-;;             added some documentation to dot-colors.
-;;             provided a much better way to handle my max-specpdl-size
-;;             problem.
-;;             added an extra autoload cookie (hope this helps, as I don't
-;;             yet use autoload myself)
-;; Version 0.1.1 bug fixes
-;; 06/11/2002: added an missing attribute, for font-locking to work.
-;;             fixed the regex generating, so that it only recognizes
-;;             whole words
-;; 05/11/2002: there can now be extra white space chars after an '@{'.
-;; 04/11/2002: Why I use max-specpdl-size is now documented, and old value
-;;             gets restored.
-;; Version 0.1 initial release
-;; 02/11/2002: implemented parser for *compilation* of a .dot file.
-;; 01/11/2002: implemented compilation of an .dot file.
-;; 31/10/2002: added syntax-table to the mode.
-;; 30/10/2002: implemented indentation code.
-;; 29/10/2002: implemented all of font-lock.
-;; 28/10/2002: derived graphviz-dot-mode from fundamental-mode, started
-;;             implementing font-lock.
-@end lisp
+This manual is maintained on GitHub at @value{DOCURL} by Daniel Birket
+(@email{danielb@@birket.com}). Please email document errata there.
 
 @node @acronym{GNU} General Public License 2.0
 @unnumbered @acronym{GNU} General Public License 2.0
@@ -746,28 +639,10 @@ also the commit history on GitHub.
 @cindex @acronym{GNU} Free Documentation License
 
 @include fdl.texi
-
-
-@ifnotdocbook
-@node Key Index
-@unnumbered Key Index
-@printindex ky
-
-@node Variable Index
-@unnumbered Variable Index
-@printindex vr
-
-@node Function Index
-@unnumbered Function Index
+@node Functions & Variables
+@unnumbered Functions & Variables
 @printindex fn
-
-@node Program Index
-@unnumbered Program Index
-@printindex pg
-@end ifnotdocbook
-
-@node Concept Index
-@unnumbered Concept Index
+@node Keys and Concepts
+@unnumbered Keys and Concepts
 @printindex cp
-
 @bye
