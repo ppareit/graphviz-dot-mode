@@ -24,9 +24,8 @@ source with GNU Texinfo v6.4 (Richard M. Stallman, et al. See
 v1.19.2.1 (John MacFarlane, et al. <http://pandoc.org>) This format has
 no index. Graphviz is by AT&T Labs Research. (See <http://graphviz.org>)
 
-This manual is based upon (and frequently copied verbatim from) the
-documentation in the `graphviz-dot-mode.el` source code, which begins
-with:
+This manual is based upon the comments and doc strings in the
+`graphviz-dot-mode.el` source code, which begins with:
 
     ;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
 
@@ -68,9 +67,10 @@ network of connected nodes (shapes) and edges (lines). Graphviz is
 documented at <http://graphviz.org>.
 
 The powerful text editor, Emacs, was created in 1976 by Richard
-Stallman. It is highly extensible and has 40 years of other extensions.
-GNU Emacs is documented at <https://www.gnu.org/software/emacs/>. XEmacs
-is documented at <http://www.xemacs.org>.
+Stallman. It is highly customizable and has 40 years of other
+extensions. GNU Emacs is documented at
+<https://www.gnu.org/software/emacs/>. XEmacs is documented at
+<http://www.xemacs.org>.
 
 Installing
 ==========
