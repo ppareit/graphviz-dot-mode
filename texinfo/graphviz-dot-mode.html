@@ -16,39 +16,11 @@ released 25 May 2015, which was written by and Copyright
 (C) 2002-2015 Pieter Pareit, et al.  (See
 http://ppareit.github.io/graphviz-dot-mode/)
 
-This manual is based upon (and frequently copied verbatim from) the
-documentation in the graphviz-dot-mode.el source code, which begins with:
-
-;;; graphviz-dot-mode.el - Mode for the dot-language used by graphviz (att).
-
-;; Copyright (C) 2002 - 2012 Pieter Pareit <pieter.pareit@gmail.com>
-
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2 of
-;; the License, or (at your option) any later version.
-
-;; This program is distributed in the hope that it will be
-;; useful, but WITHOUT ANY WARRANTY; without even the implied
-;; warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-;; PURPOSE.  See the GNU General Public License for more details.
-...
-
-;; Authors: Pieter Pareit <pieter.pareit@gmail.com>
-;;          Rubens Ramos <rubensr AT users.sourceforge.net>
-;;          Eric Anderson http://www.ece.cmu.edu/~andersoe/
-;; Maintainer: Pieter Pareit <pieter.pareit@gmail.com>
-;; Homepage: http://ppareit.github.com/graphviz-dot-mode/
-;; Created: 28 Oct 2002
-;; Last modified: 25 May 2015
-;; Version: 0.3.10
-;; Keywords: mode dot dot-language dotlanguage graphviz graphs att
-
-This HTML document was composed using Emacs v25.2.1 (Richard
+This HTML
+document was composed using Emacs v25.2.1 (Richard
 M. Stallman, et al.  See https://www.gnu.org/software/emacs/)
 and compiled from .texi source with GNU Texinfo v6.4 (Richard
 M. Stallman, et al.  See https://www.gnu.org/software/texinfo/)
-
 Graphviz is by AT&T Labs Research.  (See http://graphviz.org) -->
 <!-- Created by GNU Texinfo 6.4, http://www.gnu.org/software/texinfo/ -->
 <head>
@@ -113,7 +85,8 @@ ul.no-bullet {list-style: none}
   <li><a name="toc-Installing-1" href="#Installing">2 Installing</a>
   <ul class="no-bullet">
     <li><a name="toc-Recommended-Installation-1" href="#Recommended-Installation">2.1 Recommended Installation</a></li>
-    <li><a name="toc-Manual-Installation-1" href="#Manual-Installation">2.2 Manual Installation</a></li>
+    <li><a name="toc-Installing-by-Hand-1" href="#Installing-by-Hand">2.2 Installing by Hand</a></li>
+    <li><a name="toc-Installing-this-Info-Manual-1" href="#Installing-this-Info-Manual">2.3 Installing this Info Manual</a></li>
   </ul></li>
   <li><a name="toc-Using-graphviz_002ddot_002dmode-1" href="#Using-graphviz_002ddot_002dmode">3 Using <code>graphviz-dot-mode</code></a>
   <ul class="no-bullet">
@@ -170,10 +143,18 @@ released 25 May 2015, which was written by and Copyright
 &copy; 2002-2015 Pieter Pareit, et al.  (See
 <a href="http://ppareit.github.io/graphviz-dot-mode/">http://ppareit.github.io/graphviz-dot-mode/</a>)
 </p>
-<p>This manual is based upon (and frequently copied verbatim from) the
-documentation in the <code>graphviz-dot-mode.el</code> source code, which begins with:
+<p>This <acronym>HTML</acronym>
+document was composed using <cite>Emacs v25.2.1</cite> (Richard
+M. Stallman, et al.  See <a href="https://www.gnu.org/software/emacs/">https://www.gnu.org/software/emacs/</a>)
+and compiled from <samp>.texi</samp> source with <cite><acronym>GNU</acronym> Texinfo v6.4</cite> (Richard
+M. Stallman, et al.  See <a href="https://www.gnu.org/software/texinfo/">https://www.gnu.org/software/texinfo/</a>)
+<cite>Graphviz</cite> is by <acronym>AT&amp;T</acronym> Labs Research.  (See <a href="http://graphviz.org">http://graphviz.org</a>)
 </p>
-<a name="index-copying-copyright-_0028software_0029"></a>
+
+<p>This manual is based upon the comments and doc strings in the
+<code>graphviz-dot-mode.el</code> source code, which begins with:
+</p>
+<a name="index-copyright-_0028software_0029"></a>
 <div class="lisp">
 <pre class="lisp">;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
 
@@ -201,14 +182,6 @@ documentation in the <code>graphviz-dot-mode.el</code> source code, which begins
 ;; Keywords: mode dot dot-language dotlanguage graphviz graphs att
 </pre></div>
 
-<p>This <acronym>HTML</acronym> document was composed using <cite>Emacs v25.2.1</cite> (Richard
-M. Stallman, et al.  See <a href="https://www.gnu.org/software/emacs/">https://www.gnu.org/software/emacs/</a>)
-and compiled from <samp>.texi</samp> source with <cite><acronym>GNU</acronym> Texinfo v6.4</cite> (Richard
-M. Stallman, et al.  See <a href="https://www.gnu.org/software/texinfo/">https://www.gnu.org/software/texinfo/</a>)
-</p>
-<p><cite>Graphviz</cite> is by <acronym>AT&amp;T</acronym> Labs Research.  (See <a href="http://graphviz.org">http://graphviz.org</a>)
-</p>
-
 
 <hr>
 <a name="Introduction"></a>
@@ -233,7 +206,7 @@ representing information as a network of connected <em>nodes</em> (shapes) and
 </p>
 <a name="index-Emacs"></a>
 <p>The powerful text editor, Emacs, was created in 1976 by Richard
-Stallman.  It is highly extensible and has 40 years of other
+Stallman.  It is highly customizable and has 40 years of other
 extensions.  <cite><acronym>GNU</acronym> Emacs</cite> is documented at
 <a href="https://www.gnu.org/software/emacs/">https://www.gnu.org/software/emacs/</a>. <cite>XEmacs</cite> is
 documented at <a href="http://www.xemacs.org">http://www.xemacs.org</a>.
@@ -285,19 +258,37 @@ will be activated automatically for file names ending in either <samp>.dot</samp
 or <samp>.gv</samp>.
 </p>
 <hr>
-<a name="Manual-Installation"></a>
-<a name="Manual-Installation-1"></a>
-<h3 class="section">2.2 Manual Installation</h3>
-<a name="index-manual-installation"></a>
+<a name="Installing-by-Hand"></a>
+<a name="Installing-by-Hand-1"></a>
+<h3 class="section">2.2 Installing by Hand</h3>
+<a name="index-installing-by-hand"></a>
 <a name="index-installation_002c-the-hard-way"></a>
 <p>You can manually download and install <code>graphviz-dot-mode</code>, but it is best
 to use the recommended method above if you don&rsquo;t already know how to
 manually install an Emacs program.
 </p>
 <p>You may download <samp>graphviz-dot-mode.el</samp> from<br><a href="http://ppareit.github.io/graphviz-dot-mode/">http://ppareit.github.io/graphviz-dot-mode/</a> and
-follow the instructions there.
+follow the instructions that you find there.
 </p>
 <hr>
+<a name="Installing-this-Info-Manual"></a>
+<a name="Installing-this-Info-Manual-1"></a>
+<h3 class="section">2.3 Installing this Info Manual</h3>
+<a name="index-Installing-this-Info-Manual"></a>
+<p>This section describes how to install this manual so that it may be
+used from within Emacs using its <code>info</code> reader.
+</p><ol>
+<li> Obtain the file containing the info-format version of this manual, <samp>graphviz-dot-mode.info.gz</samp> (See <a href="https://github.com/daniel-birket/graphviz-dot-mode">https://github.com/daniel-birket/graphviz-dot-mode</a>.)
+</li><li> In Emacs, use <kbd>C-h v Info-directory-list<span class="key">RET</span></kbd> to display the contents of the <code>Info-directory-list</code> variable. (This may be the same as the <code>INFOPATH</code> enviroment variable.)
+</li><li> Copy the <samp>graphviz-dot-mode.info.gz</samp> file to one of the directories in the <code>Info-directory-list</code> variable.
+</li><li> Use <code>install-info</code> to add an entry for the new <samp>graphviz-dot-mode.info.gz</samp> file into the <samp>dir</samp> file in the info directory where you copied the file.
+</li><li> In Emacs, use <kbd>C-h i d m graphviz-dot-mode<span class="key">RET</span></kbd> to display this help file.
+</li></ol>
+
+<p>The <samp>Makefile</samp> in the <samp>texinfo</samp> subdirectory of the GitHub archive at <a href="https://github.com/daniel-birket/graphviz-dot-mode">https://github.com/daniel-birket/graphviz-dot-mode</a> includes an option to install the info file with <code>make install</code>. You must first modify the variables in the top of the Makefile to use the correct directories and files for your system.
+</p>
+<p>You must install <cite><acronym>GNU</acronym> Texinfo v6.4</cite> to use <code>install-info</code> or the <samp>Makefile</samp>.
+</p><hr>
 <a name="Using-graphviz_002ddot_002dmode"></a>
 <a name="Using-graphviz_002ddot_002dmode-1"></a>
 <h2 class="chapter">3 Using <code>graphviz-dot-mode</code></h2>
@@ -742,7 +733,8 @@ Pareit (<a href="mailto:pieter.pareit@gmail.com">pieter.pareit@gmail.com</a>). P
 comments, suggestions and corrections there.
 </p>
 <p>This manual is maintained on GitHub at <a href="https://github.com/daniel-birket/graphviz-dot-mode">https://github.com/daniel-birket/graphviz-dot-mode</a> by Daniel Birket
-(<a href="mailto:danielb@birket.com">danielb@birket.com</a>). Please email document errata there.
+(<a href="mailto:danielb@birket.com">danielb@birket.com</a>). Please submit document errata to the
+issue tracker there.
 </p>
 <hr>
 <a name="GNU-General-Public-License-2_002e0"></a>
@@ -1748,7 +1740,7 @@ to permit their use in free software.
 <tr><td></td><td valign="top"><a href="#index-commenting">commenting</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-compiling">compiling</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compiling-_0026-Viewing">Compiling &amp; Viewing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-copying-copyright-_0028manual_0029">copyright (manual)</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Top">Top</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-copying-copyright-_0028software_0029">copyright (software)</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Top">Top</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-copyright-_0028software_0029">copyright (software)</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Top">Top</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-credits">credits</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Credits">Credits</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-customizing">customizing</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Customizing">Customizing</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
@@ -1765,8 +1757,10 @@ to permit their use in free software.
 <tr><th><a name="Keys-and-Concepts_cp_letter-I">I</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-indenting">indenting</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-installation_002c-the-easy-way">installation, the easy way</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-installation_002c-the-hard-way">installation, the hard way</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Manual-Installation">Manual Installation</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-installation_002c-the-hard-way">installation, the hard way</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Installing-by-Hand">Installing by Hand</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-installing">installing</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Installing">Installing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-installing-by-hand">installing by hand</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Installing-by-Hand">Installing by Hand</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-Installing-this-Info-Manual">Installing this Info Manual</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Installing-this-Info-Manual">Installing this Info Manual</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-introduction">introduction</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Introduction">Introduction</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Keys-and-Concepts_cp_letter-L">L</a></th><td></td><td></td></tr>
@@ -1779,7 +1773,6 @@ to permit their use in free software.
 <tr><td></td><td valign="top"><a href="#index-M_002dt"><code><kbd>M-t</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-M_002dt-1"><code><kbd>M-t</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Completion-Variables">Completion Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-M_002dx-graphviz_002ddot_002dcustomize-RET"><code>M-x graphviz-dot-customize <span class="key">RET</span></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Customizing">Customizing</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-manual-installation">manual installation</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Manual-Installation">Manual Installation</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-MELPA-Stable_002c-installing-from">MELPA Stable, installing from</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Keys-and-Concepts_cp_letter-N">N</a></th><td></td><td></td></tr>

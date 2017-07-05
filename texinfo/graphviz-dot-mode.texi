@@ -48,68 +48,31 @@ released @value{RELEASED}, which was written by and Copyright
 @copyright{} @value{SWCYEARS} @value{AUTHOR}, et al@.  (See
 @value{PACURL})
 
-This manual is based upon (and frequently copied verbatim from) the
-documentation in the @value{PACSRC} source code, which begins with:
-
-@cindex copyright (software)
-@lisp
-;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
-
-;; Copyright (C) 2002 - 2012 Pieter Pareit <pieter.pareit@@gmail.com>
-
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2 of
-;; the License, or (at your option) any later version.
-
-;; This program is distributed in the hope that it will be
-;; useful, but WITHOUT ANY WARRANTY; without even the implied
-;; warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-;; PURPOSE.  See the GNU General Public License for more details.
-@dots{}
-
-;; Authors: Pieter Pareit <pieter.pareit@@gmail.com>
-;;          Rubens Ramos <rubensr AT users.sourceforge.net>
-;;          Eric Anderson http://www.ece.cmu.edu/~andersoe/
-;; Maintainer: Pieter Pareit <pieter.pareit@@gmail.com>
-;; Homepage: http://ppareit.github.com/graphviz-dot-mode/
-;; Created: 28 Oct 2002
-;; Last modified: 25 May 2015
-;; Version: 0.3.10
-;; Keywords: mode dot dot-language dotlanguage graphviz graphs att
-@end lisp
-
 @ifinfo
-This @command{info} document was composed using @value{EMACS} (Richard
-M. Stallman, et al.  See @uref{https://www.gnu.org/software/emacs/})
-and compiled from @file{.texi} source with @value{TEXINFO} (Richard
-M. Stallman, et al.  See @uref{https://www.gnu.org/software/texinfo/})
+This @command{info}
 @end ifinfo
 @iftex
-This typeset document was composed using @value{EMACS} (Richard
+This typeset
+@end iftex
+@ifhtml
+This @acronym{HTML}
+@end ifhtml
+@ifdocbook
+This
+@end ifdocbook
+document was composed using @value{EMACS} (Richard
 M. Stallman, et al.  See @uref{https://www.gnu.org/software/emacs/})
 and compiled from @file{.texi} source with @value{TEXINFO} (Richard
 M. Stallman, et al.  See @uref{https://www.gnu.org/software/texinfo/})
+@iftex
 and typeset using @TeX{} (Donald Knuth, et al.  See
 @uref{https://www.gnu.org/software/texinfo/})
 @end iftex
-@ifhtml
-This @acronym{HTML} document was composed using @value{EMACS} (Richard
-M. Stallman, et al.  See @uref{https://www.gnu.org/software/emacs/})
-and compiled from @file{.texi} source with @value{TEXINFO} (Richard
-M. Stallman, et al.  See @uref{https://www.gnu.org/software/texinfo/})
-@end ifhtml
 @ifdocbook
-This document was composed using @value{EMACS} (Richard M. Stallman,
-et al.  See @uref{https://www.gnu.org/software/emacs/}) and compiled
-from @file{.texi} source with @value{TEXINFO} (Richard M. Stallman, et
-al.  See @uref{https://www.gnu.org/software/texinfo/}) to
-@command{docbook} format (@acronym{OASIS} See @uref{http://docbook.org}, then
+to @command{docbook} format (@acronym{OASIS} See @uref{http://docbook.org}, then
 converted to this format using @value{PANDOC} (John MacFarlane, et
-al@. @uref{http://pandoc.org})  The indices are not included in this
-format.
+al@. @uref{http://pandoc.org})  This format has no index.
 @end ifdocbook
-
 @cite{Graphviz} is by @acronym{AT&T} Labs Research.  (See @uref{http://graphviz.org})
 @end copying
 
@@ -146,6 +109,37 @@ In @command{info}, type @kbd{3} to jump to the chapter on using
 @end ifnottex
 @end ifnotdocbook
 
+This manual is based upon the comments and doc strings in the
+@value{PACSRC} source code, which begins with:
+
+@cindex copyright (software)
+@lisp
+;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
+
+;; Copyright (C) 2002 - 2012 Pieter Pareit <pieter.pareit@@gmail.com>
+
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 2 of
+;; the License, or (at your option) any later version.
+
+;; This program is distributed in the hope that it will be
+;; useful, but WITHOUT ANY WARRANTY; without even the implied
+;; warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+;; PURPOSE.  See the GNU General Public License for more details.
+@dots{}
+
+;; Authors: Pieter Pareit <pieter.pareit@@gmail.com>
+;;          Rubens Ramos <rubensr AT users.sourceforge.net>
+;;          Eric Anderson http://www.ece.cmu.edu/~andersoe/
+;; Maintainer: Pieter Pareit <pieter.pareit@@gmail.com>
+;; Homepage: http://ppareit.github.com/graphviz-dot-mode/
+;; Created: 28 Oct 2002
+;; Last modified: 25 May 2015
+;; Version: 0.3.10
+;; Keywords: mode dot dot-language dotlanguage graphviz graphs att
+@end lisp
+
 @menu
 * Introduction::                About @cite{Graphviz} and @value{PACKAGE}.
 * Installing::                  How to Get and Install @value{PACKAGE}.
@@ -179,7 +173,7 @@ representing information as a network of connected @dfn{nodes} (shapes) and
 
 @pindex Emacs
 The powerful text editor, Emacs, was created in 1976 by Richard
-Stallman.  It is highly extensible and has 40 years of other
+Stallman.  It is highly customizable and has 40 years of other
 extensions.  @cite{@acronym{GNU} Emacs} is documented at
 @uref{https://www.gnu.org/software/emacs/}. @cite{XEmacs} is
 documented at @uref{http://www.xemacs.org}.
@@ -191,7 +185,8 @@ This chapter describes how to install @value{PACKAGE}.
 
 @menu
 * Recommended Installation::    Install the easy way.
-* Manual Installation::         Install the hard way.
+* Installing by Hand::          Install the hard way.
+* Installing this Info Manual:: How to Install this @command{info} manual.
 @end menu
 
 @node Recommended Installation
@@ -230,17 +225,33 @@ When installed this way using the package manager, @value{PACKAGE}
 will be activated automatically for file names ending in either @file{.dot}
 or @file{.gv}.
 
-@node Manual Installation
-@section Manual Installation
-@cindex manual installation
+@node Installing by Hand
+@section Installing by Hand
+@cindex installing by hand
 @cindex installation, the hard way
 You can manually download and install @value{PACKAGE}, but it is best
 to use the recommended method above if you don't already know how to
 manually install an Emacs program.
 
 You may download @file{graphviz-dot-mode.el} from@*@value{PACURL} and
-follow the instructions there.
+follow the instructions that you find there.
 
+@node Installing this Info Manual
+@section Installing this Info Manual
+@cindex Installing this Info Manual
+This section describes how to install this manual so that it may be
+used from within Emacs using its @code{info} reader.
+@enumerate
+@item Obtain the file containing the info-format version of this manual, @file{graphviz-dot-mode.info.gz} (See @value{DOCURL}.)
+@item In Emacs, use @kbd{C-h v Info-directory-list@key{RET}} to display the contents of the @code{Info-directory-list} variable. (This may be the same as the @env{INFOPATH} enviroment variable.)
+@item Copy the @file{graphviz-dot-mode.info.gz} file to one of the directories in the @code{Info-directory-list} variable.
+@item Use @command{install-info} to add an entry for the new @file{graphviz-dot-mode.info.gz} file into the @file{dir} file in the info directory where you copied the file.
+@item In Emacs, use @kbd{C-h i d m graphviz-dot-mode@key{RET}} to display this help file.
+@end enumerate
+
+The @file{Makefile} in the @file{texinfo} subdirectory of the GitHub archive at @value{DOCURL} includes an option to install the info file with @command{make install}. You must first modify the variables in the top of the Makefile to use the correct directories and files for your system.
+
+You must install @value{TEXINFO} to use @command{install-info} or the @file{Makefile}.
 @node Using @value{PACKAGE}
 @chapter Using @value{PACKAGE}
 @cindex using
@@ -617,7 +628,8 @@ Pareit (@email{pieter.pareit@@gmail.com}). Please email software
 comments, suggestions and corrections there.
 
 This manual is maintained on GitHub at @value{DOCURL} by Daniel Birket
-(@email{danielb@@birket.com}). Please email document errata there.
+(@email{danielb@@birket.com}). Please submit document errata to the
+issue tracker there.
 
 @node @acronym{GNU} General Public License 2.0
 @unnumbered @acronym{GNU} General Public License 2.0

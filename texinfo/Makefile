@@ -1,7 +1,8 @@
-SOURCE	:= graphviz-dot-mode.texi
+BASENAME := graphviz-dot-mode
+SOURCE	:= $(BASENAME).texi
 INCLUDE	:= fdl.texi gpl-2.0.texi gpl.texi
 
-INFODIR := /usr/local/share/info/emacs
+INFODIR := ~/info
 
 TEXINFODIR := /usr/local/Cellar/texinfo/6.4/bin
 TEXI2ANY := $(TEXINFODIR)/texi2any
@@ -29,66 +30,68 @@ help:
 	#
 	# make clean
 	#
-	# Be sure to update file locations in top of Makefile for your system.
+	# This Makefile uses TexInfo and Pandoc
+	# Check the file locations at top of this Makefile.
 
-info: graphviz-dot-mode.info.gz
+info: $(BASENAME).info.gz
 
-html: graphviz-dot-mode.html
+html: $(BASENAME).html
 
-pdf: graphviz-dot-mode.pdf
+pdf: $(BASENAME).pdf
 
-ps: graphviz-dot-mode.ps
+ps: $(BASENAME).ps
 
-txt: graphviz-dot-mode.txt
+txt: $(BASENAME).txt
 
-docbook: graphviz-dot-mode.xml
+docbook: $(BASENAME).xml
 
-adoc: graphviz-dot-mode.adoc
+adoc: $(BASENAME).adoc
 
-epub: graphviz-dot-mode.epub
+epub: $(BASENAME).epub
 
-md: graphviz-dot-mode.md
+md: $(BASENAME).md
 
-graphviz-dot-mode.info: ${SOURCE} ${INCLUDE}
+$(BASENAME).info: ${SOURCE} ${INCLUDE}
 	$(TEXI2ANY) --info $<
 
-graphviz-dot-mode.info.gz: graphviz-dot-mode.info
+$(BASENAME).info.gz: $(BASENAME).info
 	$(GZIP) $<
 
-install: graphviz-dot-mode.info.gz
+install: $(BASENAME).info.gz
 	$(INSTALL) $< $(INFODIR)
 	$(INSTALLINFO) $(INFODIR)/$< $(INFODIR)/dir
 
-graphviz-dot-mode.html: ${SOURCE} ${INCLUDE}
+$(BASENAME).html: ${SOURCE} ${INCLUDE}
 	$(TEXI2ANY) --HTML --no-split --no-headers ${SOURCE} | ${SMARTYPANTS}
 
-graphviz-dot-mode.pdf: ${SOURCE} ${INCLUDE} graphviz-dot-mode.info
+$(BASENAME).pdf: ${SOURCE} ${INCLUDE} $(BASENAME).info
 	$(TEXI2PDF) $<
 
-graphviz-dot-mode.ps: ${SOURCE} ${INCLUDE} graphviz-dot-mode.info
+$(BASENAME).ps: ${SOURCE} ${INCLUDE} $(BASENAME).info
 	$(TEXI2DVI) --ps  $<
 
-graphviz-dot-mode.txt: ${SOURCE} ${INCLUDE}
+$(BASENAME).txt: ${SOURCE} ${INCLUDE}
 	$(TEXI2ANY) --plaintext $< >$@
 
-graphviz-dot-mode.xml: ${SOURCE} ${INCLUDE} graphviz-dot-mode.info
-	$(TEXI2ANY) --docbook $<
+# texi2any --docbook handles @Xindex entries poorly. Remove them first.
+$(BASENAME).xml: ${SOURCE} ${INCLUDE} $(BASENAME).info
+	grep -v "^@[cfkptv]index " $< >$(BASENAME)._texi
+	$(TEXI2ANY) --docbook $(BASENAME)._texi
 
-# index entries are not handled correctly in docbook-derived formats below
-graphviz-dot-mode.adoc: graphviz-dot-mode.xml
+$(BASENAME).adoc: $(BASENAME).xml
 	$(PANDOC) -t asciidoc -o $@ -f docbook $<
 
-graphviz-dot-mode.epub: graphviz-dot-mode.xml
+$(BASENAME).epub: $(BASENAME).xml
 	$(PANDOC) -t epub -o $@ -f docbook $<
 
-graphviz-dot-mode.md: graphviz-dot-mode.xml
+$(BASENAME).md: $(BASENAME).xml
 	$(PANDOC) -t markdown_strict -o $@ -f docbook $<
 
 clean:
 	rm *.aux *.toc *.log || true
 	rm *.cp *.cps *.vr *.vrs *.fn *.fns *.ky *.kys *.pg *.pgs || true
-	rm graphviz-dot-mode.dvi graphviz-dot-mode.ps graphviz-dot-mode.adoc || true
-	rm graphviz-dot-mode.xml graphviz-dot-mode.epub graphviz-dot-mode.md || true
-	rm graphviz-dot-mode.html graphviz-dot-mode.txt graphviz-dot-mode.pdf || true
-	rm graphviz-dot-mode.info graphviz-dot-mode.info.gz || true
+	rm $(BASENAME).dvi $(BASENAME).ps $(BASENAME).adoc || true
+	rm $(BASENAME).xml $(BASENAME).epub $(BASENAME).md || true
+	rm $(BASENAME).html $(BASENAME).txt $(BASENAME).pdf || true
+	rm $(BASENAME).info $(BASENAME).info.gz || true
 
