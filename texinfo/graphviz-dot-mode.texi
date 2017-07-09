@@ -116,7 +116,7 @@ This manual is based upon the comments and doc strings in the
 @lisp
 ;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
 
-;; Copyright (C) 2002 - 2012 Pieter Pareit <pieter.pareit@@gmail.com>
+;; Copyright (C) 2002 - 2015 Pieter Pareit <pieter.pareit@@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -277,8 +277,8 @@ This command compiles the current dot file visited by the @cite{Emacs}
 buffer. The output file is in the same directory and has the extension
 determined by the variable @code{graphviz-dot-preview-extension}.
 
-@item @kbd{C-x '} or @code{next-error}
-@kindex @kbd{C-x '}
+@item @kbd{C-x `} or @code{next-error}
+@kindex @kbd{C-x `}
 @findex next-error
 This command will jump to the location in the source file of the next
 error from the most recent compile. Use @kbd{C-c c} to compile first.
@@ -321,6 +321,13 @@ list of @cite{Graphviz} viewers and editors.)
 @cindex editing
 This section describes how to edit with @value{PACKAGE}.
 @xref{Editing Variables}.
+@menu
+* Indenting::   How to use Indenting commands
+* Completion::  How to use Completion command
+* Commenting::  How to use Commenting commands
+@end menu
+
+@node Indenting
 @subsection Indenting
 @cindex indenting
 @table @asis
@@ -358,6 +365,8 @@ If the variable @code{graphviz-dot-auto-indent-on-braces} is
 If the variable @code{graphviz-dot-auto-indent-on-semi} is
 @code{t}, @kbd{;} will insert a @kbd{;}, newline and indent the next line.
 @end table
+
+@node Completion
 @subsection Completion
 @table @asis
 @item @kbd{M-t} @code{graphviz-dot-complete-word}
@@ -370,6 +379,7 @@ minbuffer.
 
 @xref{Completion Variables}
 
+@node Commenting
 @subsection Commenting
 @cindex commenting
 
@@ -377,22 +387,37 @@ minbuffer.
 @item @kbd{M-;} @code{comment-dwim}
 @kindex @kbd{M-;}
 @findex comment-dwim
-This command will insert a new comment line.
+This command will perform the comment command you want (Do What I
+Mean).  If the region is active and ‘transient-mark-mode’ is on, it
+will comment the region, unless it only consists of comments, in which
+case it will un-comment the region.  Else, if the current line is
+empty, it will insert a blank comment line,
+otherwise it will append a comment to the line and indent it.
+
+Use @kbd{C-u M-;} to kill the comment on the current line.
 
 @item @kbd{M-j} @code{comment-indent-newline}
 @kindex @kbd{M-j}
 @findex comment-indent-newline
-This command will insert and indent a new comment line.
+This command will break line the at point and indent, continuing a
+comment if within one.  This indents the body of the continued comment
+under the previous comment line.
 
 @item @kbd{C-c C-c} @code{comment-region}
 @kindex @kbd{C-c C-c}
 @findex comment-region
 This command will comment-out the region.
 
+You may also use @kbd{M-;} @code{comment-dwin} to comment the region
+if 'transient-mark-mode' is on.
+
 @item @kbd{C-c C-u} @code{graphviz-dot-uncomment-region}
 @kindex @kbd{C-c C-u}
 @findex graphviz-dot-uncomment-region
 This command will un-comment the region.
+
+You may also use @kbd{C-u M-;} @code{comment-dwin} to un-comment the region
+if 'transient-mark-mode' is on.
 @end table
 
 @node Customizing
