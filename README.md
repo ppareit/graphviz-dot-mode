@@ -11,10 +11,10 @@ Copyright © 2017 Daniel Birket.
 > Free Documentation License.
 
 This is the `graphviz-dot-mode` Manual, edition 0.3.10.a, by Daniel
-Birket, updated July 4, 2017, which describes how to install and use the
-Emacs package `graphviz-dot-mode`, version 0.3.10, released 25 May 2015,
-which was written by and Copyright © 2002-2015 Pieter Pareit, et al.
-(See <http://ppareit.github.io/graphviz-dot-mode/>)
+Birket, updated July 10, 2017, which describes how to install and use
+the Emacs package `graphviz-dot-mode`, version 0.3.10, released 25 May
+2015, which was written by and Copyright © 2002-2015 Pieter Pareit, et
+al. (See <http://ppareit.github.io/graphviz-dot-mode/>)
 
 This document was composed using Emacs v25.2.1 (Richard M. Stallman, et
 al. See <https://www.gnu.org/software/emacs/>) and compiled from `.texi`
@@ -29,7 +29,7 @@ This manual is based upon the comments and doc strings in the
 
     ;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
 
-    ;; Copyright (C) 2002 - 2012 Pieter Pareit <pieter.pareit@gmail.com>
+    ;; Copyright (C) 2002 - 2015 Pieter Pareit <pieter.pareit@gmail.com>
 
     ;; This program is free software; you can redistribute it and/or
     ;; modify it under the terms of the GNU General Public License as
@@ -138,7 +138,7 @@ from within Emacs using its `info` reader.
     `graphviz-dot-mode.info.gz` file into the `dir` file in the info
     directory where you copied the file.
 
-5.  In Emacs, use `C-h i d m graphviz-dot-modeRET` to display this help
+5.  In Emacs, use `C-h i d m graphviz-dot-mode RET` to display this help
     file.
 
 The `Makefile` in the `texinfo` subdirectory of the GitHub archive at
@@ -161,16 +161,16 @@ Compiling & Viewing
 This section describes how to use compile and view functions. See
 [Compile & View Variables](#Compile-_0026-View-Variables).
 
-`C-c c` `compile`  
+`C-c c` (`compile`)  
 This command compiles the current dot file visited by the Emacs buffer.
 The output file is in the same directory and has the extension
 determined by the variable `graphviz-dot-preview-extension`.
 
-`C-x '` or `next-error`  
+`` C-x ` `` (`next-error`)  
 This command will jump to the location in the source file of the next
 error from the most recent compile. Use `C-c c` to compile first.
 
-`C-c p` `graphviz-dot-preview`  
+`C-c p` (`graphviz-dot-preview`)  
 This command compiles and then (if it compiled successfully) shows the
 output of the current dot file visited by the Emacs buffer, provided
 that GNU Emacs or XEmacs is running on a graphical display capable of
@@ -179,7 +179,7 @@ displaying the graphic file output by `dot`.
 See `image-file-name-extensions` in GNU Emacs or `image-formats-alist`
 in XEmacs to customize the graphic files that can be displayed.
 
-`C-c v` `graphviz-dot-view`  
+`C-c v` (`graphviz-dot-view`)  
 This command invokes an external viewer specified by the variable
 `graphviz-dot-view-command`. If `graphviz-dot-view-edit-command` is `t`,
 you will be prompted to enter a new `graphviz-dot-view-command`. If
@@ -197,32 +197,36 @@ This section describes how to edit with `graphviz-dot-mode`. See
 
 ### Indenting
 
-`C-M-q` `graphviz-dot-indent-graph`  
+`C-M-q` (`graphviz-dot-indent-graph`)  
 This command will indent the graph, diagraph, or subgraph at point and
 any subgraph within it.
 
 `TAB`  
-This key will indent the line.
+This key will automatically indent the line. It does not perform
+completion.
 
-`RET` `electric-graphviz-dot-terminate-line`  
+`M-j` (`comment-indent-newline`)  
+See [Commenting](#Commenting)
+
+`RET` (`electric-graphviz-dot-terminate-line`)  
 If the variable `graphviz-dot-auto-indent-on-newline` is `t`, `RET` will
 insert a newline and indent the next line.
 
-`{` `electric-graphviz-dot-open-brace`  
+`{` (`electric-graphviz-dot-open-brace`)  
 If the variable `graphviz-dot-auto-indent-on-braces` is `t`, `{` will
 insert a `{`, newline and indent the next line.
 
-`}` `electric-graphviz-dot-close-brace`  
+`}` (`electric-graphviz-dot-close-brace`)  
 If the variable `graphviz-dot-auto-indent-on-braces` is `t`, `}` will
 insert a `}`, newline and indent the next line.
 
-`;` `electric-graphviz-dot-semi`  
+`;` (`electric-graphviz-dot-semi`)  
 If the variable `graphviz-dot-auto-indent-on-semi` is `t`, `;` will
 insert a `;`, newline and indent the next line.
 
 ### Completion
 
-`M-t` `graphviz-dot-complete-word`  
+`M-t` (`graphviz-dot-complete-word`)  
 This command will complete the attribute or value keyword at point. If
 more than one completion is possible, a list is displayed in the
 minbuffer.
@@ -231,17 +235,35 @@ See [Completion Variables](#Completion-Variables)
 
 ### Commenting
 
-`M-;` `comment-dwim`  
-This command will insert a new comment line.
+`M-;` (`comment-dwim`)  
+This command will perform the comment command you want (Do What I Mean).
+If the region is active and âtransient-mark-modeâ is on, it will
+comment the region, unless it only consists of comments, in which case
+it will un-comment the region. Else, if the current line is empty, it
+will insert a blank comment line, otherwise it will append a comment to
+the line and indent it.
 
-`M-j` `comment-indent-newline`  
-This command will insert and indent a new comment line.
+Use `C-u M-;` to kill the comment on the current line.
 
-`C-c C-c` `comment-region`  
+`C-x C-;` (`comment-line`)  
+This command will comment or un-comment the current line.
+
+`M-j` (`comment-indent-newline`)  
+This command will break line the at point and indent, continuing a
+comment if within one. This indents the body of the continued comment
+under the previous comment line.
+
+`C-c C-c` (`comment-region`)  
 This command will comment-out the region.
 
-`C-c C-u` `graphviz-dot-uncomment-region`  
+You may also use `M-;` (`comment-dwin`) to comment the region if
+’transient-mark-mode’ is on.
+
+`C-c C-u` (`graphviz-dot-uncomment-region`)  
 This command will un-comment the region.
+
+You may also use `C-u M-;` (`comment-dwin`) to un-comment the region if
+’transient-mark-mode’ is on.
 
 Customizing
 ===========
@@ -264,14 +286,14 @@ string, default: “dot”
 
 This variable determines the command name (and path, if necessary) used
 to invoke the Graphviz `dot` program. The `C-c
-c` `compile` function invokes this command.
+c` (`compile`) function invokes this command.
 
 graphviz-dot-preview-extension`graphviz-dot-preview-extension`  
 string, default “png”
 
 This variable determines the file extension used for the `C-c c`
-`compile` and `C-c p` `graphviz-dot-preview` functions. The format for
-the compile command is
+(`compile`) and `C-c p` (`graphviz-dot-preview`) functions. The format
+for the compile command is
 
 `dot -T<extension> <filename>.dot > <filename>.<extension>`
 
@@ -279,7 +301,7 @@ graphviz-dot-save-before-view`graphviz-dot-save-before-view`
 boolean, default `t`
 
 This variable controls whether the buffer will be saved to the visited
-file before the `C-c v` `graphviz-dot-view` function invokes the
+file before the `C-c v` (`graphviz-dot-view`) function invokes the
 external dot-file viewer command. Set this boolean variable to `t`
 (true) or `nil` (false).
 
@@ -288,8 +310,8 @@ string, default: “doted %s”
 
 This variable determines the command name (and path, if necessary) used
 to invoke an external dot-file viewer program. The `C-c v`
-`graphviz-dot-view` function invokes this command. The name of the file
-visited by the buffer will be substituted for `%s` in this string.
+(`graphviz-dot-view`) function invokes this command. The name of the
+file visited by the buffer will be substituted for `%s` in this string.
 
 (See <http://graphviz.org/content/resources> for a list of Graphviz
 viewers and editors.)

@@ -10,7 +10,7 @@ with no Back-Cover Texts.  A copy of the license is included in the
 section entitled GNU Free Documentation License.
 
 This is the graphviz-dot-mode Manual, edition 0.3.10.a, by
-Daniel Birket, updated July 4, 2017, which describes how to install and
+Daniel Birket, updated July 10, 2017, which describes how to install and
 use the Emacs package graphviz-dot-mode, version 0.3.10,
 released 25 May 2015, which was written by and Copyright
 (C) 2002-2015 Pieter Pareit, et al.  (See
@@ -93,9 +93,9 @@ ul.no-bullet {list-style: none}
     <li><a name="toc-Compiling-_0026-Viewing-1" href="#Compiling-_0026-Viewing">3.1 Compiling &amp; Viewing</a></li>
     <li><a name="toc-Editing-1" href="#Editing">3.2 Editing</a>
     <ul class="no-bullet">
-      <li><a name="toc-Indenting" href="#Indenting">3.2.1 Indenting</a></li>
-      <li><a name="toc-Completion" href="#Completion">3.2.2 Completion</a></li>
-      <li><a name="toc-Commenting" href="#Commenting">3.2.3 Commenting</a></li>
+      <li><a name="toc-Indenting-1" href="#Indenting">3.2.1 Indenting</a></li>
+      <li><a name="toc-Completion-1" href="#Completion">3.2.2 Completion</a></li>
+      <li><a name="toc-Commenting-1" href="#Commenting">3.2.3 Commenting</a></li>
     </ul></li>
   </ul></li>
   <li><a name="toc-Customizing-1" href="#Customizing">4 Customizing</a>
@@ -137,7 +137,7 @@ section entitled <cite><acronym>GNU</acronym> Free Documentation License</cite>.
 </p></blockquote>
 
 <p>This is the <cite><code>graphviz-dot-mode</code> Manual</cite>, edition 0.3.10.a, by
-Daniel Birket, updated July 4, 2017, which describes how to install and
+Daniel Birket, updated July 10, 2017, which describes how to install and
 use the Emacs package <code>graphviz-dot-mode</code>, version 0.3.10,
 released 25 May 2015, which was written by and Copyright
 &copy; 2002-2015 Pieter Pareit, et al.  (See
@@ -158,7 +158,7 @@ M. Stallman, et al.  See <a href="https://www.gnu.org/software/texinfo/">https:/
 <div class="lisp">
 <pre class="lisp">;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
 
-;; Copyright (C) 2002 - 2012 Pieter Pareit &lt;pieter.pareit@gmail.com&gt;
+;; Copyright (C) 2002 - 2015 Pieter Pareit &lt;pieter.pareit@gmail.com&gt;
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -282,7 +282,7 @@ used from within Emacs using its <code>info</code> reader.
 </li><li> In Emacs, use <kbd>C-h v Info-directory-list<span class="key">RET</span></kbd> to display the contents of the <code>Info-directory-list</code> variable. (This may be the same as the <code>INFOPATH</code> enviroment variable.)
 </li><li> Copy the <samp>graphviz-dot-mode.info.gz</samp> file to one of the directories in the <code>Info-directory-list</code> variable.
 </li><li> Use <code>install-info</code> to add an entry for the new <samp>graphviz-dot-mode.info.gz</samp> file into the <samp>dir</samp> file in the info directory where you copied the file.
-</li><li> In Emacs, use <kbd>C-h i d m graphviz-dot-mode<span class="key">RET</span></kbd> to display this help file.
+</li><li> In Emacs, use <kbd>C-h i d m graphviz-dot-mode <span class="key">RET</span></kbd> to display this help file.
 </li></ol>
 
 <p>The <samp>Makefile</samp> in the <samp>texinfo</samp> subdirectory of the GitHub archive at <a href="https://github.com/daniel-birket/graphviz-dot-mode">https://github.com/daniel-birket/graphviz-dot-mode</a> includes an option to install the info file with <code>make install</code>. You must first modify the variables in the top of the Makefile to use the correct directories and files for your system.
@@ -306,7 +306,7 @@ used from within Emacs using its <code>info</code> reader.
 functions. See <a href="#Compile-_0026-View-Variables">Compile &amp; View Variables</a>.
 </p>
 <dl compact="compact">
-<dt><kbd>C-c c</kbd> <code>compile</code></dt>
+<dt><kbd>C-c c</kbd> (<code>compile</code>)</dt>
 <dd><a name="index-C_002dc-c"></a>
 <a name="index-compile"></a>
 <p>This command compiles the current dot file visited by the <cite>Emacs</cite>
@@ -314,14 +314,14 @@ buffer. The output file is in the same directory and has the extension
 determined by the variable <code>graphviz-dot-preview-extension</code>.
 </p>
 </dd>
-<dt><kbd>C-x '</kbd> or <code>next-error</code></dt>
-<dd><a name="index-C_002dx-_0027"></a>
+<dt><kbd>C-x `</kbd> (<code>next-error</code>)</dt>
+<dd><a name="index-C_002dx-_0060"></a>
 <a name="index-next_002derror"></a>
 <p>This command will jump to the location in the source file of the next
 error from the most recent compile. Use <kbd>C-c c</kbd> to compile first.
 </p>
 </dd>
-<dt><kbd>C-c p</kbd> <code>graphviz-dot-preview</code></dt>
+<dt><kbd>C-c p</kbd> (<code>graphviz-dot-preview</code>)</dt>
 <dd><a name="index-C_002dc-p"></a>
 <a name="index-graphviz_002ddot_002dpreview"></a>
 <a name="index-preview"></a>
@@ -338,7 +338,7 @@ by <code>dot</code>.
 files that can be displayed.
 </p>
 </dd>
-<dt><kbd>C-c v</kbd> <code>graphviz-dot-view</code></dt>
+<dt><kbd>C-c v</kbd> (<code>graphviz-dot-view</code>)</dt>
 <dd><a name="index-C_002dc-v"></a>
 <a name="index-graphviz_002ddot_002dview"></a>
 <a name="index-external-viewer"></a>
@@ -363,11 +363,14 @@ list of <cite>Graphviz</cite> viewers and editors.)
 <a name="index-editing"></a>
 <p>This section describes how to edit with <code>graphviz-dot-mode</code>.
 See <a href="#Editing-Variables">Editing Variables</a>.
-</p><a name="Indenting"></a>
+</p>
+<hr>
+<a name="Indenting"></a>
+<a name="Indenting-1"></a>
 <h4 class="subsection">3.2.1 Indenting</h4>
 <a name="index-indenting"></a>
 <dl compact="compact">
-<dt><kbd>C-M-q</kbd> <code>graphviz-dot-indent-graph</code></dt>
+<dt><kbd>C-M-q</kbd> (<code>graphviz-dot-indent-graph</code>)</dt>
 <dd><a name="index-C_002dM_002dq"></a>
 <a name="index-graphviz_002ddot_002dindent_002dgraph"></a>
 <p>This command will indent the graph, diagraph, or subgraph at point and
@@ -376,41 +379,48 @@ any subgraph within it.
 </dd>
 <dt><kbd><span class="key">TAB</span></kbd></dt>
 <dd><a name="index-TAB"></a>
-<p>This key will indent the line.
+<p>This key will automatically indent the line. It does not perform completion.
 </p>
 </dd>
-<dt><kbd><span class="key">RET</span></kbd> <code>electric-graphviz-dot-terminate-line</code></dt>
+<dt><kbd>M-j</kbd> (<code>comment-indent-newline</code>)</dt>
+<dd><p>See <a href="#Commenting">Commenting</a>
+</p>
+</dd>
+<dt><kbd><span class="key">RET</span></kbd> (<code>electric-graphviz-dot-terminate-line</code>)</dt>
 <dd><a name="index-RET"></a>
 <a name="index-electric_002dgraphviz_002ddot_002dterminate_002dline"></a>
 <p>If the variable <code>graphviz-dot-auto-indent-on-newline</code> is
 <code>t</code>, <kbd><span class="key">RET</span></kbd> will insert a newline and indent the next line.
 </p>
 </dd>
-<dt><kbd>{</kbd> <code>electric-graphviz-dot-open-brace</code></dt>
+<dt><kbd>{</kbd> (<code>electric-graphviz-dot-open-brace</code>)</dt>
 <dd><a name="index-_007b"></a>
 <a name="index-electric_002dgraphviz_002ddot_002dopen_002dbrace"></a>
 <p>If the variable <code>graphviz-dot-auto-indent-on-braces</code> is
 <code>t</code>, <kbd>{</kbd> will insert a <kbd>{</kbd>, newline and indent the next line.
 </p>
 </dd>
-<dt><kbd>}</kbd> <code>electric-graphviz-dot-close-brace</code></dt>
+<dt><kbd>}</kbd> (<code>electric-graphviz-dot-close-brace</code>)</dt>
 <dd><a name="index-_007d"></a>
 <a name="index-electric_002dgraphviz_002ddot_002dclose_002dbrace"></a>
 <p>If the variable <code>graphviz-dot-auto-indent-on-braces</code> is
 <code>t</code>, <kbd>}</kbd> will insert a <kbd>}</kbd>, newline and indent the next line.
 </p>
 </dd>
-<dt><kbd>;</kbd> <code>electric-graphviz-dot-semi</code></dt>
+<dt><kbd>;</kbd> (<code>electric-graphviz-dot-semi</code>)</dt>
 <dd><a name="index-_003b"></a>
 <a name="index-electric_002dgraphviz_002ddot_002dsemi"></a>
 <p>If the variable <code>graphviz-dot-auto-indent-on-semi</code> is
 <code>t</code>, <kbd>;</kbd> will insert a <kbd>;</kbd>, newline and indent the next line.
 </p></dd>
 </dl>
+
+<hr>
 <a name="Completion"></a>
+<a name="Completion-1"></a>
 <h4 class="subsection">3.2.2 Completion</h4>
 <dl compact="compact">
-<dt><kbd>M-t</kbd> <code>graphviz-dot-complete-word</code></dt>
+<dt><kbd>M-t</kbd> (<code>graphviz-dot-complete-word</code>)</dt>
 <dd><a name="index-M_002dt"></a>
 <a name="index-graphviz_002ddot_002dcomplete_002dword"></a>
 <p>This command will complete the attribute or value keyword at point. If
@@ -421,33 +431,57 @@ minbuffer.
 
 <p>See <a href="#Completion-Variables">Completion Variables</a>
 </p>
+<hr>
 <a name="Commenting"></a>
+<a name="Commenting-1"></a>
 <h4 class="subsection">3.2.3 Commenting</h4>
 <a name="index-commenting"></a>
 
 <dl compact="compact">
-<dt><kbd>M-;</kbd> <code>comment-dwim</code></dt>
+<dt><kbd>M-;</kbd> (<code>comment-dwim</code>)</dt>
 <dd><a name="index-M_002d_003b"></a>
 <a name="index-comment_002ddwim"></a>
-<p>This command will insert a new comment line.
+<p>This command will perform the comment command you want (Do What I
+Mean).  If the region is active and âtransient-mark-modeâ is on, it
+will comment the region, unless it only consists of comments, in which
+case it will un-comment the region.  Else, if the current line is
+empty, it will insert a blank comment line,
+otherwise it will append a comment to the line and indent it.
+</p>
+<a name="index-C_002du-M_002d_003b"></a>
+<p>Use <kbd>C-u M-;</kbd> to kill the comment on the current line.
 </p>
 </dd>
-<dt><kbd>M-j</kbd> <code>comment-indent-newline</code></dt>
+<dt><kbd>C-x C-;</kbd> (<code>comment-line</code>)</dt>
+<dd><a name="index-C_002dx-C_002d_003b"></a>
+<a name="index-comment_002dline"></a>
+<p>This command will comment or un-comment the current line.
+</p>
+</dd>
+<dt><kbd>M-j</kbd> (<code>comment-indent-newline</code>)</dt>
 <dd><a name="index-M_002dj"></a>
 <a name="index-comment_002dindent_002dnewline"></a>
-<p>This command will insert and indent a new comment line.
+<p>This command will break line the at point and indent, continuing a
+comment if within one.  This indents the body of the continued comment
+under the previous comment line.
 </p>
 </dd>
-<dt><kbd>C-c C-c</kbd> <code>comment-region</code></dt>
+<dt><kbd>C-c C-c</kbd> (<code>comment-region</code>)</dt>
 <dd><a name="index-C_002dc-C_002dc"></a>
 <a name="index-comment_002dregion"></a>
 <p>This command will comment-out the region.
 </p>
+<p>You may also use <kbd>M-;</kbd> (<code>comment-dwin</code>) to comment the region
+if &rsquo;transient-mark-mode&rsquo; is on.
+</p>
 </dd>
-<dt><kbd>C-c C-u</kbd> <code>graphviz-dot-uncomment-region</code></dt>
+<dt><kbd>C-c C-u</kbd> (<code>graphviz-dot-uncomment-region</code>)</dt>
 <dd><a name="index-C_002dc-C_002du"></a>
 <a name="index-graphviz_002ddot_002duncomment_002dregion"></a>
 <p>This command will un-comment the region.
+</p>
+<p>You may also use <kbd>C-u M-;</kbd> (<code>comment-dwin</code>) to un-comment the region
+if &rsquo;transient-mark-mode&rsquo; is on.
 </p></dd>
 </dl>
 
@@ -488,7 +522,7 @@ See <a href="#Compiling-_0026-Viewing">Compiling &amp; Viewing</a>
 </p>
 <p>This variable determines the command name (and path, if necessary)
 used to invoke the <cite>Graphviz</cite> <code>dot</code> program. The <kbd>C-c
-c</kbd> <code>compile</code> function invokes this command.
+c</kbd> (<code>compile</code>) function invokes this command.
 </p>
 </dd>
 <dt><code>graphviz-dot-preview-extension</code>
@@ -500,7 +534,7 @@ c</kbd> <code>compile</code> function invokes this command.
 <p>string, default &ldquo;png&rdquo;
 </p>
 <p>This variable determines the file extension used for the <kbd>C-c c</kbd>
-<code>compile</code> and <kbd>C-c p</kbd> <code>graphviz-dot-preview</code>
+(<code>compile</code>) and <kbd>C-c p</kbd> (<code>graphviz-dot-preview</code>)
 functions. The format for the compile command is
 </p>
 <p><code>dot -T&lt;extension&gt; &lt;filename&gt;.dot &gt; &lt;filename&gt;.&lt;extension&gt;</code>
@@ -514,7 +548,7 @@ functions. The format for the compile command is
 <p>boolean, default <code>t</code>
 </p>
 <p>This variable controls whether the buffer will be saved to the visited file
-before the <kbd>C-c v</kbd> <code>graphviz-dot-view</code> function invokes the
+before the <kbd>C-c v</kbd> (<code>graphviz-dot-view</code>) function invokes the
 external dot-file viewer command. Set this boolean variable to
 <code>t</code> (true) or <code>nil</code> (false).
 </p>
@@ -528,7 +562,7 @@ external dot-file viewer command. Set this boolean variable to
 </p>
 <p>This variable determines the command name (and path, if necessary)
 used to invoke an external dot-file viewer program. The <kbd>C-c v</kbd>
-<code>graphviz-dot-view</code> function invokes this command. The name of
+(<code>graphviz-dot-view</code>) function invokes this command. The name of
 the file visited by the buffer will be substituted for <code>%s</code> in
 this string.
 </p>
@@ -1597,9 +1631,10 @@ to permit their use in free software.
 <tr><td></td><th align="left">Index Entry</th><td>&nbsp;</td><th align="left"> Section</th></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Functions-_0026-Variables_fn_letter-C">C</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-comment_002ddwim"><code>comment-dwim</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-comment_002dindent_002dnewline"><code>comment-indent-newline</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-comment_002dregion"><code>comment-region</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-comment_002ddwim"><code>comment-dwim</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Commenting">Commenting</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-comment_002dindent_002dnewline"><code>comment-indent-newline</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Commenting">Commenting</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-comment_002dline"><code>comment-line</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Commenting">Commenting</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-comment_002dregion"><code>comment-region</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Commenting">Commenting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-compile"><code>compile</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compiling-_0026-Viewing">Compiling &amp; Viewing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-compile-1"><code>compile</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compile-_0026-View-Variables">Compile &amp; View Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-compile-2"><code>compile</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compile-_0026-View-Variables">Compile &amp; View Variables</a></td></tr>
@@ -1608,13 +1643,13 @@ to permit their use in free software.
 <tr><td></td><td valign="top"><a href="#index-default_002dtab_002dwidth"><code>default-tab-width</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting-Variables">Indenting Variables</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Functions-_0026-Variables_fn_letter-E">E</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-electric_002dgraphviz_002ddot_002dclose_002dbrace"><code>electric-graphviz-dot-close-brace</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-electric_002dgraphviz_002ddot_002dclose_002dbrace"><code>electric-graphviz-dot-close-brace</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting">Indenting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-electric_002dgraphviz_002ddot_002dclose_002dbrace-1"><code>electric-graphviz-dot-close-brace</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting-Variables">Indenting Variables</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-electric_002dgraphviz_002ddot_002dopen_002dbrace"><code>electric-graphviz-dot-open-brace</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-electric_002dgraphviz_002ddot_002dopen_002dbrace"><code>electric-graphviz-dot-open-brace</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting">Indenting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-electric_002dgraphviz_002ddot_002dopen_002dbrace-1"><code>electric-graphviz-dot-open-brace</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting-Variables">Indenting Variables</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-electric_002dgraphviz_002ddot_002dsemi"><code>electric-graphviz-dot-semi</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-electric_002dgraphviz_002ddot_002dsemi"><code>electric-graphviz-dot-semi</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting">Indenting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-electric_002dgraphviz_002ddot_002dsemi-1"><code>electric-graphviz-dot-semi</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting-Variables">Indenting Variables</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-electric_002dgraphviz_002ddot_002dterminate_002dline"><code>electric-graphviz-dot-terminate-line</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-electric_002dgraphviz_002ddot_002dterminate_002dline"><code>electric-graphviz-dot-terminate-line</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting">Indenting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-electric_002dgraphviz_002ddot_002dterminate_002dline-1"><code>electric-graphviz-dot-terminate-line</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting-Variables">Indenting Variables</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Functions-_0026-Variables_fn_letter-G">G</a></th><td></td><td></td></tr>
@@ -1622,12 +1657,12 @@ to permit their use in free software.
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dauto_002dindent_002don_002dbraces"><code>graphviz-dot-auto-indent-on-braces</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting-Variables">Indenting Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dauto_002dindent_002don_002dnewline"><code>graphviz-dot-auto-indent-on-newline</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting-Variables">Indenting Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dauto_002dindent_002don_002dsemi"><code>graphviz-dot-auto-indent-on-semi</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting-Variables">Indenting Variables</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dcomplete_002dword"><code>graphviz-dot-complete-word</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dcomplete_002dword"><code>graphviz-dot-complete-word</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Completion">Completion</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dcomplete_002dword-1"><code>graphviz-dot-complete-word</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Completion-Variables">Completion Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dcustomize"><code>graphviz-dot-customize</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Customizing">Customizing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002ddelete_002dcompletions"><code>graphviz-dot-delete-completions</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Completion-Variables">Completion Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002ddot_002dprogram"><code>graphviz-dot-dot-program</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compile-_0026-View-Variables">Compile &amp; View Variables</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dindent_002dgraph"><code>graphviz-dot-indent-graph</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dindent_002dgraph"><code>graphviz-dot-indent-graph</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting">Indenting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dindent_002dwidth"><code>graphviz-dot-indent-width</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting-Variables">Indenting Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dmode_002dhook"><code>graphviz-dot-mode-hook</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Mode-Hook">Mode Hook</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dpreview"><code>graphviz-dot-preview</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compiling-_0026-Viewing">Compiling &amp; Viewing</a></td></tr>
@@ -1636,7 +1671,7 @@ to permit their use in free software.
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dsave_002dbefore_002dview"><code>graphviz-dot-save-before-view</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compiling-_0026-Viewing">Compiling &amp; Viewing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dsave_002dbefore_002dview-1"><code>graphviz-dot-save-before-view</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compile-_0026-View-Variables">Compile &amp; View Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dtoggle_002dcompletions"><code>graphviz-dot-toggle-completions</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Completion-Variables">Completion Variables</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002duncomment_002dregion"><code>graphviz-dot-uncomment-region</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002duncomment_002dregion"><code>graphviz-dot-uncomment-region</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Commenting">Commenting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dvalue_002dkeywords"><code>graphviz-dot-value-keywords</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Keyword-Variables">Keyword Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dview"><code>graphviz-dot-view</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compiling-_0026-Viewing">Compiling &amp; Viewing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-graphviz_002ddot_002dview-1"><code>graphviz-dot-view</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compile-_0026-View-Variables">Compile &amp; View Variables</a></td></tr>
@@ -1715,29 +1750,31 @@ to permit their use in free software.
 <tr><td></td><th align="left">Index Entry</th><td>&nbsp;</td><th align="left"> Section</th></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Keys-and-Concepts_cp_symbol-1">;</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-_003b"><code><kbd>;</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-_003b"><code><kbd>;</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting">Indenting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-_003b-1"><code><kbd>;</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting-Variables">Indenting Variables</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Keys-and-Concepts_cp_symbol-2">{</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-_007b"><code><kbd>{</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-_007b"><code><kbd>{</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting">Indenting</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Keys-and-Concepts_cp_symbol-3">}</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-_007d"><code><kbd>}</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-_007d"><code><kbd>}</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting">Indenting</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Keys-and-Concepts_cp_letter-C">C</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-C_002dc-c"><code><kbd>C-c c</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compiling-_0026-Viewing">Compiling &amp; Viewing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-C_002dc-c-1"><code><kbd>C-c c</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compile-_0026-View-Variables">Compile &amp; View Variables</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-C_002dc-C_002dc"><code><kbd>C-c C-c</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-C_002dc-C_002du"><code><kbd>C-c C-u</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-C_002dc-C_002dc"><code><kbd>C-c C-c</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Commenting">Commenting</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-C_002dc-C_002du"><code><kbd>C-c C-u</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Commenting">Commenting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-C_002dc-p"><code><kbd>C-c p</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compiling-_0026-Viewing">Compiling &amp; Viewing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-C_002dc-p-1"><code><kbd>C-c p</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compile-_0026-View-Variables">Compile &amp; View Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-C_002dc-v"><code><kbd>C-c v</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compiling-_0026-Viewing">Compiling &amp; Viewing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-C_002dc-v-1"><code><kbd>C-c v</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compile-_0026-View-Variables">Compile &amp; View Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-C_002dc-v-2"><code><kbd>C-c v</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compile-_0026-View-Variables">Compile &amp; View Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-C_002dc-v-3"><code><kbd>C-c v</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compile-_0026-View-Variables">Compile &amp; View Variables</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-C_002dM_002dq"><code><kbd>C-M-q</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-C_002dx-_0027"><code><kbd>C-x '</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compiling-_0026-Viewing">Compiling &amp; Viewing</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-commenting">commenting</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-C_002dM_002dq"><code><kbd>C-M-q</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting">Indenting</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-C_002du-M_002d_003b"><code>C-u M-;</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Commenting">Commenting</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-C_002dx-C_002d_003b"><code>C-x C-;</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Commenting">Commenting</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-C_002dx-_0060"><code><kbd>C-x `</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compiling-_0026-Viewing">Compiling &amp; Viewing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-commenting">commenting</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Commenting">Commenting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-compiling">compiling</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Compiling-_0026-Viewing">Compiling &amp; Viewing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-copying-copyright-_0028manual_0029">copyright (manual)</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Top">Top</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-copyright-_0028software_0029">copyright (software)</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Top">Top</a></td></tr>
@@ -1755,7 +1792,7 @@ to permit their use in free software.
 <tr><td></td><td valign="top"><a href="#index-graph">graph</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Introduction">Introduction</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Keys-and-Concepts_cp_letter-I">I</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-indenting">indenting</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-indenting">indenting</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting">Indenting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-installation_002c-the-easy-way">installation, the easy way</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-installation_002c-the-hard-way">installation, the hard way</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Installing-by-Hand">Installing by Hand</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-installing">installing</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Installing">Installing</a></td></tr>
@@ -1768,9 +1805,9 @@ to permit their use in free software.
 <tr><td></td><td valign="top"><a href="#index-license-_0028software_0029">license (software)</a>:</td><td>&nbsp;</td><td valign="top"><a href="#GNU-General-Public-License-2_002e0"><acronym>GNU</acronym> General Public License 2.0</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Keys-and-Concepts_cp_letter-M">M</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-M_002d_003b"><code><kbd>M-;</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-M_002dj"><code><kbd>M-j</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-M_002dt"><code><kbd>M-t</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-M_002d_003b"><code><kbd>M-;</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Commenting">Commenting</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-M_002dj"><code><kbd>M-j</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Commenting">Commenting</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-M_002dt"><code><kbd>M-t</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Completion">Completion</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-M_002dt-1"><code><kbd>M-t</kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Completion-Variables">Completion Variables</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-M_002dx-graphviz_002ddot_002dcustomize-RET"><code>M-x graphviz-dot-customize <span class="key">RET</span></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Customizing">Customizing</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-MELPA-Stable_002c-installing-from">MELPA Stable, installing from</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
@@ -1784,11 +1821,11 @@ to permit their use in free software.
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Keys-and-Concepts_cp_letter-R">R</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-recommended-installation">recommended installation</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Recommended-Installation">Recommended Installation</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-RET"><code><kbd><span class="key">RET</span></kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-RET"><code><kbd><span class="key">RET</span></kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting">Indenting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-RET-1"><code><kbd><span class="key">RET</span></kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting-Variables">Indenting Variables</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Keys-and-Concepts_cp_letter-T">T</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-TAB"><code><kbd><span class="key">TAB</span></kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Editing">Editing</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-TAB"><code><kbd><span class="key">TAB</span></kbd></code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Indenting">Indenting</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th><a name="Keys-and-Concepts_cp_letter-U">U</a></th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-using">using</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Using-graphviz_002ddot_002dmode">Using <code>graphviz-dot-mode</code></a></td></tr>
