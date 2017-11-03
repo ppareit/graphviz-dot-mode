@@ -116,7 +116,7 @@ This manual is based upon the comments and doc strings in the
 @lisp
 ;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
 
-;; Copyright (C) 2002 - 2012 Pieter Pareit <pieter.pareit@@gmail.com>
+;; Copyright (C) 2002 - 2015 Pieter Pareit <pieter.pareit@@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -246,7 +246,7 @@ used from within Emacs using its @code{info} reader.
 @item In Emacs, use @kbd{C-h v Info-directory-list@key{RET}} to display the contents of the @code{Info-directory-list} variable. (This may be the same as the @env{INFOPATH} enviroment variable.)
 @item Copy the @file{graphviz-dot-mode.info.gz} file to one of the directories in the @code{Info-directory-list} variable.
 @item Use @command{install-info} to add an entry for the new @file{graphviz-dot-mode.info.gz} file into the @file{dir} file in the info directory where you copied the file.
-@item In Emacs, use @kbd{C-h i d m graphviz-dot-mode@key{RET}} to display this help file.
+@item In Emacs, use @kbd{C-h i d m graphviz-dot-mode @key{RET}} to display this help file.
 @end enumerate
 
 The @file{Makefile} in the @file{texinfo} subdirectory of the GitHub archive at @value{DOCURL} includes an option to install the info file with @command{make install}. You must first modify the variables in the top of the Makefile to use the correct directories and files for your system.
@@ -270,20 +270,20 @@ This section describes how to use compile and view
 functions. @xref{Compile & View Variables}.
 
 @table @asis
-@item @kbd{C-c c} @code{compile}
+@item @kbd{C-c c} (@code{compile})
 @kindex @kbd{C-c c}
 @findex compile
 This command compiles the current dot file visited by the @cite{Emacs}
 buffer. The output file is in the same directory and has the extension
 determined by the variable @code{graphviz-dot-preview-extension}.
 
-@item @kbd{C-x '} or @code{next-error}
-@kindex @kbd{C-x '}
+@item @kbd{C-x `} (@code{next-error})
+@kindex @kbd{C-x `}
 @findex next-error
 This command will jump to the location in the source file of the next
 error from the most recent compile. Use @kbd{C-c c} to compile first.
 
-@item @kbd{C-c p} @code{graphviz-dot-preview}
+@item @kbd{C-c p} (@code{graphviz-dot-preview})
 @kindex @kbd{C-c p}
 @findex graphviz-dot-preview
 @cindex preview
@@ -299,7 +299,7 @@ See @code{image-file-name-extensions} in @cite{@acronym{GNU} Emacs} or
 @code{image-formats-alist} in @cite{XEmacs} to customize the graphic
 files that can be displayed.
 
-@item @kbd{C-c v} @code{graphviz-dot-view}
+@item @kbd{C-c v} (@code{graphviz-dot-view})
 @kindex @kbd{C-c v}
 @findex graphviz-dot-view
 @cindex external viewer
@@ -321,10 +321,17 @@ list of @cite{Graphviz} viewers and editors.)
 @cindex editing
 This section describes how to edit with @value{PACKAGE}.
 @xref{Editing Variables}.
+@menu
+* Indenting::   How to use Indenting commands
+* Completion::  How to use Completion command
+* Commenting::  How to use Commenting commands
+@end menu
+
+@node Indenting
 @subsection Indenting
 @cindex indenting
 @table @asis
-@item @kbd{C-M-q} @code{graphviz-dot-indent-graph}
+@item @kbd{C-M-q} (@code{graphviz-dot-indent-graph})
 @kindex @kbd{C-M-q}
 @findex graphviz-dot-indent-graph
 This command will indent the graph, diagraph, or subgraph at point and
@@ -332,35 +339,40 @@ any subgraph within it.
 
 @item @kbd{@key{TAB}}
 @kindex @kbd{@key{TAB}}
-This key will indent the line.
+This key will automatically indent the line. It does not perform completion.
 
-@item @kbd{@key{RET}} @code{electric-graphviz-dot-terminate-line}
+@item @kbd{M-j} (@code{comment-indent-newline})
+@xref{Commenting}
+
+@item @kbd{@key{RET}} (@code{electric-graphviz-dot-terminate-line})
 @kindex @kbd{@key{RET}}
 @findex electric-graphviz-dot-terminate-line
 If the variable @code{graphviz-dot-auto-indent-on-newline} is
 @code{t}, @kbd{@key{RET}} will insert a newline and indent the next line.
 
-@item @kbd{@{} @code{electric-graphviz-dot-open-brace}
+@item @kbd{@{} (@code{electric-graphviz-dot-open-brace})
 @kindex @kbd{@{}
 @findex electric-graphviz-dot-open-brace
 If the variable @code{graphviz-dot-auto-indent-on-braces} is
 @code{t}, @kbd{@{} will insert a @kbd{@{}, newline and indent the next line.
 
-@item @kbd{@}} @code{electric-graphviz-dot-close-brace}
+@item @kbd{@}} (@code{electric-graphviz-dot-close-brace})
 @kindex @kbd{@}}
 @findex electric-graphviz-dot-close-brace
 If the variable @code{graphviz-dot-auto-indent-on-braces} is
 @code{t}, @kbd{@}} will insert a @kbd{@}}, newline and indent the next line.
 
-@item @kbd{;} @code{electric-graphviz-dot-semi}
+@item @kbd{;} (@code{electric-graphviz-dot-semi})
 @kindex @kbd{;}
 @findex electric-graphviz-dot-semi
 If the variable @code{graphviz-dot-auto-indent-on-semi} is
 @code{t}, @kbd{;} will insert a @kbd{;}, newline and indent the next line.
 @end table
+
+@node Completion
 @subsection Completion
 @table @asis
-@item @kbd{M-t} @code{graphviz-dot-complete-word}
+@item @kbd{M-t} (@code{graphviz-dot-complete-word})
 @kindex @kbd{M-t}
 @findex graphviz-dot-complete-word
 This command will complete the attribute or value keyword at point. If
@@ -370,29 +382,51 @@ minbuffer.
 
 @xref{Completion Variables}
 
+@node Commenting
 @subsection Commenting
 @cindex commenting
 
 @table @asis
-@item @kbd{M-;} @code{comment-dwim}
+@item @kbd{M-;} (@code{comment-dwim})
 @kindex @kbd{M-;}
 @findex comment-dwim
-This command will insert a new comment line.
+This command will perform the comment command you want (Do What I
+Mean).  If the region is active and ‘transient-mark-mode’ is on, it
+will comment the region, unless it only consists of comments, in which
+case it will un-comment the region.  Else, if the current line is
+empty, it will insert a blank comment line,
+otherwise it will append a comment to the line and indent it.
 
-@item @kbd{M-j} @code{comment-indent-newline}
+@kindex C-u M-;
+Use @kbd{C-u M-;} to kill the comment on the current line.
+
+@item @kbd{C-x C-;} (@code{comment-line})
+@kindex C-x C-;
+@findex comment-line
+This command will comment or un-comment the current line.
+
+@item @kbd{M-j} (@code{comment-indent-newline})
 @kindex @kbd{M-j}
 @findex comment-indent-newline
-This command will insert and indent a new comment line.
+This command will break line the at point and indent, continuing a
+comment if within one.  This indents the body of the continued comment
+under the previous comment line.
 
-@item @kbd{C-c C-c} @code{comment-region}
+@item @kbd{C-c C-c} (@code{comment-region})
 @kindex @kbd{C-c C-c}
 @findex comment-region
 This command will comment-out the region.
 
-@item @kbd{C-c C-u} @code{graphviz-dot-uncomment-region}
+You may also use @kbd{M-;} (@code{comment-dwin}) to comment the region
+if 'transient-mark-mode' is on.
+
+@item @kbd{C-c C-u} (@code{graphviz-dot-uncomment-region})
 @kindex @kbd{C-c C-u}
 @findex graphviz-dot-uncomment-region
 This command will un-comment the region.
+
+You may also use @kbd{C-u M-;} (@code{comment-dwin}) to un-comment the region
+if 'transient-mark-mode' is on.
 @end table
 
 @node Customizing
@@ -431,7 +465,7 @@ string, default: ``dot''
 
 This variable determines the command name (and path, if necessary)
 used to invoke the @cite{Graphviz} @command{dot} program. The @kbd{C-c
-c} @code{compile} function invokes this command.
+c} (@code{compile}) function invokes this command.
 
 @item graphviz-dot-preview-extension
 @findex compile
@@ -440,7 +474,7 @@ c} @code{compile} function invokes this command.
 string, default ``png''
 
 This variable determines the file extension used for the @kbd{C-c c}
-@code{compile} and @kbd{C-c p} @code{graphviz-dot-preview}
+(@code{compile}) and @kbd{C-c p} (@code{graphviz-dot-preview})
 functions. The format for the compile command is
 
 @command{dot -T<extension> <filename>.dot > <filename>.<extension>}
@@ -451,7 +485,7 @@ functions. The format for the compile command is
 boolean, default @code{t}
 
 This variable controls whether the buffer will be saved to the visited file
-before the @kbd{C-c v} @code{graphviz-dot-view} function invokes the
+before the @kbd{C-c v} (@code{graphviz-dot-view}) function invokes the
 external dot-file viewer command. Set this boolean variable to
 @code{t} (true) or @code{nil} (false).
 
@@ -462,7 +496,7 @@ string, default: ``doted %s''
 
 This variable determines the command name (and path, if necessary)
 used to invoke an external dot-file viewer program. The @kbd{C-c v}
-@code{graphviz-dot-view} function invokes this command. The name of
+(@code{graphviz-dot-view}) function invokes this command. The name of
 the file visited by the buffer will be substituted for @code{%s} in
 this string.
 
