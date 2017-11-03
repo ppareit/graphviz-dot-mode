@@ -57,6 +57,9 @@
 
 ;;; History:
 
+;; Version 0.3.11 Olli Piepponen
+;; 29/01/2016: * use define-derived-mode for the mode-definition
+;;             * add support for a auto-loading live preview work flow
 ;; Version 0.3.10 Kevin Ryde
 ;; 25/05/2015: * shell-quote-argument for safety
 ;;             * use read-shell-command whenever available, don't set novaproc
@@ -142,6 +145,8 @@
 
 ;;; Code:
 
+(require 'subr-x)
+
 (defconst graphviz-dot-mode-version "0.3.10"
   "Version of `graphviz-dot-mode.el'.")
 
@@ -161,6 +166,12 @@
 (defcustom graphviz-dot-dot-program "dot"
   "*Location of the dot program. This is used by `compile'."
   :type 'string
+  :group 'graphviz)
+
+(defcustom graphviz-dot-layout-programs
+  '("dot" "neato" "fdp" "sfdp" "twopi" "twopi" "circo")
+  "*List of layout programs for the user to choose from."
+  :type 'list
   :group 'graphviz)
 
 (defcustom graphviz-dot-view-command "doted %s"
@@ -220,6 +231,17 @@ completion, a buffer will display all completions."
   "*Non-nil means that the completion buffer is automatically deleted when a
 key is pressed."
   :type 'boolean
+  :group 'graphviz)
+
+(defcustom graphviz-dot-auto-preview-on-save nil
+  "*Determines if saving the buffer should automatically trigger preview."
+  :type 'boolean
+  :group 'graphviz)
+
+(defcustom graphviz-dot-revert-delay 300
+  "*Amount of time to sleep for before attempting to display the
+  rendered image."
+  :type 'number
   :group 'graphviz)
 
 (defcustom graphviz-dot-attr-keywords
@@ -408,11 +430,7 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
   (mapcar #'(lambda (elm) (cons elm 0)) graphviz-dot-color-keywords))
 
 ;;; Key map
-(defvar graphviz-dot-mode-map ()
-  "Keymap used in Graphviz Dot mode.")
-
-(if graphviz-dot-mode-map
-    ()
+(defvar graphviz-dot-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map "\r"       'electric-graphviz-dot-terminate-line)
     (define-key map "{"        'electric-graphviz-dot-open-brace)
@@ -425,28 +443,25 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
     (define-key map "\C-cv"    'graphviz-dot-view)
     (define-key map "\C-c\C-c" 'comment-region)
     (define-key map "\C-c\C-u" 'graphviz-dot-uncomment-region)
-    (setq graphviz-dot-mode-map map)
-    ))
+    (setq graphviz-dot-mode-map map))
+  "Keymap used in Graphviz Dot mode.")
 
 ;;; Syntax table
-(defvar graphviz-dot-mode-syntax-table nil
-  "Syntax table for `graphviz-dot-mode'.")
-
-(if graphviz-dot-mode-syntax-table
-    ()
+(defvar graphviz-dot-mode-syntax-table
   (let ((st (make-syntax-table)))
     (modify-syntax-entry ?/  ". 124b" st)
     (modify-syntax-entry ?*  ". 23"   st)
     (modify-syntax-entry ?\n "> b"    st)
+    (modify-syntax-entry ?#  "< b"    st)
     (modify-syntax-entry ?=  "."      st)
     (modify-syntax-entry ?_  "_"      st)
     (modify-syntax-entry ?-  "_"      st)
     (modify-syntax-entry ?>  "."      st)
     (modify-syntax-entry ?[  "(]"     st)
-    (modify-syntax-entry ?]  ")["     st)
+                         (modify-syntax-entry ?]  ")["     st)
     (modify-syntax-entry ?\" "\""     st)
-    (setq graphviz-dot-mode-syntax-table st)
-  ))
+    (setq graphviz-dot-mode-syntax-table st))
+  "Syntax table for `graphviz-dot-mode'.")
 
 (defvar graphviz-dot-font-lock-keywords
   `(("\\(:?di\\|sub\\)?graph \\(\\sw+\\)"
@@ -469,8 +484,22 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
      (0 font-lock-variable-name-face)))
   "Keyword highlighting specification for `graphviz-dot-mode'.")
 
+(defun graphviz-output-file-name (f-name)
+  (concat (file-name-sans-extension f-name)
+          "." graphviz-dot-preview-extension))
+
+(defun graphviz-compile-command (f-name)
+  (when f-name
+    (setq compile-command
+          (concat graphviz-dot-dot-program
+                  " -T" graphviz-dot-preview-extension " "
+                  (shell-quote-argument f-name)
+                  " -o "
+                  (shell-quote-argument
+                   (graphviz-output-file-name f-name))))))
+
 ;;;###autoload
-(defun graphviz-dot-mode ()
+(define-derived-mode graphviz-dot-mode prog-mode "dot"
   "Major mode for the dot language. \\<graphviz-dot-mode-map>
 TAB indents for graph lines.
 
@@ -515,37 +544,17 @@ This mode can be customized by running \\[graphviz-dot-customize].
 
 Turning on Graphviz Dot mode calls the value of the variable
 `graphviz-dot-mode-hook' with no args, if that value is non-nil."
-  (interactive)
-  (kill-all-local-variables)
-  (use-local-map graphviz-dot-mode-map)
-  (setq major-mode 'graphviz-dot-mode)
-  (setq mode-name "dot")
-  (setq local-abbrev-table graphviz-dot-mode-abbrev-table)
-  (set-syntax-table graphviz-dot-mode-syntax-table)
-  (set (make-local-variable 'indent-line-function) 'graphviz-dot-indent-line)
-  (set (make-local-variable 'comment-start) "//")
-  (set (make-local-variable 'comment-start-skip) "/\\*+ *\\|//+ *")
-  (modify-syntax-entry ?# "< b" graphviz-dot-mode-syntax-table)
-  (modify-syntax-entry ?\n "> b" graphviz-dot-mode-syntax-table)
-  (set (make-local-variable 'font-lock-defaults)
-       '(graphviz-dot-font-lock-keywords))
-  ;; RR - If user is running this in the scratch buffer, there is no
-  ;; buffer file name...
-  (if (buffer-file-name)
-      (set (make-local-variable 'compile-command)
-       (concat graphviz-dot-dot-program
-               " -T" graphviz-dot-preview-extension " "
-               (shell-quote-argument buffer-file-name)
-               " -o "
-               (shell-quote-argument
-                (concat (file-name-sans-extension buffer-file-name)
-                        "." graphviz-dot-preview-extension)))))
-  (set (make-local-variable 'compilation-parse-errors-function)
-       'graphviz-dot-compilation-parse-errors)
-  (if dot-menu
-      (easy-menu-add dot-menu))
-  (run-hooks 'graphviz-dot-mode-hook)
-  )
+  (setq-local font-lock-defaults '(graphviz-dot-font-lock-keywords))
+  (setq-local comment-start "//")
+  (setq-local comment-start-skip "/\\*+ *\\|//+ *")
+  (setq-local indent-line-function 'graphviz-dot-indent-line)
+  (when (buffer-file-name)
+    (setq-local compile-command
+                (graphviz-compile-command (buffer-file-name))))
+  (setq-local compilation-parse-errors-function 'graphviz-dot-compilation-parse-errors)
+  (when dot-menu (easy-menu-add dot-menu))
+  (add-hook 'after-save-hook 'graphviz-live-reload-hook)
+  (run-hooks 'graphviz-dot-mode-hook))
 
 ;;;; Menu definitions
 
@@ -786,47 +795,49 @@ then indent this and each subgraph in it."
            (not (graphviz-dot-comment-or-string-p)))
       (graphviz-dot-newline-and-indent)))
 
-;;;;
-;;;; Preview
-;;;;
+(defun graphviz-compile-warning-msg ()
+  (set-buffer "*compilation*")
+  (goto-char (point-min))
+  (save-match-data
+    (when (re-search-forward "^\\(Warning: .+\\)$" nil t)
+      (match-string-no-properties 1))))
+
+;;;###autoload
 (defun graphviz-dot-preview ()
-  "Shows an example of the current dot file in an emacs buffer.
-This assumes that we are running GNU Emacs or XEmacs under a windowing system.
-See `image-file-name-extensions' for customizing the files that can be
-loaded in GNU Emacs, and `image-formats-alist' for XEmacs."
   (interactive)
-  ;; unsafe to compile ourself, ask it to the user
-  (if (buffer-modified-p)
-      (message "Buffer needs to be compiled.")
-    (if (string-match "XEmacs" emacs-version)
-        ;; things are easier in XEmacs...
-        (find-file-other-window (concat (file-name-sans-extension
-                                         buffer-file-name)
-                                        "." graphviz-dot-preview-extension))
-      ;; run through all the extensions for images
-      (let ((l image-file-name-extensions))
-        (while
-            (let ((f (concat (file-name-sans-extension (buffer-file-name))
-                             "."
-                             (car l))))
-              ;; see if a file matches, might be best also to check
-              ;; if file is up to date TODO:PP
-              (if (file-exists-p f)
-                  (progn (auto-image-file-mode 1)
-                         ;; OK, this is ugly, I would need to
-                         ;; know how I can reload a file in an existing buffer
-                         (if (get-buffer "*preview*")
-                             (kill-buffer "*preview*"))
-                         (set-buffer (find-file-noselect f))
-                         (rename-buffer "*preview*")
-                         (display-buffer (get-buffer "*preview*"))
-                         ;; stop iterating
-                         '())
-                ;; will stop iterating when l is nil
-                (setq l (cdr l)))))
-      ;; each extension tested and nothing found, let user know
-      (when (eq l '())
-        (message "No image found."))))))
+  (save-buffer)
+  (let ((windows (window-list))
+        (f-name (graphviz-output-file-name (buffer-file-name)))
+        (warn-msg (string-trim (shell-command-to-string compile-command))))
+    (if (string-match-p "^Warning: .+ line \\([0-9]+\\)" warn-msg)
+        (message warn-msg)
+      (progn
+        (sleep-for 0 graphviz-dot-revert-delay)
+        (when (= (length windows) 1)
+          (split-window-sensibly))
+        (with-selected-window (selected-window)
+          (switch-to-buffer-other-window (find-file-noselect f-name t))
+          ;; I get "changed on disk; really edit the buffer?" prompt w/o this
+          (sleep-for 0 50)
+          (revert-buffer t t))))))
+
+;;;###autoload
+(defun graphviz-turn-on-live-preview ()
+  "Turns on live preview on save."
+  (interactive)
+  (setq graphviz-dot-auto-preview-on-save t)
+  (add-hook 'after-save-hook 'graphviz-live-reload-hook))
+
+;;;###autoload
+(defun graphviz-turn-off-live-preview ()
+  "Turns off live preview on save."
+  (interactive)
+  (setq graphviz-dot-auto-preview-on-save nil)
+  (remove-hook 'after-save-hook 'graphviz-live-reload-hook))
+
+(defun graphviz-live-reload-hook ()
+  (when (and (eq major-mode 'graphviz-dot-mode) graphviz-dot-auto-preview-on-save)
+    (graphviz-dot-preview)))
 
 ;;;;
 ;;;; View
@@ -955,6 +966,12 @@ buffer is saved before the command is executed."
                  (delete-window
                   (get-buffer-window (get-buffer "*Completions*"))))
              )))))
+
+(defun graphviz-dot-set-layout ()
+  "Changes the value of `graphviz-dot-dot-program'."
+  (interactive)
+  (setq graphviz-dot-dot-program
+        (completing-read "Layout: " graphviz-dot-layout-programs)))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.dot\\'" . graphviz-dot-mode))
