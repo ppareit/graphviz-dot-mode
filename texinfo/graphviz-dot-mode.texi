@@ -143,7 +143,7 @@ This manual is based upon the comments and doc strings in the
 @menu
 * Introduction::                About @cite{Graphviz} and @value{PACKAGE}.
 * Installing::                  How to Get and Install @value{PACKAGE}.
-* Using @value{PACKAGE}::       Hot to Use @value{PACKAGE}
+* Using @value{PACKAGE}::       How to Use @value{PACKAGE}
 * Customizing::                 How to customize @value{PACKAGE}.
 * Credits::
 * @acronym{GNU} General Public License 2.0::  License of @value{PACKAGE}.
