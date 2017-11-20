@@ -11,10 +11,10 @@ Copyright © 2017 Daniel Birket.
 > Free Documentation License.
 
 This is the `graphviz-dot-mode` Manual, edition 0.3.10.a, by Daniel
-Birket, updated July 10, 2017, which describes how to install and use
-the Emacs package `graphviz-dot-mode`, version 0.3.10, released 25 May
-2015, which was written by and Copyright © 2002-2015 Pieter Pareit, et
-al. (See <http://ppareit.github.io/graphviz-dot-mode/>)
+Birket, updated November 20, 2017, which describes how to install and
+use the Emacs package `graphviz-dot-mode`, version 0.3.10, released 25
+May 2015, which was written by and Copyright © 2002-2015 Pieter Pareit,
+et al. (See <http://ppareit.github.io/graphviz-dot-mode/>)
 
 This document was composed using Emacs v25.2.1 (Richard M. Stallman, et
 al. See <https://www.gnu.org/software/emacs/>) and compiled from `.texi`
@@ -237,11 +237,11 @@ See [Completion Variables](#Completion-Variables)
 
 `M-;` (`comment-dwim`)  
 This command will perform the comment command you want (Do What I Mean).
-If the region is active and `transient-mark-mode` is on, it will
-comment the region, unless it only consists of comments, in which case
-it will un-comment the region. Else, if the current line is empty, it
-will insert a blank comment line, otherwise it will append a comment to
-the line and indent it.
+If the region is active and `transient-mark-mode` is on, it will comment
+the region, unless it only consists of comments, in which case it will
+un-comment the region. Else, if the current line is empty, it will
+insert a blank comment line, otherwise it will append a comment to the
+line and indent it.
 
 Use `C-u M-;` to kill the comment on the current line.
 
