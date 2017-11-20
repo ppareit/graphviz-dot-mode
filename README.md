@@ -237,7 +237,7 @@ See [Completion Variables](#Completion-Variables)
 
 `M-;` (`comment-dwim`)  
 This command will perform the comment command you want (Do What I Mean).
-If the region is active and âtransient-mark-modeâ is on, it will
+If the region is active and `transient-mark-mode` is on, it will
 comment the region, unless it only consists of comments, in which case
 it will un-comment the region. Else, if the current line is empty, it
 will insert a blank comment line, otherwise it will append a comment to
@@ -257,13 +257,13 @@ under the previous comment line.
 This command will comment-out the region.
 
 You may also use `M-;` (`comment-dwin`) to comment the region if
-’transient-mark-mode’ is on.
+`transient-mark-mode` is on.
 
 `C-c C-u` (`graphviz-dot-uncomment-region`)  
 This command will un-comment the region.
 
 You may also use `C-u M-;` (`comment-dwin`) to un-comment the region if
-’transient-mark-mode’ is on.
+`transient-mark-mode` is on.
 
 Customizing
 ===========
