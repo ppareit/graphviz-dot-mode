@@ -145,6 +145,7 @@
 
 ;;; Code:
 
+(require 'compile)
 (require 'subr-x)
 
 (defconst graphviz-dot-mode-version "0.3.10"
@@ -498,6 +499,11 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
                   (shell-quote-argument
                    (graphviz-output-file-name f-name))))))
 
+(defvar dot-menu nil
+  "Menu for Graphviz Dot Mode.
+This menu will get created automatically if you have the `easymenu'
+package. Note that the latest X/Emacs releases contain this package.")
+
 ;;;###autoload
 (define-derived-mode graphviz-dot-mode prog-mode "dot"
   "Major mode for the dot language. \\<graphviz-dot-mode-map>
@@ -558,11 +564,6 @@ Turning on Graphviz Dot mode calls the value of the variable
 
 ;;;; Menu definitions
 
-(defvar dot-menu nil
-  "Menu for Graphviz Dot Mode.
-This menu will get created automatically if you have the `easymenu'
-package. Note that the latest X/Emacs releases contain this package.")
-
 (and (condition-case nil
          (require 'easymenu)
        (error nil))
@@ -608,8 +609,7 @@ package. Note that the latest X/Emacs releases contain this package.")
   "Parse the current buffer for dot errors.
 See variable `compilation-parse-errors-functions' for interface."
   (interactive)
-  (save-excursion
-    (set-buffer "*compilation*")
+  (with-current-buffer "*compilation*"
     (goto-char (point-min))
     (setq compilation-error-list nil)
     (let (buffer-of-error)
@@ -629,10 +629,9 @@ See variable `compilation-parse-errors-functions' for interface."
       (cons
        (cons
         (point-marker)
-        (save-excursion
-          (set-buffer buffer-of-error)
-          (goto-line line-of-error)
-          (beginning-of-line)
+        (with-current-buffer buffer-of-error
+          (goto-char (point-min))
+          (forward-line (1- line-of-error))
           (point-marker)))
        compilation-error-list))))
     (t t))
@@ -977,6 +976,8 @@ buffer is saved before the command is executed."
 (add-to-list 'auto-mode-alist '("\\.dot\\'" . graphviz-dot-mode))
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.gv\\'" . graphviz-dot-mode))
+
+(defvar org-src-lang-modes)  ; defined in org-src.el
 
 (eval-after-load 'org-mode
     '(add-to-list 'org-src-lang-modes  '("dot" . graphviz-dot)))
