@@ -474,7 +474,7 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
     ;; convert them to a list of strings, and make
     ;; an optimized regexp from them
     (,(let ((max-specpdl-size (max max-specpdl-size 1200)))
-  (regexp-opt graphviz-dot-color-keywords))
+        (regexp-opt graphviz-dot-color-keywords 'words))
      . font-lock-string-face)
     (,(concat
        (regexp-opt graphviz-dot-attr-keywords 'words)
