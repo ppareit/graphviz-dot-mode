@@ -481,7 +481,18 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
        "[ \\t\\n]*=")
      ;; RR - ugly, really, but I dont know why xemacs does not work
      ;; if I change the next car to "1"...
-     (0 font-lock-variable-name-face)))
+     (0 font-lock-variable-name-face))
+    ;; See the 'graph' nonterminal in
+    ;; https://graphviz.gitlab.io/_pages/doc/info/lang.html.
+    ("\\(?:\\_<\\(strict\\)[[:space:]]+\\)?\\(\\(?:di\\)?graph\\)\\_>"
+     (1 'font-lock-keyword-face) (2 'font-lock-keyword-face))
+    ;; See the 'attr_stmt' nonterminal in
+    ;; https://graphviz.gitlab.io/_pages/doc/info/lang.html.
+    ("\\_<\\(edge\\|graph\\|node\\)\\_>[[:space:]]*\\["
+     1 'font-lock-keyword-face)
+    ;; See the 'subgraph' nonterminal in
+    ;; https://graphviz.gitlab.io/_pages/doc/info/lang.html.
+    ("\\_<subgraph\\_>" . 'font-lock-keyword-face))
   "Keyword highlighting specification for `graphviz-dot-mode'.")
 
 (defun graphviz-output-file-name (f-name)
