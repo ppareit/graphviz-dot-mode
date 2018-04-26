@@ -754,13 +754,6 @@ then indent this and each subgraph in it."
            (not (graphviz-dot-comment-or-string-p)))
       (graphviz-dot-newline-and-indent)))
 
-(defun graphviz-compile-warning-msg ()
-  (set-buffer "*compilation*")
-  (goto-char (point-min))
-  (save-match-data
-    (when (re-search-forward "^\\(Warning: .+\\)$" nil t)
-      (match-string-no-properties 1))))
-
 ;;;###autoload
 (defun graphviz-dot-preview ()
   (interactive)
