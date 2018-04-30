@@ -46,11 +46,6 @@
 ;; There is support for viewing an generated image with C-c p.
 
 ;;; Todo:
-;; * electric indentation is fundamentally broken, because
-;;   {...} are also used for record nodes. You could argue, I suppose, that
-;;   many diagrams don't need those, but it would be worth having a note (and
-;;   it makes sense that the default is now for electric indentation to be
-;;   off).
 ;; * lines that start with # are comments, lines that start with one or more
 ;;   whitespaces and then a # should give an error.
 
@@ -192,24 +187,9 @@ the command."
   :type 'boolean
   :group 'graphviz)
 
-(defcustom graphviz-dot-auto-indent-on-newline t
-  "*If not nil, `electric-graphviz-dot-terminate-line' is executed in a line is terminated."
-  :type 'boolean
-  :group 'graphviz)
-
 (defcustom graphviz-dot-indent-width tab-width
   "*Indentation width in Graphviz Dot mode buffers."
   :type 'integer
-  :group 'graphviz)
-
-(defcustom graphviz-dot-auto-indent-on-braces nil
-  "*If not nil, `electric-graphviz-dot-open-brace' and `electric-graphviz-dot-close-brace' are executed when { or } are typed"
-  :type 'boolean
-  :group 'graphviz)
-
-(defcustom graphviz-dot-auto-indent-on-semi t
-  "*If not nil, `electric-graphviz-dot-semi' is executed when semicolon is typed"
-  :type 'boolean
   :group 'graphviz)
 
 (defcustom graphviz-dot-preview-extension "png"
@@ -433,10 +413,6 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
 ;;; Key map
 (defvar graphviz-dot-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map "\r"       'electric-graphviz-dot-terminate-line)
-    (define-key map "{"        'electric-graphviz-dot-open-brace)
-    (define-key map "}"        'electric-graphviz-dot-close-brace)
-    (define-key map ";"        'electric-graphviz-dot-semi)
     (define-key map "\C-c\M-t" 'graphviz-dot-complete-word)
     (define-key map "\C-\M-q"  'graphviz-dot-indent-graph)
     (define-key map "\C-c\C-p" 'graphviz-dot-preview)
@@ -456,10 +432,10 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
     (modify-syntax-entry ?_  "_"      st)
     (modify-syntax-entry ?-  "_"      st)
     (modify-syntax-entry ?>  "."      st)
-    (modify-syntax-entry ?\[  "(]"     st)
-    (modify-syntax-entry ?\]  ")["     st)
+    (modify-syntax-entry ?\[  "(]"    st)
+    (modify-syntax-entry ?\]  ")["    st)
     (modify-syntax-entry ?\" "\""     st)
-    (setq graphviz-dot-mode-syntax-table st))
+    st)
   "Syntax table for `graphviz-dot-mode'.")
 
 (defvar graphviz-dot-font-lock-keywords
@@ -523,10 +499,6 @@ TAB indents for graph lines.
 \\[graphviz-dot-view]\t- Views graph in an external viewer.
 \\[graphviz-dot-indent-line]\t- Indents current line of code.
 \\[graphviz-dot-complete-word]\t- Completes the current word.
-\\[electric-graphviz-dot-terminate-line]\t- Electric newline.
-\\[electric-graphviz-dot-open-brace]\t- Electric open braces.
-\\[electric-graphviz-dot-close-brace]\t- Electric close braces.
-\\[electric-graphviz-dot-semi]\t- Electric semi colons.
 
 Variables specific to this mode:
 
@@ -540,16 +512,6 @@ Variables specific to this mode:
        Automatically save current buffer berore `graphviz-dot-view'.
   graphviz-dot-preview-extension      (default `png')
        File type to use for `graphviz-dot-preview'.
-  graphviz-dot-auto-indent-on-newline (default t)
-       Whether to run `electric-graphviz-dot-terminate-line' when
-       newline is entered.
-  graphviz-dot-auto-indent-on-braces (default t)
-       Whether to run `electric-graphviz-dot-open-brace' and
-       `electric-graphviz-dot-close-brace' when braces are
-       entered.
-  graphviz-dot-auto-indent-on-semi (default t)
-       Whether to run `electric-graphviz-dot-semi' when semi colon
-       is typed.
   graphviz-dot-toggle-completions  (default nil)
        If completions should be displayed in the buffer instead of a
        completion buffer when \\[graphviz-dot-complete-word] is
@@ -698,59 +660,6 @@ then indent this and each subgraph in it."
             (forward-line 1)
             ;; as long as we are not completed or at end of buffer
             (and (> bracket-count 0) (not (eobp))))))))
-
-;;;;
-;;;; Electric indentation
-;;;;
-(defun graphviz-dot-comment-or-string-p ()
-  (let ((state (parse-partial-sexp (point-min) (point))))
-     (or (nth 4 state) (nth 3 state))))
-
-(defun graphviz-dot-newline-and-indent ()
-  (save-excursion
-    (beginning-of-line)
-    (skip-chars-forward " \t")
-    (graphviz-dot-indent-line))
-  (delete-horizontal-space)
-  (newline)
-  (graphviz-dot-indent-line))
-
-(defun electric-graphviz-dot-terminate-line ()
-  "Terminate line and indent next line."
-  (interactive)
-  (if graphviz-dot-auto-indent-on-newline
-      (graphviz-dot-newline-and-indent)
-    (newline)))
-
-(defun electric-graphviz-dot-open-brace ()
-  "Terminate line and indent next line."
-  (interactive)
-  (insert "{")
-  (if (and graphviz-dot-auto-indent-on-braces
-           (not (graphviz-dot-comment-or-string-p)))
-      (graphviz-dot-newline-and-indent)))
-
-(defun electric-graphviz-dot-close-brace ()
-  "Terminate line and indent next line."
-  (interactive)
-  (insert "}")
-  (if (and graphviz-dot-auto-indent-on-braces
-           (not (graphviz-dot-comment-or-string-p)))
-      (progn
-        (save-excursion
-          (beginning-of-line)
-          (skip-chars-forward " \t")
-          (graphviz-dot-indent-line))
-        (newline)
-        (graphviz-dot-indent-line))))
-
-(defun electric-graphviz-dot-semi ()
-  "Terminate line and indent next line."
-  (interactive)
-  (insert ";")
-  (if (and graphviz-dot-auto-indent-on-semi
-           (not (graphviz-dot-comment-or-string-p)))
-      (graphviz-dot-newline-and-indent)))
 
 ;;;###autoload
 (defun graphviz-dot-preview ()
