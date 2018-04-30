@@ -46,8 +46,6 @@
 ;; There is support for viewing an generated image with C-c p.
 
 ;;; Todo:
-;; * lines that start with # are comments, lines that start with one or more
-;;   whitespaces and then a # should give an error.
 
 ;;; History:
 
@@ -427,16 +425,19 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
     (modify-syntax-entry ?/  ". 124b" st)
     (modify-syntax-entry ?*  ". 23"   st)
     (modify-syntax-entry ?\n "> b"    st)
-    (modify-syntax-entry ?#  "< b"    st)
     (modify-syntax-entry ?=  "."      st)
     (modify-syntax-entry ?_  "_"      st)
     (modify-syntax-entry ?-  "_"      st)
     (modify-syntax-entry ?>  "."      st)
-    (modify-syntax-entry ?\[  "(]"    st)
-    (modify-syntax-entry ?\]  ")["    st)
+    (modify-syntax-entry ?\[ "(]"     st)
+    (modify-syntax-entry ?\] ")["     st)
     (modify-syntax-entry ?\" "\""     st)
     st)
   "Syntax table for `graphviz-dot-mode'.")
+
+(defvar graphviz-dot-syntax-propertize-function
+  (syntax-propertize-rules
+   ("^#" (0 "< b"))))
 
 (defvar graphviz-dot-font-lock-keywords
   `(("\\(:?di\\|sub\\)?graph \\(\\sw+\\)"
@@ -525,6 +526,8 @@ Turning on Graphviz Dot mode calls the value of the variable
   (setq-local comment-start "//")
   (setq-local comment-start-skip "/\\*+ *\\|//+ *")
   (setq-local indent-line-function 'graphviz-dot-indent-line)
+  (setq-local syntax-propertize-function
+              graphviz-dot-syntax-propertize-function)
   (when (buffer-file-name)
     (setq-local compile-command
                 (graphviz-compile-command (buffer-file-name))))
