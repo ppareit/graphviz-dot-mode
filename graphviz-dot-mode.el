@@ -571,7 +571,7 @@ package. Note that the latest X/Emacs releases contain this package.")
       '("Graphviz"
         ["Indent Graph"       graphviz-dot-indent-graph     t]
         ["Comment Out Region" comment-region                (mark)]
-        ["Uncomment Region"   graphviz-dot-uncomment-region (mark)]
+        ["Uncomment Region"   uncomment-region              (mark)]
         "-"
         ["Compile"            compile                       t]
         ["Preview"            graphviz-dot-preview
@@ -641,10 +641,6 @@ See variable `compilation-parse-errors-functions' for interface."
 ;;;;
 ;;;; Indentation
 ;;;;
-(defun graphviz-dot-uncomment-region (begin end)
-  "Uncomments a region of code."
-  (interactive "r")
-  (comment-region begin end '(4)))
 
 (defun graphviz-dot-indent-line ()
   "Indent current line of dot code."
