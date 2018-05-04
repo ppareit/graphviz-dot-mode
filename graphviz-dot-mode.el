@@ -197,20 +197,6 @@ for the compilation command is
   :type 'string
   :group 'graphviz)
 
-(defcustom graphviz-dot-toggle-completions nil
-  "*Non-nil means that repeated use of \
-\\<graphviz-dot-mode-map>\\[graphviz-dot-complete-word] will toggle the possible
-completions in the minibuffer.  Normally, when there is more than one possible
-completion, a buffer will display all completions."
-  :type 'boolean
-  :group 'graphviz)
-
-(defcustom graphviz-dot-delete-completions nil
-  "*Non-nil means that the completion buffer is automatically deleted when a
-key is pressed."
-  :type 'boolean
-  :group 'graphviz)
-
 (defcustom graphviz-dot-auto-preview-on-save nil
   "*Determines if saving the buffer should automatically trigger preview."
   :type 'boolean
@@ -267,151 +253,138 @@ so changes to this are not immediately visible."
   :group 'graphviz)
 
 ;;; Font-locking:
-(defvar graphviz-dot-colors-list
-  '(aliceblue antiquewhite antiquewhite1 antiquewhite2
-        antiquewhite3 antiquewhite4 aquamarine aquamarine1
-        aquamarine2 aquamarine3 aquamarine4 azure azure1
-        azure2 azure3 azure4 beige bisque bisque1 bisque2
-        bisque3 bisque4 black blanchedalmond blue blue1
-        blue2 blue3 blue4 blueviolet brown brown1 brown2
-        brown3 brown4 burlywood burlywood1 burlywood2
-        burlywood3 burlywood4 cadetblue cadetblue1
-        cadetblue2 cadetblue3 cadetblue4 chartreuse
-        chartreuse1 chartreuse2 chartreuse3 chartreuse4
-        chocolate chocolate1 chocolate2 chocolate3 chocolate4
-        coral coral1 coral2 coral3 coral4 cornflowerblue
-        cornsilk cornsilk1 cornsilk2 cornsilk3 cornsilk4
-        crimson cyan cyan1 cyan2 cyan3 cyan4 darkgoldenrod
-        darkgoldenrod1 darkgoldenrod2 darkgoldenrod3
-        darkgoldenrod4 darkgreen darkkhaki darkolivegreen
-        darkolivegreen1 darkolivegreen2 darkolivegreen3
-        darkolivegreen4 darkorange darkorange1 darkorange2
-        darkorange3 darkorange4 darkorchid darkorchid1
-        darkorchid2 darkorchid3 darkorchid4 darksalmon
-        darkseagreen darkseagreen1 darkseagreen2
-        darkseagreen3 darkseagreen4 darkslateblue
-        darkslategray darkslategray1 darkslategray2
-        darkslategray3  darkslategray4 darkslategrey
-        darkturquoise darkviolet deeppink deeppink1
-        deeppink2 deeppink3 deeppink4 deepskyblue
-        deepskyblue1 deepskyblue2 deepskyblue3 deepskyblue4
-        dimgray dimgrey  dodgerblue dodgerblue1 dodgerblue2
-        dodgerblue3  dodgerblue4 firebrick firebrick1
-        firebrick2 firebrick3 firebrick4 floralwhite
-        forestgreen gainsboro ghostwhite gold gold1 gold2
-        gold3 gold4 goldenrod goldenrod1 goldenrod2
-        goldenrod3 goldenrod4 gray gray0 gray1 gray10 gray100
-        gray11 gray12 gray13 gray14 gray15 gray16 gray17
-        gray18 gray19 gray2 gray20 gray21 gray22 gray23
-        gray24 gray25 gray26 gray27 gray28 gray29 gray3
-        gray30 gray31 gray32 gray33 gray34 gray35 gray36
-        gray37 gray38 gray39 gray4 gray40 gray41 gray42
-        gray43 gray44 gray45 gray46 gray47 gray48 gray49
-        gray5 gray50 gray51 gray52 gray53 gray54 gray55
-        gray56 gray57 gray58 gray59 gray6 gray60 gray61
-        gray62 gray63 gray64 gray65 gray66 gray67 gray68
-        gray69 gray7 gray70 gray71 gray72 gray73 gray74
-        gray75 gray76 gray77 gray78 gray79 gray8 gray80
-        gray81 gray82 gray83 gray84 gray85 gray86 gray87
-        gray88 gray89 gray9 gray90 gray91 gray92 gray93
-        gray94 gray95 gray96 gray97 gray98 gray99 green
-        green1 green2 green3 green4 greenyellow grey grey0
-        grey1 grey10 grey100 grey11 grey12 grey13 grey14
-        grey15 grey16 grey17 grey18 grey19 grey2 grey20
-        grey21 grey22 grey23 grey24 grey25 grey26 grey27
-        grey28 grey29 grey3 grey30 grey31 grey32 grey33
-        grey34 grey35 grey36 grey37 grey38 grey39 grey4
-        grey40 grey41 grey42 grey43 grey44 grey45 grey46
-        grey47 grey48 grey49 grey5 grey50 grey51 grey52
-        grey53 grey54 grey55 grey56 grey57 grey58 grey59
-        grey6 grey60 grey61 grey62 grey63 grey64 grey65
-        grey66 grey67 grey68 grey69 grey7 grey70 grey71
-        grey72 grey73 grey74 grey75 grey76 grey77 grey78
-        grey79 grey8 grey80 grey81 grey82 grey83 grey84
-        grey85 grey86 grey87 grey88 grey89 grey9 grey90
-        grey91 grey92 grey93 grey94 grey95 grey96 grey97
-        grey98 grey99 honeydew honeydew1 honeydew2 honeydew3
-        honeydew4 hotpink hotpink1 hotpink2 hotpink3 hotpink4
-        indianred indianred1 indianred2 indianred3 indianred4
-        indigo ivory ivory1 ivory2 ivory3 ivory4 khaki khaki1
-        khaki2 khaki3 khaki4 lavender lavenderblush
-        lavenderblush1 lavenderblush2 lavenderblush3
-        lavenderblush4 lawngreen lemonchiffon lemonchiffon1
-        lemonchiffon2 lemonchiffon3 lemonchiffon4 lightblue
-        lightblue1 lightblue2 lightblue3 lightblue4
-        lightcoral lightcyan lightcyan1 lightcyan2 lightcyan3
-        lightcyan4 lightgoldenrod lightgoldenrod1
-        lightgoldenrod2 lightgoldenrod3 lightgoldenrod4
-        lightgoldenrodyellow lightgray lightgrey lightpink
-        lightpink1 lightpink2 lightpink3 lightpink4
-        lightsalmon lightsalmon1 lightsalmon2 lightsalmon3
-        lightsalmon4 lightseagreen lightskyblue lightskyblue1
-        lightskyblue2 lightskyblue3 lightskyblue4
-        lightslateblue lightslategray lightslategrey
-        lightsteelblue lightsteelblue1 lightsteelblue2
-        lightsteelblue3 lightsteelblue4 lightyellow
-        lightyellow1 lightyellow2 lightyellow3 lightyellow4
-        limegreen linen magenta magenta1 magenta2 magenta3
-        magenta4 maroon maroon1 maroon2 maroon3 maroon4
-        mediumaquamarine mediumblue  mediumorchid
-        mediumorchid1 mediumorchid2 mediumorchid3
-        mediumorchid4 mediumpurple mediumpurple1
-        mediumpurple2 mediumpurple3 mediumpurple4
-        mediumseagreen mediumslateblue mediumspringgreen
-        mediumturquoise mediumvioletred midnightblue
-        mintcream mistyrose mistyrose1 mistyrose2 mistyrose3
-        mistyrose4 moccasin navajowhite navajowhite1
-        navajowhite2 navajowhite3 navajowhite4 navy navyblue
-        oldlace olivedrab olivedrap olivedrab1 olivedrab2
-        olivedrap3 oragne palegoldenrod palegreen palegreen1
-        palegreen2 palegreen3 palegreen4 paleturquoise
-        paleturquoise1 paleturquoise2 paleturquoise3
-        paleturquoise4 palevioletred palevioletred1
-        palevioletred2 palevioletred3 palevioletred4
-        papayawhip peachpuff peachpuff1 peachpuff2
-        peachpuff3 peachpuff4 peru pink pink1 pink2 pink3
-        pink4 plum plum1 plum2 plum3 plum4 powderblue
-        purple purple1 purple2 purple3 purple4 red red1 red2
-        red3 red4 rosybrown rosybrown1 rosybrown2 rosybrown3
-        rosybrown4 royalblue royalblue1 royalblue2 royalblue3
-        royalblue4 saddlebrown salmon salmon1 salmon2 salmon3
-        salmon4 sandybrown seagreen seagreen1 seagreen2
-        seagreen3 seagreen4 seashell seashell1 seashell2
-        seashell3 seashell4 sienna sienna1 sienna2 sienna3
-        sienna4 skyblue skyblue1 skyblue2 skyblue3 skyblue4
-        slateblue slateblue1 slateblue2 slateblue3 slateblue4
-        slategray slategray1 slategray2 slategray3 slategray4
-        slategrey snow snow1 snow2 snow3 snow4 springgreen
-        springgreen1 springgreen2 springgreen3 springgreen4
-        steelblue steelblue1 steelblue2 steelblue3 steelblue4
-        tan tan1 tan2 tan3 tan4 thistle thistle1 thistle2
-        thistle3 thistle4 tomato tomato1 tomato2 tomato3
-        tomato4 transparent turquoise turquoise1 turquoise2
-        turquoise3 turquoise4 violet violetred violetred1
-        violetred2 violetred3 violetred4 wheat wheat1 wheat2
-        wheat3 wheat4 white whitesmoke yellow yellow1 yellow2
-        yellow3 yellow4 yellowgreen)
+(defvar graphviz-dot-color-keywords
+  '("aliceblue" "antiquewhite" "antiquewhite1" "antiquewhite2"
+    "antiquewhite3" "antiquewhite4" "aquamarine" "aquamarine1"
+    "aquamarine2" "aquamarine3" "aquamarine4" "azure" "azure1"
+    "azure2" "azure3" "azure4" "beige" "bisque" "bisque1" "bisque2"
+    "bisque3" "bisque4" "black" "blanchedalmond" "blue" "blue1"
+    "blue2" "blue3" "blue4" "blueviolet" "brown" "brown1" "brown2"
+    "brown3" "brown4" "burlywood" "burlywood1" "burlywood2"
+    "burlywood3" "burlywood4" "cadetblue" "cadetblue1"
+    "cadetblue2" "cadetblue3" "cadetblue4" "chartreuse"
+    "chartreuse1" "chartreuse2" "chartreuse3" "chartreuse4"
+    "chocolate" "chocolate1" "chocolate2" "chocolate3" "chocolate4"
+    "coral" "coral1" "coral2" "coral3" "coral4" "cornflowerblue"
+    "cornsilk" "cornsilk1" "cornsilk2" "cornsilk3" "cornsilk4"
+    "crimson" "cyan" "cyan1" "cyan2" "cyan3" "cyan4" "darkgoldenrod"
+    "darkgoldenrod1" "darkgoldenrod2" "darkgoldenrod3"
+    "darkgoldenrod4" "darkgreen" "darkkhaki" "darkolivegreen"
+    "darkolivegreen1" "darkolivegreen2" "darkolivegreen3"
+    "darkolivegreen4" "darkorange" "darkorange1" "darkorange2"
+    "darkorange3" "darkorange4" "darkorchid" "darkorchid1"
+    "darkorchid2" "darkorchid3" "darkorchid4" "darksalmon"
+    "darkseagreen" "darkseagreen1" "darkseagreen2"
+    "darkseagreen3" "darkseagreen4" "darkslateblue"
+    "darkslategray" "darkslategray1" "darkslategray2"
+    "darkslategray3"  "darkslategray4" "darkslategrey"
+    "darkturquoise" "darkviolet" "deeppink" "deeppink1"
+    "deeppink2" "deeppink3" "deeppink4" "deepskyblue"
+    "deepskyblue1" "deepskyblue2" "deepskyblue3" "deepskyblue4"
+    "dimgray" "dimgrey"  "dodgerblue" "dodgerblue1" "dodgerblue2"
+    "dodgerblue3"  "dodgerblue4" "firebrick" "firebrick1"
+    "firebrick2" "firebrick3" "firebrick4" "floralwhite"
+    "forestgreen" "gainsboro" "ghostwhite" "gold" "gold1" "gold2"
+    "gold3" "gold4" "goldenrod" "goldenrod1" "goldenrod2"
+    "goldenrod3" "goldenrod4" "gray" "gray0" "gray1" "gray10" "gray100"
+    "gray11" "gray12" "gray13" "gray14" "gray15" "gray16" "gray17"
+    "gray18" "gray19" "gray2" "gray20" "gray21" "gray22" "gray23"
+    "gray24" "gray25" "gray26" "gray27" "gray28" "gray29" "gray3"
+    "gray30" "gray31" "gray32" "gray33" "gray34" "gray35" "gray36"
+    "gray37" "gray38" "gray39" "gray4" "gray40" "gray41" "gray42"
+    "gray43" "gray44" "gray45" "gray46" "gray47" "gray48" "gray49"
+    "gray5" "gray50" "gray51" "gray52" "gray53" "gray54" "gray55"
+    "gray56" "gray57" "gray58" "gray59" "gray6" "gray60" "gray61"
+    "gray62" "gray63" "gray64" "gray65" "gray66" "gray67" "gray68"
+    "gray69" "gray7" "gray70" "gray71" "gray72" "gray73" "gray74"
+    "gray75" "gray76" "gray77" "gray78" "gray79" "gray8" "gray80"
+    "gray81" "gray82" "gray83" "gray84" "gray85" "gray86" "gray87"
+    "gray88" "gray89" "gray9" "gray90" "gray91" "gray92" "gray93"
+    "gray94" "gray95" "gray96" "gray97" "gray98" "gray99" "green"
+    "green1" "green2" "green3" "green4" "greenyellow" "grey" "grey0"
+    "grey1" "grey10" "grey100" "grey11" "grey12" "grey13" "grey14"
+    "grey15" "grey16" "grey17" "grey18" "grey19" "grey2" "grey20"
+    "grey21" "grey22" "grey23" "grey24" "grey25" "grey26" "grey27"
+    "grey28" "grey29" "grey3" "grey30" "grey31" "grey32" "grey33"
+    "grey34" "grey35" "grey36" "grey37" "grey38" "grey39" "grey4"
+    "grey40" "grey41" "grey42" "grey43" "grey44" "grey45" "grey46"
+    "grey47" "grey48" "grey49" "grey5" "grey50" "grey51" "grey52"
+    "grey53" "grey54" "grey55" "grey56" "grey57" "grey58" "grey59"
+    "grey6" "grey60" "grey61" "grey62" "grey63" "grey64" "grey65"
+    "grey66" "grey67" "grey68" "grey69" "grey7" "grey70" "grey71"
+    "grey72" "grey73" "grey74" "grey75" "grey76" "grey77" "grey78"
+    "grey79" "grey8" "grey80" "grey81" "grey82" "grey83" "grey84"
+    "grey85" "grey86" "grey87" "grey88" "grey89" "grey9" "grey90"
+    "grey91" "grey92" "grey93" "grey94" "grey95" "grey96" "grey97"
+    "grey98" "grey99" "honeydew" "honeydew1" "honeydew2" "honeydew3"
+    "honeydew4" "hotpink" "hotpink1" "hotpink2" "hotpink3" "hotpink4"
+    "indianred" "indianred1" "indianred2" "indianred3" "indianred4"
+    "indigo" "ivory" "ivory1" "ivory2" "ivory3" "ivory4" "khaki" "khaki1"
+    "khaki2" "khaki3" "khaki4" "lavender" "lavenderblush"
+    "lavenderblush1" "lavenderblush2" "lavenderblush3"
+    "lavenderblush4" "lawngreen" "lemonchiffon" "lemonchiffon1"
+    "lemonchiffon2" "lemonchiffon3" "lemonchiffon4" "lightblue"
+    "lightblue1" "lightblue2" "lightblue3" "lightblue4"
+    "lightcoral" "lightcyan" "lightcyan1" "lightcyan2" "lightcyan3"
+    "lightcyan4" "lightgoldenrod" "lightgoldenrod1"
+    "lightgoldenrod2" "lightgoldenrod3" "lightgoldenrod4"
+    "lightgoldenrodyellow" "lightgray" "lightgrey" "lightpink"
+    "lightpink1" "lightpink2" "lightpink3" "lightpink4"
+    "lightsalmon" "lightsalmon1" "lightsalmon2" "lightsalmon3"
+    "lightsalmon4" "lightseagreen" "lightskyblue" "lightskyblue1"
+    "lightskyblue2" "lightskyblue3" "lightskyblue4"
+    "lightslateblue" "lightslategray" "lightslategrey"
+    "lightsteelblue" "lightsteelblue1" "lightsteelblue2"
+    "lightsteelblue3" "lightsteelblue4" "lightyellow"
+    "lightyellow1" "lightyellow2" "lightyellow3" "lightyellow4"
+    "limegreen" "linen" "magenta" "magenta1" "magenta2" "magenta3"
+    "magenta4" "maroon" "maroon1" "maroon2" "maroon3" "maroon4"
+    "mediumaquamarine" "mediumblue"  "mediumorchid"
+    "mediumorchid1" "mediumorchid2" "mediumorchid3"
+    "mediumorchid4" "mediumpurple" "mediumpurple1"
+    "mediumpurple2" "mediumpurple3" "mediumpurple4"
+    "mediumseagreen" "mediumslateblue" "mediumspringgreen"
+    "mediumturquoise" "mediumvioletred" "midnightblue"
+    "mintcream" "mistyrose" "mistyrose1" "mistyrose2" "mistyrose3"
+    "mistyrose4" "moccasin" "navajowhite" "navajowhite1"
+    "navajowhite2" "navajowhite3" "navajowhite4" "navy" "navyblue"
+    "oldlace" "olivedrab" "olivedrap" "olivedrab1" "olivedrab2"
+    "olivedrap3" "oragne" "palegoldenrod" "palegreen" "palegreen1"
+    "palegreen2" "palegreen3" "palegreen4" "paleturquoise"
+    "paleturquoise1" "paleturquoise2" "paleturquoise3"
+    "paleturquoise4" "palevioletred" "palevioletred1"
+    "palevioletred2" "palevioletred3" "palevioletred4"
+    "papayawhip" "peachpuff" "peachpuff1" "peachpuff2"
+    "peachpuff3" "peachpuff4" "peru" "pink" "pink1" "pink2" "pink3"
+    "pink4" "plum" "plum1" "plum2" "plum3" "plum4" "powderblue"
+    "purple" "purple1" "purple2" "purple3" "purple4" "red" "red1" "red2"
+    "red3" "red4" "rosybrown" "rosybrown1" "rosybrown2" "rosybrown3"
+    "rosybrown4" "royalblue" "royalblue1" "royalblue2" "royalblue3"
+    "royalblue4" "saddlebrown" "salmon" "salmon1" "salmon2" "salmon3"
+    "salmon4" "sandybrown" "seagreen" "seagreen1" "seagreen2"
+    "seagreen3" "seagreen4" "seashell" "seashell1" "seashell2"
+    "seashell3" "seashell4" "sienna" "sienna1" "sienna2" "sienna3"
+    "sienna4" "skyblue" "skyblue1" "skyblue2" "skyblue3" "skyblue4"
+    "slateblue" "slateblue1" "slateblue2" "slateblue3" "slateblue4"
+    "slategray" "slategray1" "slategray2" "slategray3" "slategray4"
+    "slategrey" "snow" "snow1" "snow2" "snow3" "snow4" "springgreen"
+    "springgreen1" "springgreen2" "springgreen3" "springgreen4"
+    "steelblue" "steelblue1" "steelblue2" "steelblue3" "steelblue4"
+    "tan" "tan1" "tan2" "tan3" "tan4" "thistle" "thistle1" "thistle2"
+    "thistle3" "thistle4" "tomato" "tomato1" "tomato2" "tomato3"
+    "tomato4" "transparent" "turquoise" "turquoise1" "turquoise2"
+    "turquoise3" "turquoise4" "violet" "violetred" "violetred1"
+    "violetred2" "violetred3" "violetred4" "wheat" "wheat1" "wheat2"
+    "wheat3" "wheat4" "white" "whitesmoke" "yellow" "yellow1" "yellow2"
+    "yellow3" "yellow4" "yellowgreen")
   "Possible color constants in the dot language.
 The list of constant is available at http://www.research.att.com/~erg/graphviz\
 /info/colors.html")
 
 
-(defvar graphviz-dot-color-keywords
-  (mapcar 'symbol-name graphviz-dot-colors-list))
-
-(defvar graphviz-attr-keywords
-  (mapcar #'(lambda (elm) (cons elm 0)) graphviz-dot-attr-keywords))
-
-(defvar graphviz-value-keywords
-  (mapcar #'(lambda (elm) (cons elm 0)) graphviz-dot-value-keywords))
-
-(defvar graphviz-color-keywords
-  (mapcar #'(lambda (elm) (cons elm 0)) graphviz-dot-color-keywords))
-
 ;;; Key map
 (defvar graphviz-dot-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map "\C-c\M-t" 'graphviz-dot-complete-word)
     (define-key map "\C-\M-q"  'graphviz-dot-indent-graph)
     (define-key map "\C-c\C-p" 'graphviz-dot-preview)
     (define-key map "\C-c\C-c" 'compile)
@@ -499,7 +472,6 @@ TAB indents for graph lines.
 \\[graphviz-dot-preview]\t- Previews graph in a buffer.
 \\[graphviz-dot-view]\t- Views graph in an external viewer.
 \\[graphviz-dot-indent-line]\t- Indents current line of code.
-\\[graphviz-dot-complete-word]\t- Completes the current word.
 
 Variables specific to this mode:
 
@@ -512,16 +484,7 @@ Variables specific to this mode:
   graphviz-dot-save-before-view       (default t)
        Automatically save current buffer berore `graphviz-dot-view'.
   graphviz-dot-preview-extension      (default `png')
-       File type to use for `graphviz-dot-preview'.
-  graphviz-dot-toggle-completions  (default nil)
-       If completions should be displayed in the buffer instead of a
-       completion buffer when \\[graphviz-dot-complete-word] is
-       pressed repeatedly.
-
-This mode can be customized by running \\[graphviz-dot-customize].
-
-Turning on Graphviz Dot mode calls the value of the variable
-`graphviz-dot-mode-hook' with no args, if that value is non-nil."
+       File type to use for `graphviz-dot-preview'."
   (setq-local font-lock-defaults '(graphviz-dot-font-lock-keywords))
   (setq-local comment-start "//")
   (setq-local comment-start-skip "/\\*+ *\\|//+ *")
@@ -713,110 +676,6 @@ buffer is saved before the command is executed."
         (save-buffer))
     (start-process-shell-command (downcase mode-name) nil cmd)
     (message (format "Executing `%s'..." cmd))))
-
-;;;;
-;;;; Completion
-;;;;
-(defvar graphviz-dot-str nil)
-(defvar graphviz-dot-all nil)
-(defvar graphviz-dot-pred nil)
-(defvar graphviz-dot-buffer-to-use nil)
-(defvar graphviz-dot-flag nil)
-
-(defun graphviz-dot-get-state ()
-  "Returns the syntax state of the current point."
-  (let ((state (parse-partial-sexp (point-min) (point))))
-    (cond
-     ((nth 4 state) 'comment)
-     ((nth 3 state) 'string)
-     ((not (nth 1 state)) 'out)
-     (t (save-excursion
-          (skip-chars-backward "^[,=\\[]{};")
-          (backward-char)
-          (cond
-           ((looking-at "[\\[,]{};") 'attribute)
-           ((looking-at "=") (progn
-                               (backward-word 1)
-                               (if (looking-at "[a-zA-Z]*color")
-                                   'color
-                                 'value)))
-           (t 'other)))))))
-
-(defun graphviz-dot-get-keywords ()
-  "Return possible completions for a word"
-  (let ((state (graphviz-dot-get-state)))
-    (cond
-     ((equal state 'comment)   ())
-     ((equal state 'string)    ())
-     ((equal state 'out)       graphviz-attr-keywords)
-     ((equal state 'value)     graphviz-value-keywords)
-     ((equal state 'color)     graphviz-color-keywords)
-     ((equal state 'attribute) graphviz-attr-keywords)
-     (t                        graphviz-attr-keywords))))
-
-(defvar graphviz-dot-last-word-numb 0)
-(defvar graphviz-dot-last-word-shown nil)
-(defvar graphviz-dot-last-completions nil)
-
-(defun graphviz-dot-complete-word ()
-  "Complete word at current point."
-  (interactive)
-  (let* ((b (save-excursion (skip-chars-backward "a-zA-Z0-9_") (point)))
-         (e (save-excursion (skip-chars-forward "a-zA-Z0-9_") (point)))
-         (graphviz-dot-str (buffer-substring b e))
-         (allcomp (if (and graphviz-dot-toggle-completions
-                           (string= graphviz-dot-last-word-shown
-                                    graphviz-dot-str))
-                      graphviz-dot-last-completions
-                    (all-completions graphviz-dot-str
-                                     (graphviz-dot-get-keywords))))
-         (match (if graphviz-dot-toggle-completions
-                    "" (try-completion
-                        graphviz-dot-str (mapcar #'(lambda (elm)
-                                                     (cons elm 0)) allcomp)))))
-    ;; Delete old string
-    (delete-region b e)
-
-    ;; Toggle-completions inserts whole labels
-    (if graphviz-dot-toggle-completions
-        (progn
-          ;; Update entry number in list
-          (setq graphviz-dot-last-completions allcomp
-                graphviz-dot-last-word-numb
-                (if (>= graphviz-dot-last-word-numb (1- (length allcomp)))
-                    0
-                  (1+ graphviz-dot-last-word-numb)))
-          (setq graphviz-dot-last-word-shown
-                (elt allcomp graphviz-dot-last-word-numb))
-          ;; Display next match or same string if no match was found
-          (if (not (null allcomp))
-              (insert "" graphviz-dot-last-word-shown)
-            (insert "" graphviz-dot-str)
-            (message "(No match)")))
-      ;; The other form of completion does not necessarily do that.
-
-      ;; Insert match if found, or the original string if no match
-      (if (or (null match) (equal match 't))
-          (progn (insert "" graphviz-dot-str)
-                 (message "(No match)"))
-        (insert "" match))
-      ;; Give message about current status of completion
-      (cond ((equal match 't)
-             (if (not (null (cdr allcomp)))
-                 (message "(Complete but not unique)")
-               (message "(Sole completion)")))
-            ;; Display buffer if the current completion didn't help
-            ;; on completing the label.
-            ((and (not (null (cdr allcomp))) (= (length graphviz-dot-str)
-                                                (length match)))
-             (with-output-to-temp-buffer "*Completions*"
-               (display-completion-list allcomp))
-             ;; Wait for a keypress. Then delete *Completion*  window
-             (momentary-string-display "" (point))
-             (if graphviz-dot-delete-completions
-                 (delete-window
-                  (get-buffer-window (get-buffer "*Completions*"))))
-             )))))
 
 (defun graphviz-dot-set-layout ()
   "Changes the value of `graphviz-dot-dot-program'."
