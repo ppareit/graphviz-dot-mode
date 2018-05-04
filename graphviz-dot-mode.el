@@ -572,13 +572,6 @@ Turning on Graphviz Dot mode calls the value of the variable
     (save-excursion
       (graphviz-dot-real-indent-line))))
 
-(defun graphviz-dot-get-indendation()
-  "Return current line's indentation"
-  (interactive)
-  (message "Current indentation is %d."
-           (current-indentation))
-  (current-indentation))
-
 (defun graphviz-dot-real-indent-line ()
   "Indent current line of dot code."
   (beginning-of-line)
