@@ -30,7 +30,7 @@
 
 @copying
 @cindex copyright (manual)
-Copyright @copyright{} 2017 @value{EDITOR}.
+Copyright @copyright{} 2018 @value{EDITOR}.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -391,7 +391,7 @@ minbuffer.
 @kindex @kbd{M-;}
 @findex comment-dwim
 This command will perform the comment command you want (Do What I
-Mean).  If the region is active and ‘transient-mark-mode’ is on, it
+Mean).  If the region is active and @code{transient-mark-mode} is on, it
 will comment the region, unless it only consists of comments, in which
 case it will un-comment the region.  Else, if the current line is
 empty, it will insert a blank comment line,
@@ -418,7 +418,7 @@ under the previous comment line.
 This command will comment-out the region.
 
 You may also use @kbd{M-;} (@code{comment-dwin}) to comment the region
-if 'transient-mark-mode' is on.
+if @code{transient-mark-mode} is on.
 
 @item @kbd{C-c C-u} (@code{graphviz-dot-uncomment-region})
 @kindex @kbd{C-c C-u}
@@ -426,7 +426,7 @@ if 'transient-mark-mode' is on.
 This command will un-comment the region.
 
 You may also use @kbd{C-u M-;} (@code{comment-dwin}) to un-comment the region
-if 'transient-mark-mode' is on.
+if @code{transient-mark-mode} is on.
 @end table
 
 @node Customizing

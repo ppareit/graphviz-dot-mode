@@ -1,7 +1,7 @@
 This manual describes how to install and use `graphviz-dot-mode`, an
 Emacs package for working with Graphviz DOT-format files.
 
-Copyright © 2017 Daniel Birket.
+Copyright © 2018 Daniel Birket.
 
 > Permission is granted to copy, distribute and/or modify this document
 > under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -11,10 +11,10 @@ Copyright © 2017 Daniel Birket.
 > Free Documentation License.
 
 This is the `graphviz-dot-mode` Manual, edition 0.3.10.a, by Daniel
-Birket, updated July 10, 2017, which describes how to install and use
-the Emacs package `graphviz-dot-mode`, version 0.3.10, released 25 May
-2015, which was written by and Copyright © 2002-2015 Pieter Pareit, et
-al. (See <http://ppareit.github.io/graphviz-dot-mode/>)
+Birket, updated May 6, 2018, which describes how to install and use the
+Emacs package `graphviz-dot-mode`, version 0.3.10, released 25 May 2015,
+which was written by and Copyright © 2002-2015 Pieter Pareit, et al.
+(See <http://ppareit.github.io/graphviz-dot-mode/>)
 
 This document was composed using Emacs v25.2.1 (Richard M. Stallman, et
 al. See <https://www.gnu.org/software/emacs/>) and compiled from `.texi`
@@ -237,11 +237,11 @@ See [Completion Variables](#Completion-Variables)
 
 `M-;` (`comment-dwim`)  
 This command will perform the comment command you want (Do What I Mean).
-If the region is active and âtransient-mark-modeâ is on, it will
-comment the region, unless it only consists of comments, in which case
-it will un-comment the region. Else, if the current line is empty, it
-will insert a blank comment line, otherwise it will append a comment to
-the line and indent it.
+If the region is active and `transient-mark-mode` is on, it will comment
+the region, unless it only consists of comments, in which case it will
+un-comment the region. Else, if the current line is empty, it will
+insert a blank comment line, otherwise it will append a comment to the
+line and indent it.
 
 Use `C-u M-;` to kill the comment on the current line.
 
@@ -257,13 +257,13 @@ under the previous comment line.
 This command will comment-out the region.
 
 You may also use `M-;` (`comment-dwin`) to comment the region if
-’transient-mark-mode’ is on.
+`transient-mark-mode` is on.
 
 `C-c C-u` (`graphviz-dot-uncomment-region`)  
 This command will un-comment the region.
 
 You may also use `C-u M-;` (`comment-dwin`) to un-comment the region if
-’transient-mark-mode’ is on.
+`transient-mark-mode` is on.
 
 Customizing
 ===========
@@ -448,6 +448,7 @@ GNU General Public License 2.0
 ==============================
 
 Version 2, June 1991
+
     Copyright © 1989, 1991 Free Software Foundation, Inc.
     51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
@@ -795,6 +796,7 @@ GNU Free Documentation License
 ==============================
 
 Version 1.3, 3 November 2008
+
     Copyright © 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.
     http://fsf.org/
 
