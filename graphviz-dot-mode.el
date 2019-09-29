@@ -24,7 +24,7 @@
 ;; Homepage: https://ppareit.github.io/graphviz-dot-mode/
 ;; Created: 28 Oct 2002
 ;; Last modified: 29 September 2019
-;; Version: 0.4
+;; Version: 0.4.1
 ;; Keywords: mode dot dot-language dotlanguage graphviz graphs att
 
 ;;; Commentary:
@@ -52,9 +52,10 @@
 ;;   off).
 ;;
 ;;; History:
-;; Version 0.4 Pieter Pareit
+;; Version 0.4.1 Pieter Pareit
 ;; 28/09/2019: * Maintenance, checking documentation, fixing flycheck errors.
 ;;             * Solve next-error for gaphviz
+;;             * Tag new version
 ;; Version 0.3.11 Olli Piepponen
 ;; 29/01/2016: * use define-derived-mode for the mode-definition
 ;;             * add support for a auto-loading live preview work flow
@@ -146,7 +147,7 @@
 (require 'compile)
 (require 'subr-x)
 
-(defconst graphviz-dot-mode-version "0.4"
+(defconst graphviz-dot-mode-version "0.4.1"
   "Version of `graphviz-dot-mode.el'.")
 
 (defgroup graphviz nil
