@@ -21,7 +21,7 @@
 ;;          Rubens Ramos <rubensr AT users.sourceforge.net>
 ;;          Eric Anderson http://www.ece.cmu.edu/~andersoe/
 ;; Maintainer: Pieter Pareit <pieter.pareit@gmail.com>
-;; Homepage: http://ppareit.github.com/graphviz-dot-mode/
+;; Homepage: https://ppareit.github.io/graphviz-dot-mode/
 ;; Created: 28 Oct 2002
 ;; Last modified: 29 September 2019
 ;; Version: 0.4
