@@ -45,7 +45,6 @@
 ;; viewing an generated image with C-c p.
 ;;
 ;;; Todo:
-;; * cleanup the mess of graphviz-dot-compilation-parse-errors.
 ;; * electric indentation is fundamentally broken, because
 ;;   {...} are also used for record nodes. You could argue, I suppose, that
 ;;   many diagrams don't need those, but it would be worth having a note (and
