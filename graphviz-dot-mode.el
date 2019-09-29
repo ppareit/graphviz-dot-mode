@@ -570,8 +570,10 @@ Turning on Graphviz Dot mode calls the value of the variable
   (when (buffer-file-name)
     (setq-local compile-command
                 (graphviz-compile-command (buffer-file-name))))
-  (setq-local compilation-parse-errors-function 'graphviz-dot-compilation-parse-errors)
   (when dot-menu (easy-menu-add dot-menu))
+  (add-to-list 'compilation-error-regexp-alist 'dot)
+  (add-to-list 'compilation-error-regexp-alist-alist
+	       '(dot "^Error: \\(.+\\): .*error in line \\([0-9]+\\).*" 1 2))
   (add-hook 'after-save-hook 'graphviz-live-reload-hook)
   (run-hooks 'graphviz-dot-mode-hook))
 
@@ -598,57 +600,6 @@ Turning on Graphviz Dot mode calls the value of the variable
 
 ;;;; Compilation
 
-;; note on graphviz-dot-compilation-parse-errors:
-;;  It would nicer if we could just use compilation-error-regexp-alist
-;;  to do that, 3 options:
-;;   - still write dot-compilation-parse-errors, don't build
-;;     a return list, but modify the *compilation* buffer
-;;     in a way compilation-error-regexp-alist recognizes the
-;;     format.
-;;     to do that, I should globally change compilation-parse-function
-;;     to this function, and call the old value of comp..-parse-fun..
-;;     to provide the return value.
-;;     two drawbacks are that, every compilation would be run through
-;;     this function (performance) and that in autoload there would
-;;     be a chance that this function would not yet be known.
-;;   - let the compilation run through a filter that would
-;;     modify the output of dot or neato:
-;;     dot -Tpng input.dot | filter
-;;     drawback: ugly, extra work for user, extra decency ...
-;;               no-option
-;;   - modify dot and neato !!! (PP:15/02/2005 seems to have happend,
-;;                                       so version 0.4.0 should clean this mess up!)
-(defun graphviz-dot-compilation-parse-errors (limit-search find-at-least)
-  "Parse the current buffer for dot errors.
-See variable `compilation-parse-errors-functions' for interface."
-  (interactive)
-  (with-current-buffer "*compilation*"
-    (goto-char (point-min))
-    (setq compilation-error-list nil)
-    (let (buffer-of-error)
-      (while (not (eobp))
-  (cond
-   ((looking-at "^dot\\( -[^ ]+\\)* \\(.*\\)")
-    (setq buffer-of-error (find-file-noselect
-         (buffer-substring-no-properties
-          (nth 4 (match-data t))
-          (nth 5 (match-data t))))))
-   ((looking-at ".*:.*line \\([0-9]+\\)")
-    (let ((line-of-error
-     (string-to-number (buffer-substring-no-properties
-            (nth 2 (match-data t))
-            (nth 3 (match-data t))))))
-      (setq compilation-error-list
-      (cons
-       (cons
-        (point-marker)
-        (with-current-buffer buffer-of-error
-          (goto-char (point-min))
-          (forward-line (1- line-of-error))
-          (point-marker)))
-       compilation-error-list))))
-    (t t))
-  (forward-line 1)) )))
 
 ;;;;
 ;;;; Indentation
@@ -796,15 +747,9 @@ then indent this and each subgraph in it."
            (not (graphviz-dot-comment-or-string-p)))
       (graphviz-dot-newline-and-indent)))
 
-(defun graphviz-compile-warning-msg ()
-  (set-buffer "*compilation*")
-  (goto-char (point-min))
-  (save-match-data
-    (when (re-search-forward "^\\(Warning: .+\\)$" nil t)
-      (match-string-no-properties 1))))
-
 ;;;###autoload
 (defun graphviz-dot-preview ()
+  "Compile the graph and preview it in an other buffer."
   (interactive)
   (save-buffer)
   (let ((windows (window-list))
