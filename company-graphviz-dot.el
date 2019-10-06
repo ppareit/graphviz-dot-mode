@@ -18,7 +18,8 @@
 ;; Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 ;; MA 02111-1307 USA
 
-;; Author: Bjarte Johansen <bjarte.johansen@gmail.com>
+;; Authors: Bjarte Johansen <bjarte.johansen@gmail.com>
+;;          Pieter Pareit <pieter.pareit@gmail.com>
 ;; Homepage: http://ppareit.github.com/graphviz-dot-mode/
 ;; Created:
 ;; Last modified:
@@ -27,62 +28,63 @@
 
 ;;; Commentary:
 
-
 ;;; Code:
 
 (require 'company)
-(require 'graphviz-dot)
+(require 'graphviz-dot-mode)
 
 (eval-when-compile
   (require 'cl-lib))
 
 (defun company-gz-dot--candidates (arg)
-  (cl-destructuring-bind (type . value) arg
-    (cl-case type
-      (color
-       (cl-remove-if-not (lambda (c) (string-prefix-p value c))
-                         graphviz-dot-color-keywords))
-      (value
-       (cl-remove-if-not (lambda (c) (string-prefix-p value c))
-                         graphviz-dot-value-keywords)))
-      ((comment string) nil)
-      (t (cl-remove-if-not (lambda (c) (string-prefix-p value c))
-                           graphviz-dot-attr-keywords)))))
+  "Return good candidates for the argument ARG for company."
+  (all-completions arg
+		   (cl-case (company-graphviz-dot--syntax-at-point)
+		     (color graphviz-dot-color-keywords)
+		     (value graphviz-dot-value-keywords)
+		     ((comment string) nil)
+		     (t graphviz-dot-attr-keywords))))
 
-(defun company-gz-dot--prefix ()
+(defun company-graphviz-dot--syntax-at-point ()
+  "Return the syntax at point.
+This can be one of
+ - 'comment
+ - 'string
+ - 'out
+ - 'value
+ - 'attribute
+ - 'other"
   (let ((state (syntax-ppss)))
-    (cond ((nth 4 state) 'comment)
-          ((nth 3 state) 'string)
-          ((not (nth 1 state)) 'out)
-          ((save-excursion
-             (skip-chars-backward "^[,=\\[]{};")
-             (backward-char)
-             (looking-at "="))
-           (save-excursion
-             (backward-word 1)
-             (if (looking-at "[a-zA-Z]*color")
-                 'color
-               'value)))
-          ((save-excursion
-             (skip-chars-backward "^[,=\\[]{};")
-             (backward-char)
-             (looking-at "[\\[,]{};"))
-           'attr)
-          (t 'other))))
+    (cond
+     ((nth 4 state) 'comment)
+     ((nth 3 state) 'string)
+     ((not (nth 1 state)) 'out)
+     (t (save-excursion
+          (skip-chars-backward "^[,=\\[]{};")
+          (backward-char)
+          (cond
+           ((looking-at "[\\[,]{};") 'attribute)
+           ((looking-at "=") (progn
+                               (backward-word 1)
+                               (if (looking-at "[a-zA-Z]*color")
+                                   'color
+                                 'value)))
+           (t 'other)))))))
 
 
-(defun company-graphviz-dot (command &optional arg &rest ignored)
-  "`company-mode' completion back-end for `sparql-mode'. Right
-now it only completes prefixes, `company-keywords' takes care of
-keywords."
+(defun company-graphviz-dot-backend (command &optional arg &rest ignored)
+  "Company back-end for `graphviz-dot-mode'.
+In the signature, COMMAND, ARG and IGNORED are mandated by `company-mode'."
   (interactive (list 'interactive))
   (cl-case command
-    (init)
-    (interactive (company-begin-backend 'company-graphviz-dot))
+    (interactive (company-begin-backend 'company-graphviz-dot-backend))
     (prefix (and (eq major-mode 'graphviz-dot-mode)
-                 (company-gz-dot--prefix)))
+                 (company-grab-symbol)))
     (candidates (company-gz-dot--candidates arg))
+    (no-cache t)
     (require-match 'never)))
 
+(add-to-list 'company-backends 'company-graphviz-dot-backend)
 
-(provide company-graphviz-dot)
+(provide 'company-graphviz-dot)
+;;; company-graphviz-dot.el ends here
