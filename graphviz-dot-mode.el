@@ -126,7 +126,7 @@
 ;; 06/11/2002: added an missing attribute, for font-locking to work.
 ;;             fixed the regex generating, so that it only recognizes
 ;;             whole words
-;; 05/11/2002: there can now be extra white space chars after an '{'.
+;; 05/11/2002: there can now be extra whitespace chars after an '{'.
 ;; 04/11/2002: Why I use max-specpdl-size is now documented, and old value
 ;;             gets restored.
 ;; Version 0.1 initial release
