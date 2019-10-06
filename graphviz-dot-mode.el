@@ -25,6 +25,7 @@
 ;; Created: 28 Oct 2002
 ;; Last modified: 29 September 2019
 ;; Version: 0.4.1
+;; Package-Requires: ((emacs "25.0"))
 ;; Keywords: mode dot dot-language dotlanguage graphviz graphs att
 
 ;;; Commentary:
