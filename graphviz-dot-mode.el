@@ -487,6 +487,7 @@ Variables specific to this mode:
        Automatically save current buffer berore `graphviz-dot-view'.
   graphviz-dot-preview-extension      (default `png')
        File type to use for `graphviz-dot-preview'."
+  :group 'graphviz
   (setq-local font-lock-defaults '(graphviz-dot-font-lock-keywords))
   (setq-local comment-start "//")
   (setq-local comment-start-skip "/\\*+ *\\|//+ *")
