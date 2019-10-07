@@ -413,8 +413,12 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
    ("^#" (0 "< b"))))
 
 (defvar graphviz-dot-font-lock-keywords
-  `(("\\(:?di\\|sub\\)?graph \\(\\sw+\\)"
-     (2 font-lock-function-name-face))
+  `(;; Match ID, first case
+    ("\\(:?di\\|sub\\)?graph\\([[:space:]]+\\)\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)"
+     (3 font-lock-function-name-face))
+    ;; Match ID, second case
+    ("\\(:?di\\|sub\\)?graph\\([[:space:]]+\\)\\(-?[0-9]*\\(\\.[0-9]*\\)?\\)"
+     (3 font-lock-function-name-face))
     (,(regexp-opt graphviz-dot-value-keywords 'words)
      . font-lock-reference-face)
     ;; to build the font-locking for the colors,
