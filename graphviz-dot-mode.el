@@ -413,12 +413,13 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
    ("^#" (0 "< b"))))
 
 (defvar graphviz-dot-font-lock-keywords
+  ;; See https://graphviz.gitlab.io/_pages/doc/info/lang.html.
   `(;; Match ID, first case
-    ("\\(:?di\\|sub\\)?graph\\([[:space:]]+\\)\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)"
-     (3 font-lock-function-name-face))
+    ("\\(?:di\\|sub\\)?graph\\(?:[[:space:]]+\\)\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)"
+     (1 font-lock-function-name-face))
     ;; Match ID, second case
-    ("\\(:?di\\|sub\\)?graph\\([[:space:]]+\\)\\(-?[0-9]*\\(\\.[0-9]*\\)?\\)"
-     (3 font-lock-function-name-face))
+    ("\\(?:di\\|sub\\)?graph\\(?:[[:space:]]+\\)\\(-?[0-9]*\\(\\.[0-9]*\\)?\\)"
+     (1 font-lock-function-name-face))
     (,(regexp-opt graphviz-dot-value-keywords 'words)
      . font-lock-reference-face)
     ;; to build the font-locking for the colors,
@@ -435,16 +436,13 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
      ;; RR - ugly, really, but I dont know why xemacs does not work
      ;; if I change the next car to "1"...
      (0 font-lock-variable-name-face))
-    ;; See the 'graph' nonterminal in
-    ;; https://graphviz.gitlab.io/_pages/doc/info/lang.html.
-    ("\\(?:\\_<\\(strict\\)[[:space:]]+\\)?\\(\\(?:di\\)?graph\\)\\_>"
-     (1 'font-lock-keyword-face) (2 'font-lock-keyword-face))
-    ;; See the 'attr_stmt' nonterminal in
-    ;; https://graphviz.gitlab.io/_pages/doc/info/lang.html.
+    ;; The 'graph' nonterminal
+    ("\\(\\_<\\(?:strict\\)?[[:space:]]*\\(?:\\(?:di\\)?graph\\)\\_>\\)"
+     (1 'font-lock-keyword-face))
+    ;; The 'attr_stmt'
     ("\\_<\\(edge\\|graph\\|node\\)\\_>[[:space:]]*\\["
      1 'font-lock-keyword-face)
-    ;; See the 'subgraph' nonterminal in
-    ;; https://graphviz.gitlab.io/_pages/doc/info/lang.html.
+    ;; The 'subgraph' nonterminal
     ("\\_<subgraph\\_>" . 'font-lock-keyword-face))
   "Keyword highlighting specification for `graphviz-dot-mode'.")
 
