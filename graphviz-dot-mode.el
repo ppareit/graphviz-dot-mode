@@ -193,7 +193,8 @@ You can use `%s' in this string, and it will be substituted by the buffer name."
 
 (defcustom graphviz-dot-preview-extension "png"
   "*The extension to use for the compilation and preview commands.
-The format for the compilation command is `dot -T<extension> file.dot> file.<extension>'."
+The default format for the compilation command is `dot -T png
+file.dot -o file.png'."
   :type 'string
   :group 'graphviz)
 
@@ -452,7 +453,11 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
           "." graphviz-dot-preview-extension))
 
 (defun graphviz-compile-command (f-name)
-  "Shell command to compile F-NAME."
+  "Shell command to compile F-NAME.
+By default this is `dot -T png file.dot -o file.png', the used
+program to compile can be changed by setting
+`graphviz-dot-dot-program', the output format and extension can
+be changed with `graphviz-dot-preview-extension'."
   (when f-name
     (setq compile-command
           (concat graphviz-dot-dot-program
@@ -480,15 +485,15 @@ TAB indents for graph lines.
 Variables specific to this mode:
 
   `graphviz-dot-dot-program'                   (default `dot')
-       Location of the dot program.
+       Program used to compile the graphs.
+  `graphviz-dot-preview-extension'             (default `png')
+       File type to use for output.
   `graphviz-dot-view-command'                  (default `doted %s')
        Command to run when `graphviz-dot-view' is executed.
   `graphviz-dot-view-edit-command'             (default nil)
        If the user should be asked to edit the view command.
   `graphviz-dot-save-before-view'              (default t)
-       Automatically save current buffer berore `graphviz-dot-view'.
-  graphviz-dot-preview-extension      (default `png')
-       File type to use for `graphviz-dot-preview'."
+       Automatically save current buffer berore `graphviz-dot-view'."
   :group 'graphviz
   (setq-local font-lock-defaults '(graphviz-dot-font-lock-keywords))
   (setq-local comment-start "//")
