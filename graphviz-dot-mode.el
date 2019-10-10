@@ -234,6 +234,27 @@ not immediately visible."
   :type '(repeat (string :tag "Keyword"))
   :group 'graphviz)
 
+(defvar graphviz-attributes-type-arrow
+  '("arrowhead" "arrowtail")
+  "The attributes that are of type `arrow'.
+See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
+more information about possible attributes.")
+
+(defvar graphviz-values-type-arrow
+  '("box" "lbox" "rbox" "obox" "olbox" "orbox"
+    "crow" "lcrow" "rcrow"
+    "diamond" "ldiamond" "rdiamond" "odiamond" "oldiamond" "ordiamond"
+    "dot" "odot"
+    "inv" "linv" "rinv" "oinv" "olinv" "orinv"
+    "none"
+    "normal" "lnormal" "rnormal" "onormal" "olnormal" "ornormal"
+    "tee" "ltee" "rtee"
+    "vee" "lvee" "rvee"
+    "curve" "lcurve" "rcurve" "ocurve" "olcurve" "orcurve")
+  "The possible values that an attribute of type `arrow' can have.
+See https://graphviz.gitlab.io/_pages/doc/info/arrows.html for
+more information about the arrow shape.")
+
 (defcustom graphviz-dot-value-keywords
   '("true" "false" "normal" "inv" "dot" "invdot" "odot" "invodot"
     "none" "tee" "empty" "invempty" "diamond" "odiamond" "box" "obox"

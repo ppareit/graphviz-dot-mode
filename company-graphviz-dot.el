@@ -41,34 +41,32 @@
   (all-completions arg
 		   (cl-case (company-graphviz-dot--syntax-at-point)
 		     (color graphviz-dot-color-keywords)
+		     (arrow graphviz-values-type-arrow)
 		     (value graphviz-dot-value-keywords)
 		     ((comment string) nil)
 		     (t graphviz-dot-attr-keywords))))
 
 (defun company-graphviz-dot--syntax-at-point ()
   "Return the syntax at point.
-This can be one of
- - 'comment
- - 'string
- - 'out
- - 'value
- - 'attribute
- - 'other"
+This can be one of comment, string, out, value, attribute, color,
+arrow or other."
   (let ((state (syntax-ppss)))
     (cond
      ((nth 4 state) 'comment)
      ((nth 3 state) 'string)
      ((not (nth 1 state)) 'out)
      (t (save-excursion
-          (skip-chars-backward "^[,=\\[]{};")
+          (skip-chars-backward "^[\\[,;=\n]")
           (backward-char)
           (cond
-           ((looking-at "[\\[,]{};") 'attribute)
-           ((looking-at "=") (progn
-                               (backward-word 1)
-                               (if (looking-at "[a-zA-Z]*color")
-                                   'color
-                                 'value)))
+           ((looking-at "[\\[,;\n]") 'attribute)
+           ((looking-at "=")
+	    (progn
+	      (backward-word 1)
+	      (cond
+	       ((looking-at "[a-zA-Z]*color")  'color)
+	       ((member (word-at-point) graphviz-attributes-type-arrow) 'arrow)
+	       (t 'value))))
            (t 'other)))))))
 
 
