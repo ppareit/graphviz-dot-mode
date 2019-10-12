@@ -45,6 +45,7 @@
 		     (shape graphviz-values-type-shape)
 		     (style graphviz-values-type-style)
 		     (dir graphviz-values-type-dir)
+		     (outputmode graphviz-values-type-outputmode)
 		     (bool graphviz-values-type-bool)
 		     (value graphviz-dot-value-keywords)
 		     ((comment string) nil)
@@ -53,7 +54,7 @@
 (defun company-graphviz-dot--syntax-at-point ()
   "Return the syntax at point.
 This can be one of comment, string, out, value, attribute, color,
-arrow, shape or other."
+arrow, shape, style, dir, outputmode or other."
   (let ((state (syntax-ppss)))
     (cond
      ((nth 4 state) 'comment)
@@ -73,6 +74,7 @@ arrow, shape or other."
 	       ((member (word-at-point) graphviz-attributes-type-shape) 'shape)
 	       ((member (word-at-point) graphviz-attributes-type-style) 'style)
 	       ((member (word-at-point) graphviz-attributes-type-dir) 'dir)
+	       ((member (word-at-point) graphviz-attributes-type-output-mode) 'outputmode)
 	       ((member (word-at-point) graphviz-attributes-type-bool) 'bool)
 	       (t 'value))))
            (t 'other)))))))

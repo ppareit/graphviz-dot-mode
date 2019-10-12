@@ -298,7 +298,19 @@ more information about possible attributes.")
   '("forward" "back" "both" "none")
   "The possible values that an attribute of type `dir' can have.
 See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:dirType for
-more information about the direction that edges can have")
+more information about the direction that edges can have.")
+
+(defvar graphviz-attributes-type-outputmode
+  '("outputorder")
+  "The attributes that are of type `outputMode'.
+See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
+more information about possible attributes.")
+
+(defvar graphviz-values-type-outputmode
+  '("breadthfirst" "nodesfirst" "edgesfirst")
+  "The possible values that an attribute of type `outputMode' can have.
+See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:outputMode for
+more information about the direction that edges can have.")
 
 (defvar graphviz-attributes-type-bool
   '("center" "compound" "concentrate" "constraint" "decorate"
