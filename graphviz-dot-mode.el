@@ -350,6 +350,19 @@ more information about possible attributes.")
   '("true" "false" "yes" "no" "1" "0")
   "The possible values that an attribute of type `bool' can have.")
 
+(defvar graphviz-attributes-type-portpos
+  '("headport" "tailport")
+  "The attributes that are of type `portPos'.
+See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
+more information about possible attributes.")
+
+(defvar graphviz-values-type-portpos
+  '("n" "ne" "e" "se" "s" "sw" "w" "nw" "c" "_")
+  "The possible values that an attribute of type `portPos' can have.
+The can also be used on the edge as a compass point.  See
+https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:portPos
+for more information.")
+
 (defcustom graphviz-dot-value-keywords
   '("true" "false" "normal" "inv" "dot" "invdot" "odot" "invodot"
     "none" "tee" "empty" "invempty" "diamond" "odiamond" "box" "obox"

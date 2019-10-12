@@ -40,6 +40,7 @@
   "Return good candidates for the argument ARG for company."
   (all-completions arg
 		   (cl-case (company-graphviz-dot--syntax-at-point)
+		     (compasspoint graphviz-values-type-portpos)
 		     (color graphviz-dot-color-keywords)
 		     (arrow graphviz-values-type-arrow)
 		     (shape graphviz-values-type-shape)
@@ -48,6 +49,7 @@
 		     (outputmode graphviz-values-type-outputmode)
 		     (packmode graphviz-values-type-packmode)
 		     (pagedir graphviz-values-type-pagedir)
+		     (portpos graphviz-values-type-portpos)
 		     (bool graphviz-values-type-bool)
 		     (value graphviz-dot-value-keywords)
 		     ((comment string) nil)
@@ -63,10 +65,11 @@ arrow, shape, style, dir, outputmode or other."
      ((nth 3 state) 'string)
      ((not (nth 1 state)) 'out)
      (t (save-excursion
-          (skip-chars-backward "^[\\[,;=\n]")
+          (skip-chars-backward "^[\\[,;=:\n]")
           (backward-char)
           (cond
            ((looking-at "[\\[,;\n]") 'attribute)
+	   ((looking-at ":") 'compasspoint)
            ((looking-at "=")
 	    (progn
 	      (backward-word 1)
@@ -79,6 +82,7 @@ arrow, shape, style, dir, outputmode or other."
 	       ((member (word-at-point) graphviz-attributes-type-outputmode) 'outputmode)
 	       ((member (word-at-point) graphviz-attributes-type-packmode) 'packmode)
 	       ((member (word-at-point) graphviz-attributes-type-pagedir) 'pagedir)
+	       ((member (word-at-point) graphviz-attributes-type-portpos) 'portpos)
 	       ((member (word-at-point) graphviz-attributes-type-bool) 'bool)
 	       (t 'value))))
            (t 'other)))))))
