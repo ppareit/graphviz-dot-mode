@@ -275,6 +275,22 @@ more information about possible attributes.")
 See https://graphviz.gitlab.io/_pages/doc/info/arrows.html for
 more information about the arrow shape.")
 
+(defvar graphviz-attributes-type-bool
+  '("center" "compound" "concentrate" "constraint" "decorate"
+    "diredgeconstraints" "fixedsize" "forcelabels" "headclip" "imagescale"
+    "labelfloat" "landscape" "mosek" "newrank" "nojustify" "normalize"
+    "notranslate" "overlap" "overlap_shrink" "pack" "pin" "quadtree" "regular"
+    "remincross" "root" "splines" "tailclip" "truecolor")
+  "The attributes that are of type `bool'.
+See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
+more information about possible attributes.")
+
+(defvar graphviz-values-type-bool
+  '("true" "false" "yes" "no" "1" "0")
+  "The possible values that an attribute of type `bool' can have.
+See https://graphviz.gitlab.io/_pages/doc/info/arrows.html for
+more information about the arrow shape.")
+
 (defcustom graphviz-dot-value-keywords
   '("true" "false" "normal" "inv" "dot" "invdot" "odot" "invodot"
     "none" "tee" "empty" "invempty" "diamond" "odiamond" "box" "obox"

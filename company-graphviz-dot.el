@@ -43,6 +43,7 @@
 		     (color graphviz-dot-color-keywords)
 		     (arrow graphviz-values-type-arrow)
 		     (shape graphviz-values-type-shape)
+		     (bool graphviz-values-type-bool)
 		     (value graphviz-dot-value-keywords)
 		     ((comment string) nil)
 		     (t graphviz-dot-attr-keywords))))
@@ -68,6 +69,7 @@ arrow, shape or other."
 	       ((looking-at "[a-zA-Z]*color")  'color)
 	       ((member (word-at-point) graphviz-attributes-type-arrow) 'arrow)
 	       ((member (word-at-point) graphviz-attributes-type-shape) 'shape)
+	       ((member (word-at-point) graphviz-attributes-type-bool) 'bool)
 	       (t 'value))))
            (t 'other)))))))
 
