@@ -272,8 +272,21 @@ more information about possible attributes.")
     "signature" "insulator" "ribosite" "rnastab" "proteasesite" "proteinstab"
     "rpromoter" "rarrow" "larrow" "lpromoter")
   "The possible values that an attribute of type `shape' can have.
-See https://graphviz.gitlab.io/_pages/doc/info/arrows.html for
-more information about the arrow shape.")
+See https://graphviz.gitlab.io/_pages/doc/info/shape.html for
+more information about the node shapes.")
+
+(defvar graphviz-attributes-type-style
+  '("style")
+  "The attributes that are of type `style'.
+See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
+more information about possible attributes.")
+
+(defvar graphviz-values-type-style
+  '("dashed" "dotted" "solid" "invis" "bold" "tapered" "filled" "striped"
+    "wedged" "diagonals" "rounded" "filled" "striped" "rounded" "radial")
+  "The possible values that an attribute of type `style' can have.
+See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:style
+more information about possible styles.")
 
 (defvar graphviz-attributes-type-bool
   '("center" "compound" "concentrate" "constraint" "decorate"
@@ -287,9 +300,7 @@ more information about possible attributes.")
 
 (defvar graphviz-values-type-bool
   '("true" "false" "yes" "no" "1" "0")
-  "The possible values that an attribute of type `bool' can have.
-See https://graphviz.gitlab.io/_pages/doc/info/arrows.html for
-more information about the arrow shape.")
+  "The possible values that an attribute of type `bool' can have.")
 
 (defcustom graphviz-dot-value-keywords
   '("true" "false" "normal" "inv" "dot" "invdot" "odot" "invodot"
