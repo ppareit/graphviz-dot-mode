@@ -255,6 +255,26 @@ more information about possible attributes.")
 See https://graphviz.gitlab.io/_pages/doc/info/arrows.html for
 more information about the arrow shape.")
 
+(defvar graphviz-attributes-type-shape
+  '("shape")
+  "The attributes that are of type `shape'.
+See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
+more information about possible attributes.")
+
+(defvar graphviz-values-type-shape
+  '("box" "polygon" "ellipse" "oval" "circle" "point" "egg" "triangle" "plaintext"
+    "plain" "diamond" "trapezium" "parallelogram" "house" "pentagon" "hexagon"
+    "septagon" "octagon" "doublecircle" "doubleoctagon" "tripleoctagon"
+    "invtriangle" "invtrapezium" "invhouse" "Mdiamond" "Msquare" "Mcircle" "rect"
+    "rectangle" "square" "star" "none" "underline" "cylinder" "note" "tab" "folder"
+    "box3d" "component" "promoter" "cds" "terminator" "utr" "primersite"
+    "restrictionsite" "fivepoverhang" "threepoverhang" "noverhang" "assembly"
+    "signature" "insulator" "ribosite" "rnastab" "proteasesite" "proteinstab"
+    "rpromoter" "rarrow" "larrow" "lpromoter")
+  "The possible values that an attribute of type `shape' can have.
+See https://graphviz.gitlab.io/_pages/doc/info/arrows.html for
+more information about the arrow shape.")
+
 (defcustom graphviz-dot-value-keywords
   '("true" "false" "normal" "inv" "dot" "invdot" "odot" "invodot"
     "none" "tee" "empty" "invempty" "diamond" "odiamond" "box" "obox"

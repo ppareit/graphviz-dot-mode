@@ -42,6 +42,7 @@
 		   (cl-case (company-graphviz-dot--syntax-at-point)
 		     (color graphviz-dot-color-keywords)
 		     (arrow graphviz-values-type-arrow)
+		     (shape graphviz-values-type-shape)
 		     (value graphviz-dot-value-keywords)
 		     ((comment string) nil)
 		     (t graphviz-dot-attr-keywords))))
@@ -49,7 +50,7 @@
 (defun company-graphviz-dot--syntax-at-point ()
   "Return the syntax at point.
 This can be one of comment, string, out, value, attribute, color,
-arrow or other."
+arrow, shape or other."
   (let ((state (syntax-ppss)))
     (cond
      ((nth 4 state) 'comment)
@@ -66,6 +67,7 @@ arrow or other."
 	      (cond
 	       ((looking-at "[a-zA-Z]*color")  'color)
 	       ((member (word-at-point) graphviz-attributes-type-arrow) 'arrow)
+	       ((member (word-at-point) graphviz-attributes-type-shape) 'shape)
 	       (t 'value))))
            (t 'other)))))))
 
