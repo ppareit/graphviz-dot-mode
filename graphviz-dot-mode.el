@@ -310,7 +310,19 @@ more information about possible attributes.")
   '("breadthfirst" "nodesfirst" "edgesfirst")
   "The possible values that an attribute of type `outputMode' can have.
 See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:outputMode for
-more information about the direction that edges can have.")
+more information.")
+
+(defvar graphviz-attributes-type-packmode
+  '("packmode")
+  "The attributes that are of type `packMode'.
+See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
+more information about possible attributes.")
+
+(defvar graphviz-values-type-packmode
+  '("node" "clust" "array")
+  "The possible values that an attribute of type `packMode' can have.
+See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:packMode for
+more information.")
 
 (defvar graphviz-attributes-type-bool
   '("center" "compound" "concentrate" "constraint" "decorate"
