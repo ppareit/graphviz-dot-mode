@@ -324,6 +324,18 @@ more information about possible attributes.")
 See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:packMode for
 more information.")
 
+(defvar graphviz-attributes-type-pagedir
+  '("pagedir")
+  "The attributes that are of type `pagedir'.
+See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
+more information about possible attributes.")
+
+(defvar graphviz-values-type-pagedir
+  '("BL" "BR" "TL" "TR" "RB" "RT" "LB" "LT")
+  "The possible values that an attribute of type `pagedir' can have.
+See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:pagedir for
+more information.")
+
 (defvar graphviz-attributes-type-bool
   '("center" "compound" "concentrate" "constraint" "decorate"
     "diredgeconstraints" "fixedsize" "forcelabels" "headclip" "imagescale"
