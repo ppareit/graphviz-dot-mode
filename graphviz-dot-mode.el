@@ -563,7 +563,7 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
     (,(concat
        (regexp-opt graphviz-dot-attr-keywords 'words)
        "[ \\t\\n]*=")
-     ;; RR - ugly, really, but I dont know why xemacs does not work
+     ;; RR - ugly, really, but I don't know why xemacs does not work
      ;; if I change the next car to "1"...
      (0 font-lock-variable-name-face))
     ;; The 'graph' nonterminal
