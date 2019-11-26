@@ -84,7 +84,7 @@ The recommended way to install the package `graphviz-dot-mode` is to use
 `package.el` and `M-x package-install`.
 
 To install `graphviz-dot-mode`, first add the MELPA Stable archive to
-the list of archives used by `package.el` (if it is not alrady there) by
+the list of archives used by `package.el` (if it is not already there) by
 adding the following lines to your `.emacs` or other Emacs startup file.
 Then restart Emacs.
 
@@ -129,7 +129,7 @@ from within Emacs using its `info` reader.
 
 2.  In Emacs, use `C-h v Info-directory-listRET` to display the contents
     of the `Info-directory-list` variable. (This may be the same as the
-    INFOPATH enviroment variable.)
+    INFOPATH environment variable.)
 
 3.  Copy the `graphviz-dot-mode.info.gz` file to one of the directories
     in the `Info-directory-list` variable.
@@ -184,7 +184,7 @@ This command invokes an external viewer specified by the variable
 `graphviz-dot-view-command`. If `graphviz-dot-view-edit-command` is `t`,
 you will be prompted to enter a new `graphviz-dot-view-command`. If
 `graphviz-dot-save-before-view` is `t`, the buffer is saved before the
-external viwer command is invoked.
+external viewer command is invoked.
 
 (See <http://graphviz.org/content/resources> for a list of Graphviz
 viewers and editors.)
@@ -414,7 +414,7 @@ Mode Hook
 graphviz-dot-mode-hook`graphviz-dot-mode-hook`  
 list of functions, default: `nil`
 
-This variable determins which functions are called when
+This variable determines which functions are called when
 `graphviz-dot-mode` starts. To use it, add a line like below to your
 `.emacs` or other startup file.
 

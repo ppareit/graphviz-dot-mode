@@ -201,7 +201,7 @@ use @code{package.el} and @kbd{M-x package-install}.
 @vindex package-archives
 @findex package-initialize
 To install @value{PACKAGE}, first add the MELPA Stable archive to the
-list of archives used by @code{package.el} (if it is not alrady there)
+list of archives used by @code{package.el} (if it is not already there)
 by adding the following lines to your @file{.emacs} or other Emacs
 startup file. Then restart Emacs.
 
@@ -243,7 +243,7 @@ This section describes how to install this manual so that it may be
 used from within Emacs using its @code{info} reader.
 @enumerate
 @item Obtain the file containing the info-format version of this manual, @file{graphviz-dot-mode.info.gz} (See @value{DOCURL}.)
-@item In Emacs, use @kbd{C-h v Info-directory-list@key{RET}} to display the contents of the @code{Info-directory-list} variable. (This may be the same as the @env{INFOPATH} enviroment variable.)
+@item In Emacs, use @kbd{C-h v Info-directory-list@key{RET}} to display the contents of the @code{Info-directory-list} variable. (This may be the same as the @env{INFOPATH} environment variable.)
 @item Copy the @file{graphviz-dot-mode.info.gz} file to one of the directories in the @code{Info-directory-list} variable.
 @item Use @command{install-info} to add an entry for the new @file{graphviz-dot-mode.info.gz} file into the @file{dir} file in the info directory where you copied the file.
 @item In Emacs, use @kbd{C-h i d m graphviz-dot-mode @key{RET}} to display this help file.
@@ -310,7 +310,7 @@ This command invokes an external viewer specified by the variable
 @code{graphviz-dot-view-edit-command} is @code{t}, you will be
 prompted to enter a new @code{graphviz-dot-view-command}. If
 @code{graphviz-dot-save-before-view} is @code{t}, the buffer is saved
-before the external viwer command is invoked.
+before the external viewer command is invoked.
 
 (See @uref{http://graphviz.org/content/resources} for a
 list of @cite{Graphviz} viewers and editors.)
@@ -636,7 +636,7 @@ to this variable are not immediately visible.
 @item graphviz-dot-mode-hook
 list of functions, default: @code{nil}
 
-This variable determins which functions are called when
+This variable determines which functions are called when
 @value{PACKAGE} starts. To use it, add a line like below to your
 @file{.emacs} or other startup file.
 @lisp
