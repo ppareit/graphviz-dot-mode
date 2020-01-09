@@ -4,7 +4,7 @@ INCLUDE	:= fdl.texi gpl-2.0.texi gpl.texi
 
 INFODIR := ~/info
 
-TEXINFODIR := /usr/local/Cellar/texinfo/6.4/bin
+TEXINFODIR := /usr/local/Cellar/texinfo/6.5/bin
 TEXI2ANY := $(TEXINFODIR)/texi2any
 TEXI2PDF := $(TEXINFODIR)/texi2pdf
 TEXI2DVI := $(TEXINFODIR)/texi2dvi

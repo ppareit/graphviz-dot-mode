@@ -1,7 +1,7 @@
 This manual describes how to install and use `graphviz-dot-mode`, an
 Emacs package for working with Graphviz DOT-format files.
 
-Copyright © 2017 Daniel Birket.
+Copyright © 2018 Daniel Birket.
 
 > Permission is granted to copy, distribute and/or modify this document
 > under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -11,10 +11,10 @@ Copyright © 2017 Daniel Birket.
 > Free Documentation License.
 
 This is the `graphviz-dot-mode` Manual, edition 0.3.10.a, by Daniel
-Birket, updated November 20, 2017, which describes how to install and
-use the Emacs package `graphviz-dot-mode`, version 0.3.10, released 25
-May 2015, which was written by and Copyright © 2002-2015 Pieter Pareit,
-et al. (See <http://ppareit.github.io/graphviz-dot-mode/>)
+Birket, updated May 6, 2018, which describes how to install and use the
+Emacs package `graphviz-dot-mode`, version 0.3.10, released 25 May 2015,
+which was written by and Copyright © 2002-2015 Pieter Pareit, et al.
+(See <http://ppareit.github.io/graphviz-dot-mode/>)
 
 This document was composed using Emacs v25.2.1 (Richard M. Stallman, et
 al. See <https://www.gnu.org/software/emacs/>) and compiled from `.texi`
@@ -448,6 +448,7 @@ GNU General Public License 2.0
 ==============================
 
 Version 2, June 1991
+
     Copyright © 1989, 1991 Free Software Foundation, Inc.
     51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
@@ -795,6 +796,7 @@ GNU Free Documentation License
 ==============================
 
 Version 1.3, 3 November 2008
+
     Copyright © 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.
     http://fsf.org/
 

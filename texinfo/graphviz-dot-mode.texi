@@ -30,7 +30,7 @@
 
 @copying
 @cindex copyright (manual)
-Copyright @copyright{} 2017 @value{EDITOR}.
+Copyright @copyright{} 2018 @value{EDITOR}.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
