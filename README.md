@@ -186,7 +186,7 @@ you will be prompted to enter a new `graphviz-dot-view-command`. If
 `graphviz-dot-save-before-view` is `t`, the buffer is saved before the
 external viewer command is invoked.
 
-(See <http://graphviz.org/content/resources> for a list of Graphviz
+(See <https://graphviz.gitlab.io/resources/> for a list of Graphviz
 viewers and editors.)
 
 Editing
@@ -313,7 +313,7 @@ to invoke an external dot-file viewer program. The `C-c v`
 (`graphviz-dot-view`) function invokes this command. The name of the
 file visited by the buffer will be substituted for `%s` in this string.
 
-(See <http://graphviz.org/content/resources> for a list of Graphviz
+(See <https://graphviz.gitlab.io/resources/> for a list of Graphviz
 viewers and editors.)
 
 graphviz-dot-view-edit-command`graphviz-dot-view-edit-command`  
