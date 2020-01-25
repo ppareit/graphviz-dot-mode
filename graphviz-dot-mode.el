@@ -831,8 +831,10 @@ saved before the command is executed."
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.gv\\'" . graphviz-dot-mode))
 
-(eval-after-load 'org-src
-  '(add-to-list 'org-src-lang-modes  '("dot" . graphviz-dot)))
+;; Support org-mode, when adding a code block for dot, use this mode
+(with-eval-after-load 'org-src
+  (defvar org-src-lang-modes)
+  (add-to-list 'org-src-lang-modes  '("dot" . graphviz-dot)))
 
 (provide 'graphviz-dot-mode)
 ;;; graphviz-dot-mode.el ends here
