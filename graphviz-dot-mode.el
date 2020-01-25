@@ -617,7 +617,7 @@ Variables specific to this mode:
        Program used to compile the graphs.
   `graphviz-dot-preview-extension'             (default `png')
        File type to use for output.
-  `graphviz-dot-view-command'                  (default `doted %s')
+  `graphviz-dot-view-command'                  (default `dotty %s')
        Command to run when `graphviz-dot-view' is executed.
   `graphviz-dot-view-edit-command'             (default nil)
        If the user should be asked to edit the view command.
