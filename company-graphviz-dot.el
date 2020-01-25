@@ -2,6 +2,7 @@
 ;;; graphviz-dot-mode
 
 ;; Copyright (C) Bjarte Johansen <bjarte.johansen@gmail.com>
+;; Copyright (C) 2019 - 2020 Pieter Pareit <pieter.pareit@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
