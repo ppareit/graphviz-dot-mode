@@ -170,7 +170,7 @@
   :type 'list
   :group 'graphviz)
 
-(defcustom graphviz-dot-view-command "doted %s"
+(defcustom graphviz-dot-view-command "dotty %s"
   "*External program to run on the buffer.
 You can use `%s' in this string, and it will be substituted by the buffer name."
   :type 'string
