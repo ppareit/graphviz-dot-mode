@@ -98,8 +98,8 @@ Completion makes use of
 * `company-complete`
 
   This command will complete the attribute or value keyword at
-point. If more than one completion is possible, a list is displayed in
-the minibuffer.
+point. If more than one completion is possible, a list with
+suggestions is displayed.
 
 ### Commenting
 
