@@ -89,8 +89,9 @@ arrow, shape, style, dir, outputmode or other."
            (t 'other)))))))
 
 
+;;;###autoload
 (defun company-graphviz-dot-backend (command &optional arg &rest ignored)
-  "Company back-end for `graphviz-dot-mode'.
+  "Company backend for `graphviz-dot-mode'.
 In the signature, COMMAND, ARG and IGNORED are mandated by `company-mode'."
   (interactive (list 'interactive))
   (cl-case command
