@@ -148,7 +148,7 @@
 (require 'compile)
 (require 'subr-x)
 
-(defconst graphviz-dot-mode-version "0.4.1"
+(defconst graphviz-dot-mode-version "0.4.2"
   "Version of `graphviz-dot-mode.el'.")
 
 (defgroup graphviz nil
