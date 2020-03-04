@@ -771,8 +771,6 @@ then indent this and each subgraph in it."
         (message command-result)
       (progn
         (sleep-for 0 graphviz-dot-revert-delay)
-        (when (= (length windows) 1)
-          (split-window-sensibly))
         (with-selected-window (selected-window)
           (switch-to-buffer-other-window (find-file-noselect f-name t))
           ;; I get "changed on disk; really edit the buffer?" prompt w/o this
