@@ -21,7 +21,7 @@
 
 ;; Authors: Bjarte Johansen <bjarte.johansen@gmail.com>
 ;;          Pieter Pareit <pieter.pareit@gmail.com>
-;; Homepage: http://ppareit.github.com/graphviz-dot-mode/
+;; Homepage: https://ppareit.github.io/graphviz-dot-mode/
 ;; Created:
 ;; Last modified:
 ;; Version: 0.0.1
