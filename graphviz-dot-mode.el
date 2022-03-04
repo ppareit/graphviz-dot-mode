@@ -640,7 +640,6 @@ Variables specific to this mode:
   (when (buffer-file-name)
     (setq-local compile-command
                 (graphviz-compile-command (buffer-file-name))))
-  (when dot-menu (easy-menu-add dot-menu))
   (add-to-list 'compilation-error-regexp-alist 'dot)
   (add-to-list 'compilation-error-regexp-alist-alist
 	       '(dot "^Error: \\(.+\\): .*error in line \\([0-9]+\\).*" 1 2))
