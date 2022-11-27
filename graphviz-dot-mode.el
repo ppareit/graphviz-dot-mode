@@ -1,4 +1,4 @@
-;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
+;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).   -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002 - 2020, 2022 Pieter Pareit <pieter.pareit@gmail.com>
 
