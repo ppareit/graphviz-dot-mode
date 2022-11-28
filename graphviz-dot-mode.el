@@ -1,4 +1,4 @@
-;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
+;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).   -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002 - 2020, 2022 Pieter Pareit <pieter.pareit@gmail.com>
 
@@ -761,22 +761,37 @@ then indent this and each subgraph in it."
             (and (> bracket-count 0) (not (eobp))))))))
 
 ;;;###autoload
-(defun graphviz-dot-preview ()
-  "Compile the graph and preview it in an other buffer."
+(defun graphviz-dot-preview (&optional begin end)
+  "Compile the graph between BEGIN and END and preview it in an other buffer.
+
+BEGIN (resp. END) is a number defaulting to
+`point-min' (resp. `point-max') representing the current buffer's
+point where the graph definition starts (resp. stops)."
   (interactive)
-  (save-buffer)
-  (let ((windows (window-list))
-        (f-name (graphviz-output-file-name (buffer-file-name)))
-        (command-result (string-trim (shell-command-to-string compile-command))))
-    (if (string-prefix-p "Error:" command-result)
-        (message command-result)
-      (progn
-        (sleep-for 0 graphviz-dot-revert-delay)
-        (with-selected-window (selected-window)
-          (switch-to-buffer-other-window (find-file-noselect f-name t))
-          ;; I get "changed on disk; really edit the buffer?" prompt w/o this
-          (sleep-for 0 50)
-          (revert-buffer t t))))))
+  (let* ((use-empty-active-region nil)
+         (stdout (generate-new-buffer-name "*graphviz-dot*"))
+         (stderr (generate-new-buffer-name "*graphviz-dot-error*"))
+         (begin (or begin
+                    (and (use-region-p) (region-beginning))
+                    (point-min)))
+         (end (or end
+                  (and (use-region-p) (region-end))
+                  (point-max)))
+         (process (make-process
+                   :name "graphviz-dot"
+                   :command `(,graphviz-dot-dot-program
+                              ,(format "-T%s" graphviz-dot-preview-extension))
+                   :buffer stdout
+                   :stderr stderr
+                   :sentinel
+                   (lambda (_ event)
+                     (cond
+                      ((string= event "finished\n")
+                       (with-current-buffer stdout (image-mode))
+                       (display-buffer stdout))
+                      (t (display-buffer stderr)))))))
+    (process-send-region process begin end)
+    (process-send-eof process)))
 
 ;;;###autoload
 (defun graphviz-turn-on-live-preview ()
