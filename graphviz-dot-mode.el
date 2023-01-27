@@ -556,7 +556,7 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
     ("\\(?:di\\|sub\\)?graph\\(?:[[:space:]]+\\)\\(-?[0-9]*\\(\\.[0-9]*\\)?\\)"
      (1 font-lock-function-name-face))
     (,(regexp-opt graphviz-dot-value-keywords 'words)
-     . font-lock-reference-face)
+     . font-lock-constant-face)
     ;; to build the font-locking for the colors,
     ;; we need more room for max-specpdl-size,
     ;; after that we take the list of symbols,
