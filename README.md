@@ -57,17 +57,15 @@ Setting up graphviz-dot-mode
 ----------------------------------
 
 Now you can finally add Graphviz support to your Emacs by adding the
-following lines to your start-up file.
+following lines to your startup file.
 
 ``` emacs-lisp
 (use-package graphviz-dot-mode
   :ensure t
   :config
   (setq graphviz-dot-indent-width 4))
-
-(use-package company-graphviz-dot
-  )
 ```
+
 Evaluate above code or restart Emacs.
 
 Using `graphviz-dot-mode`
@@ -92,14 +90,15 @@ and any subgraph within it.
 
 ### Completion
 
-Completion makes use of
-[company-mode](http://company-mode.github.io/):
+Is available and makes use of the facilities provided by Emacs. Your
+preferred completion framework should plug into this.
 
-* `company-complete`
+For instance, if you use company, it can be configured by adding the
+following line to your startup file.
 
-  This command will complete the attribute or value keyword at
-point. If more than one completion is possible, a list with
-suggestions is displayed.
+``` emacs-lisp
+(add-hook 'graphviz-dot-mode-hook 'company-mode)
+```
 
 ### Commenting
 

@@ -147,6 +147,7 @@
 
 (require 'compile)
 (require 'subr-x)
+(require 'thingatpt)
 
 (defconst graphviz-dot-mode-version "0.4.2"
   "Version of `graphviz-dot-mode.el'.")
@@ -603,6 +604,61 @@ be changed with `graphviz-dot-preview-extension'."
                    (file-name-unquote
                     (file-local-name (graphviz-output-file-name f-name))))))))
 
+(defun graphviz-dot--syntax-at-point ()
+  "Return the syntax at point.
+This can be one of comment, string, out, value, attribute, color,
+arrow, shape, style, dir, outputmode or other."
+  (let ((state (syntax-ppss)))
+    (cond
+     ((nth 4 state) 'comment)
+     ((nth 3 state) 'string)
+     ((not (nth 1 state)) 'out)
+     (t (save-excursion
+          (skip-chars-backward "^[\\[,;=:\n]")
+          (backward-char)
+          (cond
+           ((looking-at "[\\[,;\n]") 'attribute)
+	   ((looking-at ":") 'compasspoint)
+           ((looking-at "=")
+	    (progn
+	      (backward-word 1)
+	      (cond
+	       ((looking-at "[a-zA-Z]*color")  'color)
+	       ((member (word-at-point) graphviz-attributes-type-arrow) 'arrow)
+	       ((member (word-at-point) graphviz-attributes-type-shape) 'shape)
+	       ((member (word-at-point) graphviz-attributes-type-style) 'style)
+	       ((member (word-at-point) graphviz-attributes-type-dir) 'dir)
+	       ((member (word-at-point) graphviz-attributes-type-outputmode) 'outputmode)
+	       ((member (word-at-point) graphviz-attributes-type-packmode) 'packmode)
+	       ((member (word-at-point) graphviz-attributes-type-pagedir) 'pagedir)
+	       ((member (word-at-point) graphviz-attributes-type-portpos) 'portpos)
+	       ((member (word-at-point) graphviz-attributes-type-bool) 'bool)
+	       (t 'value))))
+           (t 'other)))))))
+
+(defun graphviz-completion-at-point ()
+  "Function to use in the hook `completion-at-point-functions'."
+  (let* ((bounds (bounds-of-thing-at-point 'symbol))
+	 (start (if bounds (car bounds) (point)))
+	 (end (if bounds (cdr bounds) (point)))
+	 (collection
+	  (cl-case (graphviz-dot--syntax-at-point)
+	    (compasspoint graphviz-values-type-portpos)
+	    (color graphviz-dot-color-keywords)
+	    (arrow graphviz-values-type-arrow)
+	    (shape graphviz-values-type-shape)
+	    (style graphviz-values-type-style)
+	    (dir graphviz-values-type-dir)
+	    (outputmode graphviz-values-type-outputmode)
+	    (packmode graphviz-values-type-packmode)
+	    (pagedir graphviz-values-type-pagedir)
+	    (portpos graphviz-values-type-portpos)
+	    (bool graphviz-values-type-bool)
+	    (value graphviz-dot-value-keywords)
+	    ((comment string) nil)
+	    (t graphviz-dot-attr-keywords))))
+    (list start end collection . nil)))
+
 (defvar dot-menu nil
   "Menu for Graphviz Dot Mode.
 This menu will get created automatically if you have the `easymenu'
@@ -639,7 +695,7 @@ Variables specific to this mode:
   (setq-local font-lock-defaults '(graphviz-dot-font-lock-keywords))
   (setq-local comment-start "//")
   (setq-local comment-start-skip "/\\*+ *\\|//+ *")
-  (setq-local indent-line-function 'graphviz-dot-indent-line)
+  (setq-local indent-line-function #'graphviz-dot-indent-line)
   (setq-local syntax-propertize-function
               graphviz-dot-syntax-propertize-function)
   (when (buffer-file-name)
@@ -649,6 +705,10 @@ Variables specific to this mode:
   (add-to-list 'compilation-error-regexp-alist-alist
 	       '(dot "^Error: \\(.+\\): .*error in line \\([0-9]+\\).*" 1 2))
   (add-hook 'after-save-hook 'graphviz-live-reload-hook)
+  (add-hook 'completion-at-point-functions
+	    'graphviz-completion-at-point
+	    nil
+	    'local)
   (run-hooks 'graphviz-dot-mode-hook))
 
 ;;;; Menu definitions
