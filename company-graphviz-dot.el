@@ -33,6 +33,7 @@
 
 (require 'company)
 (require 'graphviz-dot-mode)
+(require 'thingatpt)
 
 (eval-when-compile
   (require 'cl-lib))

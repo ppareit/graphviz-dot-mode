@@ -152,7 +152,7 @@
   "Version of `graphviz-dot-mode.el'.")
 
 (defgroup graphviz nil
-  "Major mode for editing Graphviz Dot files"
+  "Major mode for editing Graphviz Dot files."
   :group 'tools)
 
 (defun graphviz-dot-customize ()
@@ -610,13 +610,18 @@ package.")
 
 ;;;###autoload
 (define-derived-mode graphviz-dot-mode prog-mode "dot"
-  "Major mode for the dot language. \\<graphviz-dot-mode-map>
-TAB indents for graph lines.
+  "Major mode for the dot language.
 
-\\[graphviz-dot-indent-graph]\t- Indentation function.
-\\[graphviz-dot-preview]\t- Previews graph in a buffer.
-\\[graphviz-dot-view]\t- Views graph in an external viewer.
-\\[graphviz-dot-indent-line]\t- Indents current line of code.
+Functionallity specific to this mode:
+
+  `indent-for-tab-command'    \\[indent-for-tab-command]
+        Indents a single line.
+  `graphviz-dot-preview'      \\[graphviz-dot-preview]
+        Previews graph in a buffer.
+  `graphviz-dot-view'         \\[graphviz-dot-view]
+        Views graph in an external viewer.
+  `graphviz-dot-indent-line'  \\[graphviz-dot-indent-line]
+        Indents current line of code.
 
 Variables specific to this mode:
 
