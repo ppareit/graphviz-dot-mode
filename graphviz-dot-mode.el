@@ -342,12 +342,22 @@ more information about possible attributes.")
 See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:pagedir for
 more information.")
 
+(defvar graphviz-attributes-splines
+  '("splines")
+  "The attributes that are `splines'.
+See URL ‘https://graphviz.org/docs/attrs/splines/’.")
+
+(defvar graphviz-attributes-splines-values
+  '("true" "false" "none" "line" "spline" "polyline" "ortho" "curved")
+  "The possible values that an attribute `splines' can have.
+See URL ‘https://graphviz.org/docs/attrs/splines/’.")
+
 (defvar graphviz-attributes-type-bool
   '("center" "compound" "concentrate" "constraint" "decorate"
     "diredgeconstraints" "fixedsize" "forcelabels" "headclip" "imagescale"
     "labelfloat" "landscape" "mosek" "newrank" "nojustify" "normalize"
     "notranslate" "overlap" "overlap_shrink" "pack" "pin" "quadtree" "regular"
-    "remincross" "root" "splines" "tailclip" "truecolor")
+    "remincross" "root" "tailclip" "truecolor")
   "The attributes that are of type `bool'.
 See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
 more information about possible attributes.")
@@ -632,6 +642,7 @@ arrow, shape, style, dir, outputmode or other."
 	       ((member (word-at-point) graphviz-attributes-type-packmode) 'packmode)
 	       ((member (word-at-point) graphviz-attributes-type-pagedir) 'pagedir)
 	       ((member (word-at-point) graphviz-attributes-type-portpos) 'portpos)
+	       ((member (word-at-point) graphviz-attributes-splines) 'splines)
 	       ((member (word-at-point) graphviz-attributes-type-bool) 'bool)
 	       (t 'value))))
            (t 'other)))))))
@@ -653,6 +664,7 @@ arrow, shape, style, dir, outputmode or other."
 	    (packmode graphviz-values-type-packmode)
 	    (pagedir graphviz-values-type-pagedir)
 	    (portpos graphviz-values-type-portpos)
+	    (splines graphviz-attributes-splines-values)
 	    (bool graphviz-values-type-bool)
 	    (value graphviz-dot-value-keywords)
 	    ((comment string) nil)
