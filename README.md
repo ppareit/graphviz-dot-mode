@@ -134,7 +134,7 @@ extension determined by the variable `graphviz-dot-preview-extension`.
 * `` C-x ` `` (`next-error`)
 
   This command will jump to the location in the source file of the
-next error from the most recent compile. Use `C-c c` to compile first.
+next error from the most recent compile. Use `C-c C-c` to compile first.
 
 ### Viewing
 
@@ -148,7 +148,7 @@ displaying the graphic file output by `dot`.
   See `image-file-name-extensions` to customize the graphic files that
   can be displayed.
 
-* `C-c v` (`graphviz-dot-view`)
+* `C-c C-v` (`graphviz-dot-view`)
 
   This command invokes an external viewer specified by the variable
 `graphviz-dot-view-command`. If `graphviz-dot-view-edit-command` is
