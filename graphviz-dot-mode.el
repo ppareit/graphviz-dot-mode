@@ -242,9 +242,8 @@ not immediately visible."
 
 (defvar graphviz-attributes-type-arrow
   '("arrowhead" "arrowtail")
-  "The attributes that are of type `arrow'.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
-more information about possible attributes.")
+  "The attributes that are of type `arrowType'.
+See URL `https://graphviz.org/docs/attr-types/arrowType/'.")
 
 (defvar graphviz-values-type-arrow
   '("box" "lbox" "rbox" "obox" "olbox" "orbox"
@@ -257,15 +256,13 @@ more information about possible attributes.")
     "tee" "ltee" "rtee"
     "vee" "lvee" "rvee"
     "curve" "lcurve" "rcurve" "ocurve" "olcurve" "orcurve")
-  "The possible values that an attribute of type `arrow' can have.
-See https://graphviz.gitlab.io/_pages/doc/info/arrows.html for
-more information about the arrow shape.")
+  "The possible values that an attribute of type `arrowType' can have.
+See URL 'https://graphviz.org/doc/info/arrows.html.'")
 
 (defvar graphviz-attributes-type-shape
   '("shape")
   "The attributes that are of type `shape'.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
-more information about possible attributes.")
+See URL `https://graphviz.org/docs/attr-types/shape/'.")
 
 (defvar graphviz-values-type-shape
   '("box" "polygon" "ellipse" "oval" "circle" "point" "egg" "triangle" "plaintext"
@@ -276,91 +273,85 @@ more information about possible attributes.")
     "box3d" "component" "promoter" "cds" "terminator" "utr" "primersite"
     "restrictionsite" "fivepoverhang" "threepoverhang" "noverhang" "assembly"
     "signature" "insulator" "ribosite" "rnastab" "proteasesite" "proteinstab"
-    "rpromoter" "rarrow" "larrow" "lpromoter")
+    "rpromoter" "rarrow" "larrow" "lpromoter"
+    "record")
   "The possible values that an attribute of type `shape' can have.
-See https://graphviz.gitlab.io/_pages/doc/info/shape.html for
-more information about the node shapes.")
+See URL `https://graphviz.org/doc/info/shapes.html'.")
 
 (defvar graphviz-attributes-type-style
   '("style")
   "The attributes that are of type `style'.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
-more information about possible attributes.")
+See URL `https://graphviz.org/docs/attrs/style/'.")
 
 (defvar graphviz-values-type-style
-  '("dashed" "dotted" "solid" "invis" "bold" "tapered" "filled" "striped"
-    "wedged" "diagonals" "rounded" "filled" "striped" "rounded" "radial")
+  '("dashed" "dotted" "solid" "invis" "bold"
+    "tapered"
+    "filled" "striped" "wedged" "diagonals" "rounded"
+    "filled" "striped" "rounded"
+    "radial")
   "The possible values that an attribute of type `style' can have.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:style for
-more information about possible styles.")
+See URL `https://graphviz.org/docs/attr-types/style/'.")
 
 (defvar graphviz-attributes-type-dir
   '("dir")
-  "The attributes that are of type `bool'.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
-more information about possible attributes.")
+  "The attributes that are of type `dirType'.
+See URL `https://graphviz.org/docs/attrs/dir/'.")
 
 (defvar graphviz-values-type-dir
   '("forward" "back" "both" "none")
-  "The possible values that an attribute of type `dir' can have.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:dirType for
-more information about the direction that edges can have.")
+  "The possible values that an attribute of type `dirType' can have.
+See URL `https://graphviz.org/docs/attr-types/dirType/'.")
 
 (defvar graphviz-attributes-type-outputmode
   '("outputorder")
   "The attributes that are of type `outputMode'.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
-more information about possible attributes.")
+See URL `https://graphviz.org/docs/attrs/outputorder/'.")
 
 (defvar graphviz-values-type-outputmode
   '("breadthfirst" "nodesfirst" "edgesfirst")
   "The possible values that an attribute of type `outputMode' can have.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:outputMode for
-more information.")
+See URL `https://graphviz.org/docs/attr-types/outputMode/'.")
 
 (defvar graphviz-attributes-type-packmode
   '("packmode")
   "The attributes that are of type `packMode'.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
-more information about possible attributes.")
+See URL `https://graphviz.org/docs/attrs/packmode/'.")
 
 (defvar graphviz-values-type-packmode
   '("node" "clust" "array")
   "The possible values that an attribute of type `packMode' can have.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:packMode for
-more information.")
+See URL `https://graphviz.org/docs/attr-types/packMode/'.")
 
 (defvar graphviz-attributes-type-pagedir
   '("pagedir")
   "The attributes that are of type `pagedir'.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
-more information about possible attributes.")
+See URL `https://graphviz.org/docs/attrs/pagedir/'.")
 
 (defvar graphviz-values-type-pagedir
   '("BL" "BR" "TL" "TR" "RB" "RT" "LB" "LT")
   "The possible values that an attribute of type `pagedir' can have.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:pagedir for
-more information.")
+See URL `https://graphviz.org/docs/attr-types/pagedir/'.")
 
 (defvar graphviz-attributes-splines
   '("splines")
   "The attributes that are `splines'.
-See URL ‘https://graphviz.org/docs/attrs/splines/’.")
+See URL `https://graphviz.org/docs/attrs/splines/'.")
 
 (defvar graphviz-attributes-splines-values
   '("true" "false" "none" "line" "spline" "polyline" "ortho" "curved")
   "The possible values that an attribute `splines' can have.
-See URL ‘https://graphviz.org/docs/attrs/splines/’.")
+See URL `https://graphviz.org/docs/attrs/splines/'.")
 
 (defvar graphviz-attributes-type-bool
-  '("center" "compound" "concentrate" "constraint" "decorate"
-    "diredgeconstraints" "fixedsize" "forcelabels" "headclip" "imagescale"
-    "labelfloat" "landscape" "mosek" "newrank" "nojustify" "normalize"
-    "notranslate" "overlap" "overlap_shrink" "pack" "pin" "quadtree" "regular"
-    "remincross" "root" "tailclip" "truecolor")
+  '("beautify" "center" "cluster" "compound" "concentrate" "constraint"
+    "decorate" "diredgeconstraints" "fixedsize" "forcelabels" "headclip"
+    "imagescale" "labelfloat" "landscape" "newrank" "nojustify" "normalize"
+    "notranslate" "oneblock" "overlap" "overlap_shrink" "pack" "pin" "quadtree"
+    "regular" "remincross" "root" "splines" "tailclip" "truecolor")
   "The attributes that are of type `bool'.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
-more information about possible attributes.")
+Some atributes like `splines' are more specific then bool.  So during switching
+one type, checking for `bool' must come last.
+See URL `https://graphviz.org/docs/attr-types/bool/'.")
 
 (defvar graphviz-values-type-bool
   '("true" "false" "yes" "no" "1" "0")
@@ -369,15 +360,13 @@ more information about possible attributes.")
 (defvar graphviz-attributes-type-portpos
   '("headport" "tailport")
   "The attributes that are of type `portPos'.
-See https://graphviz.gitlab.io/_pages/doc/info/attrs.html for
-more information about possible attributes.")
+See URL `https://graphviz.org/docs/attr-types/portPos/'.")
 
 (defvar graphviz-values-type-portpos
   '("n" "ne" "e" "se" "s" "sw" "w" "nw" "c" "_")
   "The possible values that an attribute of type `portPos' can have.
-The can also be used on the edge as a compass point.  See
-https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:portPos
-for more information.")
+They can also be used on the edge as a compass point.
+See URL `https://graphviz.org/docs/attr-types/portPos/'.")
 
 (defcustom graphviz-dot-value-keywords
   '("true" "false" "normal" "inv" "dot" "invdot" "odot" "invodot"
@@ -524,8 +513,7 @@ not immediately visible."
     "wheat3" "wheat4" "white" "whitesmoke" "yellow" "yellow1" "yellow2"
     "yellow3" "yellow4" "yellowgreen")
   "Possible color constants in the dot language.
-The list of constant is available at http://www.research.att.com/~erg/graphviz\
-/info/colors.html")
+See URL `https://graphviz.org/doc/info/colors.html'")
 
 
 ;;; Key map
@@ -559,7 +547,6 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
    ("^#" (0 "< b"))))
 
 (defvar graphviz-dot-font-lock-keywords
-  ;; See https://graphviz.gitlab.io/_pages/doc/info/lang.html.
   `(;; Match ID, first case
     ("\\(?:di\\|sub\\)?graph\\(?:[[:space:]]+\\)\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)"
      (1 font-lock-function-name-face))
@@ -590,7 +577,8 @@ The list of constant is available at http://www.research.att.com/~erg/graphviz\
      1 'font-lock-keyword-face)
     ;; The 'subgraph' nonterminal
     ("\\_<subgraph\\_>" . 'font-lock-keyword-face))
-  "Keyword highlighting specification for `graphviz-dot-mode'.")
+  "Keyword highlighting specification for `graphviz-dot-mode'.
+See URL `https://graphviz.org/doc/info/lang.html'.")
 
 (defun graphviz-output-file-name (f-name)
   "Return the filename of the preview, using F-NAME."
