@@ -42,8 +42,8 @@
 ;; automatic, indentation uses the same commands as other modes, tab,
 ;; M-j and C-M-q.  Insertion of comments uses the same commands as
 ;; other modes, M-; .  You can compile a file using M-x compile or C-c
-;; c, after that M-x next-error will also work.  There is support for
-;; viewing an generated image with C-c p.
+;; C- c, after that M-x next-error will also work.  There is support
+;; for viewing an generated image with C-c C-p.
 ;;
 ;;; Todo:
 ;;
