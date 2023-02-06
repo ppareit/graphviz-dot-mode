@@ -825,6 +825,12 @@ then indent this and each subgraph in it."
             ;; as long as we are not completed or at end of buffer
             (and (> bracket-count 0) (not (eobp))))))))
 
+(defconst graphviz-preview-buffer
+  "*Graphviz Preview: %s*")
+
+(defconst graphviz-error-buffer
+  "*Graphviz Errors*")
+
 ;;;###autoload
 (defun graphviz-dot-preview (&optional begin end)
   "Compile the graph between BEGIN and END and preview it in an other buffer.
@@ -834,8 +840,9 @@ BEGIN (resp. END) is a number defaulting to
 point where the graph definition starts (resp. stops)."
   (interactive)
   (let* ((use-empty-active-region nil)
-         (stdout (generate-new-buffer-name "*graphviz-dot*"))
-         (stderr (generate-new-buffer-name "*graphviz-dot-error*"))
+         (graphviz-preview-buffer (format graphviz-preview-buffer (buffer-name)))
+         (stdout (get-buffer-create graphviz-preview-buffer))
+         (stderr (get-buffer-create graphviz-error-buffer))
          (begin (or begin
                     (and (use-region-p) (region-beginning))
                     (point-min)))
@@ -852,11 +859,16 @@ point where the graph definition starts (resp. stops)."
                    (lambda (_ event)
                      (cond
                       ((string= event "finished\n")
-                       (with-current-buffer stdout (image-mode))
+                       (with-current-buffer stdout
+                         (beginning-of-buffer)
+                         (image-mode))
                        (display-buffer stdout))
                       (t (display-buffer stderr)))))))
+    (with-current-buffer stdout
+      (fundamental-mode)
+      (erase-buffer))
     (process-send-region process begin end)
-    (process-send-eof process)))
+      (process-send-eof process)))
 
 ;;;###autoload
 (defun graphviz-turn-on-live-preview ()
