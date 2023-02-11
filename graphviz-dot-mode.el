@@ -846,10 +846,11 @@ INPUT-FILE is the file we are previewing."
     (let ((inhibit-read-only t))
       (goto-char (point-min))
       (while (search-forward "<stdin>" nil t)
-	(replace-match  input-file))
-      (goto-char (point-min)))
+	(replace-match  input-file)))
     (compilation-mode))
-  (display-buffer stderr-buffer))
+  (display-buffer stderr-buffer)
+  (with-selected-window (get-buffer-window stderr-buffer)
+    (goto-char (point-min))))
 
 ;;;###autoload
 (defun graphviz-dot-preview (&optional begin end)
