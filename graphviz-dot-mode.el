@@ -831,16 +831,36 @@ then indent this and each subgraph in it."
 (defconst graphviz-error-buffer
   "*Graphviz Errors*")
 
+(defun graphviz--display-preview-buffer (stdout-buffer)
+  "Display STDOUT-BUFFER as the dot preview."
+  (with-current-buffer stdout-buffer
+    (goto-char (point-min))
+    (image-mode))
+  (display-buffer stdout-buffer))
+
+(defun graphviz--display-stderr-buffer (stderr-buffer input-file)
+  "Display the compilation buffer when the preview fails.
+STDERR-BUFFER is the compilation buffer.
+INPUT-FILE is the file we are previewing."
+  (with-current-buffer stderr-buffer
+    (let ((inhibit-read-only t))
+      (goto-char (point-min))
+      (while (search-forward "<stdin>" nil t)
+	(replace-match  input-file))
+      (goto-char (point-min)))
+    (compilation-mode))
+  (display-buffer stderr-buffer))
+
 ;;;###autoload
 (defun graphviz-dot-preview (&optional begin end)
   "Compile the graph between BEGIN and END and preview it in an other buffer.
-
-BEGIN (resp. END) is a number defaulting to
-`point-min' (resp. `point-max') representing the current buffer's
-point where the graph definition starts (resp. stops)."
+BEGIN (resp. END) is a number defaulting to `point-min' (resp. `point-max')
+representing the current buffer's point where the graph definition starts
+\(resp. stops)."
   (interactive)
   (let* ((use-empty-active-region nil)
-         (graphviz-preview-buffer (format graphviz-preview-buffer (buffer-name)))
+         (graphviz-preview-buffer (format graphviz-preview-buffer
+					  (buffer-name)))
          (stdout (get-buffer-create graphviz-preview-buffer))
          (stderr (get-buffer-create graphviz-error-buffer))
          (begin (or begin
@@ -859,16 +879,19 @@ point where the graph definition starts (resp. stops)."
                    (lambda (_ event)
                      (cond
                       ((string= event "finished\n")
-                       (with-current-buffer stdout
-                         (beginning-of-buffer)
-                         (image-mode))
-                       (display-buffer stdout))
-                      (t (display-buffer stderr)))))))
+                       (graphviz--display-preview-buffer stdout))
+                      ((string-prefix-p "exited" event)
+		       (graphviz--display-stderr-buffer stderr
+							(buffer-name))))))))
     (with-current-buffer stdout
       (fundamental-mode)
       (erase-buffer))
+    (with-current-buffer stderr
+      (let ((inhibit-read-only t))
+	(fundamental-mode)
+	(erase-buffer)))
     (process-send-region process begin end)
-      (process-send-eof process)))
+    (process-send-eof process)))
 
 ;;;###autoload
 (defun graphviz-turn-on-live-preview ()
