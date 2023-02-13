@@ -192,7 +192,7 @@ You can use `%s' in this string, and it will be substituted by the buffer name."
   :type 'boolean
   :group 'graphviz)
 
-(defcustom graphviz-dot-indent-width tab-width
+(defcustom graphviz-dot-indent-width standard-indent
   "*Indentation width in Graphviz Dot mode buffers."
   :type 'integer
   :group 'graphviz)

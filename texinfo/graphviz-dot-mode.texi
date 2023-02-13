@@ -567,8 +567,8 @@ is called when a semicolon @kbd{;} is typed. Set this boolean variable
 to @code{t} (true) or @code{nil} (false).
 
 @item graphviz-dot-indent-width
-@vindex default-tab-width
-integer, default: @code{default-tab-width}
+@vindex standard-indent
+integer, default: @code{standard-indent}
 
 This variable determines the indentation used in @value{PACKAGE} buffers.
 

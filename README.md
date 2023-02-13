@@ -210,7 +210,7 @@ dot-file viewer command name when you use `C-c C-v`
 the viewer command variable `graphviz-dot-view-command` every time you
 use `C-c C-v` or `nil` to avoid the prompt.
 
-* `graphviz-dot-indent-width` integer, default: `default-tab-width`
+* `graphviz-dot-indent-width` integer, default: `standard-indent`
 
   This variable determines the indentation used in `graphviz-dot-mode`
 buffers.
