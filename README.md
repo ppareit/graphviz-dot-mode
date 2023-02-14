@@ -123,6 +123,14 @@ comment to the line and indent it.
 comment if within one. This indents the body of the continued comment
 under the previous comment line.
 
+### Choosing layout
+
+* `M-x graphviz-dot-set-layout`
+
+  This command lets you choose the layout program for your graphs.
+The default is `dot`. The list of layout programs is in
+`C-h v graphviz-dot-layout-programs` and can be customized.
+
 ### Compiling
 
 * `C-c C-c` (`compile`)
@@ -168,7 +176,7 @@ You may customize variables by typing
 
 `M-x graphviz-dot-customize RET`
 
-or by setting them to different values in your start-up file.
+or by setting them to different values in your startup file.
 
 * `graphviz-dot-dot-program` string, default: “dot”
 
