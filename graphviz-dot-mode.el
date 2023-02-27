@@ -763,7 +763,9 @@ Variables specific to this mode:
    ;; other cases need to look at previous lines
    (t
     (indent-line-to (save-excursion
-                      (forward-line -1)
+		      (forward-line -1)
+		      (while (looking-back "^[[:space:]]*$" (line-beginning-position))
+			(forward-line -1))
                       (cond
                        ((looking-at "\\(^.*{[^}]*$\\)")
                         ;; previous line opened a block
