@@ -764,7 +764,8 @@ Variables specific to this mode:
    (t
     (indent-line-to (save-excursion
 		      (forward-line -1)
-		      (while (looking-back "^[[:space:]]*$" (line-beginning-position))
+		      (while (and (not (bobp))
+                                  (looking-back "^[[:space:]]*$" (line-beginning-position)))
 			(forward-line -1))
                       (cond
                        ((looking-at "\\(^.*{[^}]*$\\)")
@@ -782,22 +783,24 @@ Variables specific to this mode:
                         ;; previous line stopped filling
                         ;; attributes, find the line that started
                         ;; filling them and indent to that line
-                        (while (or (looking-at ".*\\[.*\\].*")
-                                   (not (looking-at ".*\\[.*"))) ; TODO:PP : "
+                        (while (and (not (bobp))
+                                    (or (looking-at ".*\\[.*\\].*")
+                                        (not (looking-at ".*\\[.*")))) ; TODO:PP : "
                           (forward-line -1))
                         (current-indentation))
                        (t
                         ;; default case, indent the
                         ;; same as previous NON-BLANK line
                         ;; (or the first line, if there are no previous non-blank lines)
-                        (while (and (< (point-min) (point))
+                        (while (and (not (bobp))
                                     (looking-at "^\[ \t\]*$"))
                           (forward-line -1))
                         ;; if we find a closing square bracket, don't indent
                         ;; to the level of its attributes, but instead
                         ;; find the opening bracket and indent to that
                         (if (looking-at ".*\\].*")
-                            (while (not (looking-at ".*\\[.*"))
+                            (while (and (not (bobp))
+                                        (not (looking-at ".*\\[.*")))
                               (forward-line -1)))
                         (current-indentation)) ))) )))
 
