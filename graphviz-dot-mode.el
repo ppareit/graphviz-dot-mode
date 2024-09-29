@@ -668,7 +668,7 @@ package.")
 (define-derived-mode graphviz-dot-mode prog-mode "dot"
   "Major mode for the dot language.
 
-Functionallity specific to this mode:
+Functionality specific to this mode:
 
   `indent-for-tab-command'    \\[indent-for-tab-command]
         Indents a single line.
