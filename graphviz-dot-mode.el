@@ -257,7 +257,7 @@ See URL `https://graphviz.org/docs/attr-types/arrowType/'.")
     "vee" "lvee" "rvee"
     "curve" "lcurve" "rcurve" "ocurve" "olcurve" "orcurve")
   "The possible values that an attribute of type `arrowType' can have.
-See URL 'https://graphviz.org/doc/info/arrows.html.'")
+See URL `https://graphviz.org/doc/info/arrows.html.'")
 
 (defvar graphviz-attributes-type-shape
   '("shape")
