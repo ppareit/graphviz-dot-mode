@@ -881,6 +881,7 @@ representing the current buffer's point where the graph definition starts
                               ,(format "-T%s" graphviz-dot-preview-extension))
                    :buffer stdout
                    :stderr stderr
+                   :connection-type 'pipe
                    :sentinel
                    (lambda (_ event)
                      (cond
