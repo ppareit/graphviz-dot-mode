@@ -257,7 +257,7 @@ See URL `https://graphviz.org/docs/attr-types/arrowType/'.")
     "vee" "lvee" "rvee"
     "curve" "lcurve" "rcurve" "ocurve" "olcurve" "orcurve")
   "The possible values that an attribute of type `arrowType' can have.
-See URL 'https://graphviz.org/doc/info/arrows.html.'")
+See URL `https://graphviz.org/doc/info/arrows.html.'")
 
 (defvar graphviz-attributes-type-shape
   '("shape")
@@ -560,7 +560,7 @@ See URL `https://graphviz.org/doc/info/colors.html'")
     ;; after that we take the list of symbols,
     ;; convert them to a list of strings, and make
     ;; an optimized regexp from them
-    (,(let ((max-specpdl-size (max max-specpdl-size 1200)))
+    (,(let ((max-lisp-eval-depth (max max-lisp-eval-depth 1200)))
         (regexp-opt graphviz-dot-color-keywords 'words))
      . font-lock-string-face)
     (,(concat
