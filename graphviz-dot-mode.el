@@ -635,29 +635,80 @@ arrow, shape, style, dir, outputmode or other."
 	       (t 'value))))
            (t 'other)))))))
 
+;; dynamic node completion
+(defun graphviz-dot--collect-node-ids ()
+  "Return a de-duplicated list of node IDs in the current buffer.
+
+• Ignores identifiers inside comments, double-quoted strings,
+  square-bracket attribute lists, or immediately following an '=' or ':'.
+• Filters out everything in `graphviz-dot-attr-keywords`
+  so language and attribute names never appear."
+  (save-excursion
+    (goto-char (point-min))
+    (let (ids)
+      (while (re-search-forward
+              ;; bare identifiers or double-quoted identifiers
+              "\\(?:\\_<\\([A-Za-z_][A-Za-z0-9_]*\\)\\_>\\|\"\\([^\"]+\\)\"\\)"
+              nil t)
+        (let* ((match-beg   (match-beginning 0))
+               (match-end   (match-end 0))         ; keep point progressing
+               (state       (syntax-ppss match-beg))
+               (in-string   (nth 3 state))
+               (in-comment  (nth 4 state))
+               (bracket-pos (nth 1 state))
+               (in-attr-list
+                (and bracket-pos (eq (char-after bracket-pos) ?\[)))
+               ;; identifier just after '='  ?
+               (preceded-by-equal
+                (save-excursion
+                  (goto-char match-beg)
+                  (skip-chars-backward " \t")
+                  (eq (char-before) ?=)))
+               ;; identifier just after ':'  ?
+               (preceded-by-colon
+                (save-excursion
+                  (goto-char match-beg)
+                  (skip-chars-backward " \t")
+                  (eq (char-before) ?:))))
+          (unless (or in-string in-comment in-attr-list
+                      preceded-by-equal preceded-by-colon)
+            (push (or (match-string-no-properties 1)
+                      (match-string-no-properties 2))
+                  ids))
+          (goto-char match-end)))
+      (cl-set-difference
+       (cl-delete-duplicates ids :test #'string= :from-end t)
+       graphviz-dot-attr-keywords
+       :test #'string=))))
+
 (defun graphviz-completion-at-point ()
-  "Function to use in the hook `completion-at-point-functions'."
+  "Offer context-aware completion for Graphviz.
+Adds dynamic node/subgraph names alongside the static keyword tables."
   (let* ((bounds (bounds-of-thing-at-point 'symbol))
-	 (start (if bounds (car bounds) (point)))
-	 (end (if bounds (cdr bounds) (point)))
-	 (collection
-	  (cl-case (graphviz-dot--syntax-at-point)
-	    (compasspoint graphviz-values-type-portpos)
-	    (color graphviz-dot-color-keywords)
-	    (arrow graphviz-values-type-arrow)
-	    (shape graphviz-values-type-shape)
-	    (style graphviz-values-type-style)
-	    (dir graphviz-values-type-dir)
-	    (outputmode graphviz-values-type-outputmode)
-	    (packmode graphviz-values-type-packmode)
-	    (pagedir graphviz-values-type-pagedir)
-	    (portpos graphviz-values-type-portpos)
-	    (splines graphviz-attributes-splines-values)
-	    (bool graphviz-values-type-bool)
-	    (value graphviz-dot-value-keywords)
-	    ((comment string) nil)
-	    (t graphviz-dot-attr-keywords))))
-    (list start end collection . nil)))
+         (start  (if bounds (car bounds) (point)))
+         (end    (if bounds (cdr bounds) (point)))
+         (context (graphviz-dot--syntax-at-point))
+         (collection
+          (cl-case context
+            (compasspoint graphviz-values-type-portpos)
+            (color        graphviz-dot-color-keywords)
+            (arrow        graphviz-values-type-arrow)
+            (shape        graphviz-values-type-shape)
+            (style        graphviz-values-type-style)
+            (dir          graphviz-values-type-dir)
+            (outputmode   graphviz-values-type-outputmode)
+            (packmode     graphviz-values-type-packmode)
+            (pagedir      graphviz-values-type-pagedir)
+            (portpos      graphviz-values-type-portpos)
+            (splines      graphviz-attributes-splines-values)
+            (bool         graphviz-values-type-bool)
+            (value        graphviz-dot-value-keywords)
+            ((comment string) nil)                       ; nothing in strings/comments
+            (t (append (graphviz-dot--collect-node-ids)  ; in all other places
+                       graphviz-dot-attr-keywords)))))
+    (when collection
+      (list start end collection :exclusive 'no))))
+
 
 (defvar dot-menu nil
   "Menu for Graphviz Dot Mode.
