@@ -982,14 +982,9 @@ This creates an external process every time it is executed.  If
 saved before the command is executed."
   (interactive)
   (let ((cmd (if graphviz-dot-view-edit-command
-                 (if (fboundp 'read-shell-command)
                      (read-shell-command "View command: "
                                          (format graphviz-dot-view-command
                                                  (shell-quote-argument (buffer-file-name))))
-                   ;; read-shell-command not available in GNU Emacs 21
-                   (read-from-minibuffer "View command: "
-                                         (format graphviz-dot-view-command
-                                                 (shell-quote-argument (buffer-file-name)))))
                (format graphviz-dot-view-command
                        (shell-quote-argument (buffer-file-name))))))
     (if graphviz-dot-save-before-view
