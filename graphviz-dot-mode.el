@@ -144,7 +144,7 @@
 ;;             implementing font-lock.
 
 ;;; Code:
-
+(require 'cl-lib)
 (require 'compile)
 (require 'subr-x)
 (require 'thingatpt)
