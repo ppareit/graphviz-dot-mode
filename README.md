@@ -63,7 +63,9 @@ following lines to your startup file.
 (use-package graphviz-dot-mode
   :ensure t
   :config
-  (setq graphviz-dot-indent-width 4))
+  (setq graphviz-dot-indent-width 4)
+  :hook
+  (graphviz-dot-mode . flycheck-mode))
 ```
 
 Evaluate above code or restart Emacs.
