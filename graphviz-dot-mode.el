@@ -78,7 +78,7 @@
 (defcustom graphviz-dot-layout-programs
   '("dot" "neato" "fdp" "sfdp" "twopi" "twopi" "circo")
   "*List of layout programs for the user to choose from."
-  :type 'list
+  :type '(repeat (string :tag "Program"))
   :group 'graphviz)
 
 (defcustom graphviz-dot-view-command "dotty %s"
