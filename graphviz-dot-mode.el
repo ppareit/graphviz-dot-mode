@@ -47,104 +47,8 @@
 ;;
 ;;; Todo:
 ;;
-;;; History:
-;; Version 0.4.2 Pieter Pareit
-;; 25/01/2020: * Fix issues
-;;             * Improve font-locking
-;;             * Improve completion by implementing company mode
-;;             * Rewrote basic documentation
-;; Version 0.4.1 Pieter Pareit
-;; 28/09/2019: * Maintenance, checking documentation, fixing flycheck errors.
-;;             * Solve next-error for gaphviz
-;;             * Tag new version
-;; Version 0.3.11 Olli Piepponen
-;; 29/01/2016: * use define-derived-mode for the mode-definition
-;;             * add support for a auto-loading live preview work flow
-;; Version 0.3.10 Kevin Ryde
-;; 25/05/2015: * shell-quote-argument for safety
-;;             * use read-shell-command whenever available, don't set novaproc
-;; Version 0.3.9 Titus Barik <titus AT barik.net>
-;; 28/08/2012: * compile-command uses -ofile instead of >
-;; Version 0.3.8 new home
-;; 27/06/2012: * put graphviz-dot-mode into git, updated links
-;; Version 0.3.7 Tim Allen
-;; 09/03/2011: * fix spaces in file names when compiling
-;; Version 0.3.6 maintenance
-;; 19/02/2011: * .gv is the new extension  (Pander)
-;;             * comments can start with # (Pander)
-;;             * highlight of new keywords (Pander)
-;; Version 0.3.5 bug (or at least feature I dislike) fix
-;; 11/11/2010:  Eric Anderson http://www.ece.cmu.edu/~andersoe/
-;;             * Preserve indentation across blank (whitespace-only) lines
-;; Version 0.3.4 bug fixes
-;; 24/02/2005: * fixed a bug in graphviz-dot-preview
-;; Version 0.3.3 bug fixes
-;; 13/02/2005: Reuben Thomas <rrt AT sc3d.org>
-;;             * add graphviz-dot-indent-width
-;; Version 0.3.2 bug fixes
-;; 25/03/2004: Rubens Ramos <rubensr AT users.sourceforge.net>
-;;             * semi-colons and brackets are added when electric
-;;               behaviour is disabled.
-;;             * electric characters do not behave electrically inside
-;;               comments or strings.
-;;             * default for electric-braces is disabled now (makes more
-;;               sense I guess).
-;;             * using read-from-minibuffer instead of read-shell-command
-;;               for emacs.
-;;             * Fixed test for easymenu, so that it works on older
-;;               versions of XEmacs.
-;;             * Fixed indentation error when trying to indent last brace
-;;               of an empty graph.
-;;             * region-active-p does not exist in emacs (21.2 at least),
-;;               so removed from code
-;;             * Added uncomment menu option
-;; Version 0.3.1 bug fixes
-;; 03/03/2004: * backward-word needs argument for older emacs
-;; Version 0.3 added features and fixed bugs
-;; 10/01/2004: fixed a bug in graphviz-dot-indent-graph
-;; 08/01/2004: Rubens Ramos <rubensr AT users.sourceforge.net>
-;;             * added customization support
-;;             * Now it works on XEmacs and Emacs
-;;             * Added support to use an external Viewer
-;;             * Now things do not break when dot mode is entered
-;;               when there is no buffer name, but the side effect is
-;;               that in this case, the compilation command is not
-;;               correct.
-;;             * Preview works on XEmacs and emacs.
-;;             * Electric indentation on newline
-;;             * Minor changes to indentation
-;;             * Added keyword completion (but could be A LOT better)
-;;             * There are still a couple of ugly hacks. Look for 'RR'.
-;; Version 0.2 added features
-;; 11/11/2002: added preview support.
-;; 10/11/2002: indent a graph or subgraph at once with C-M-q.
-;; 08/11/2002: relaxed rules for indentation, the may now be extra chars
-;;             after beginning of graph (comment's for example).
-;; Version 0.1.2 bug fixes and naming issues
-;; 06/11/2002: renamed dot-font-lock-defaults to dot-font-lock-keywords.
-;;             added some documentation to dot-colors.
-;;             provided a much better way to handle my max-specpdl-size
-;;             problem.
-;;             added an extra autoload cookie (hope this helps, as I don't
-;;             yet use autoload myself)
-;; Version 0.1.1 bug fixes
-;; 06/11/2002: added an missing attribute, for font-locking to work.
-;;             fixed the regex generating, so that it only recognizes
-;;             whole words
-;; 05/11/2002: there can now be extra whitespace chars after an '{'.
-;; 04/11/2002: Why I use max-specpdl-size is now documented, and old value
-;;             gets restored.
-;; Version 0.1 initial release
-;; 02/11/2002: implemented parser for *compilation* of a .dot file.
-;; 01/11/2002: implemented compilation of an .dot file.
-;; 31/10/2002: added syntax-table to the mode.
-;; 30/10/2002: implemented indentation code.
-;; 29/10/2002: implemented all of font-lock.
-;; 28/10/2002: derived graphviz-dot-mode from fundamental-mode, started
-;;             implementing font-lock.
-
 ;;; Code:
-
+(require 'cl-lib)
 (require 'compile)
 (require 'subr-x)
 (require 'thingatpt)
@@ -257,7 +161,7 @@ See URL `https://graphviz.org/docs/attr-types/arrowType/'.")
     "vee" "lvee" "rvee"
     "curve" "lcurve" "rcurve" "ocurve" "olcurve" "orcurve")
   "The possible values that an attribute of type `arrowType' can have.
-See URL 'https://graphviz.org/doc/info/arrows.html.'")
+See URL `https://graphviz.org/doc/info/arrows.html.'")
 
 (defvar graphviz-attributes-type-shape
   '("shape")
@@ -560,7 +464,7 @@ See URL `https://graphviz.org/doc/info/colors.html'")
     ;; after that we take the list of symbols,
     ;; convert them to a list of strings, and make
     ;; an optimized regexp from them
-    (,(let ((max-specpdl-size (max max-specpdl-size 1200)))
+    (,(let ((max-lisp-eval-depth (max max-lisp-eval-depth 1200)))
         (regexp-opt graphviz-dot-color-keywords 'words))
      . font-lock-string-face)
     (,(concat
@@ -635,29 +539,80 @@ arrow, shape, style, dir, outputmode or other."
 	       (t 'value))))
            (t 'other)))))))
 
+;; dynamic node completion
+(defun graphviz-dot--collect-node-ids ()
+  "Return a de-duplicated list of node IDs in the current buffer.
+
+• Ignores identifiers inside comments, double-quoted strings,
+  square-bracket attribute lists, or immediately following an '=' or ':'.
+• Filters out everything in `graphviz-dot-attr-keywords`
+  so language and attribute names never appear."
+  (save-excursion
+    (goto-char (point-min))
+    (let (ids)
+      (while (re-search-forward
+              ;; bare identifiers or double-quoted identifiers
+              "\\(?:\\_<\\([A-Za-z_][A-Za-z0-9_]*\\)\\_>\\|\"\\([^\"]+\\)\"\\)"
+              nil t)
+        (let* ((match-beg   (match-beginning 0))
+               (match-end   (match-end 0))         ; keep point progressing
+               (state       (syntax-ppss match-beg))
+               (in-string   (nth 3 state))
+               (in-comment  (nth 4 state))
+               (bracket-pos (nth 1 state))
+               (in-attr-list
+                (and bracket-pos (eq (char-after bracket-pos) ?\[)))
+               ;; identifier just after '='  ?
+               (preceded-by-equal
+                (save-excursion
+                  (goto-char match-beg)
+                  (skip-chars-backward " \t")
+                  (eq (char-before) ?=)))
+               ;; identifier just after ':'  ?
+               (preceded-by-colon
+                (save-excursion
+                  (goto-char match-beg)
+                  (skip-chars-backward " \t")
+                  (eq (char-before) ?:))))
+          (unless (or in-string in-comment in-attr-list
+                      preceded-by-equal preceded-by-colon)
+            (push (or (match-string-no-properties 1)
+                      (match-string-no-properties 2))
+                  ids))
+          (goto-char match-end)))
+      (cl-set-difference
+       (cl-delete-duplicates ids :test #'string= :from-end t)
+       graphviz-dot-attr-keywords
+       :test #'string=))))
+
 (defun graphviz-completion-at-point ()
-  "Function to use in the hook `completion-at-point-functions'."
+  "Offer context-aware completion for Graphviz.
+Adds dynamic node/subgraph names alongside the static keyword tables."
   (let* ((bounds (bounds-of-thing-at-point 'symbol))
-	 (start (if bounds (car bounds) (point)))
-	 (end (if bounds (cdr bounds) (point)))
-	 (collection
-	  (cl-case (graphviz-dot--syntax-at-point)
-	    (compasspoint graphviz-values-type-portpos)
-	    (color graphviz-dot-color-keywords)
-	    (arrow graphviz-values-type-arrow)
-	    (shape graphviz-values-type-shape)
-	    (style graphviz-values-type-style)
-	    (dir graphviz-values-type-dir)
-	    (outputmode graphviz-values-type-outputmode)
-	    (packmode graphviz-values-type-packmode)
-	    (pagedir graphviz-values-type-pagedir)
-	    (portpos graphviz-values-type-portpos)
-	    (splines graphviz-attributes-splines-values)
-	    (bool graphviz-values-type-bool)
-	    (value graphviz-dot-value-keywords)
-	    ((comment string) nil)
-	    (t graphviz-dot-attr-keywords))))
-    (list start end collection . nil)))
+         (start  (if bounds (car bounds) (point)))
+         (end    (if bounds (cdr bounds) (point)))
+         (context (graphviz-dot--syntax-at-point))
+         (collection
+          (cl-case context
+            (compasspoint graphviz-values-type-portpos)
+            (color        graphviz-dot-color-keywords)
+            (arrow        graphviz-values-type-arrow)
+            (shape        graphviz-values-type-shape)
+            (style        graphviz-values-type-style)
+            (dir          graphviz-values-type-dir)
+            (outputmode   graphviz-values-type-outputmode)
+            (packmode     graphviz-values-type-packmode)
+            (pagedir      graphviz-values-type-pagedir)
+            (portpos      graphviz-values-type-portpos)
+            (splines      graphviz-attributes-splines-values)
+            (bool         graphviz-values-type-bool)
+            (value        graphviz-dot-value-keywords)
+            ((comment string) nil)                       ; nothing in strings/comments
+            (t (append (graphviz-dot--collect-node-ids)  ; in all other places
+                       graphviz-dot-attr-keywords)))))
+    (when collection
+      (list start end collection :exclusive 'no))))
+
 
 (defvar dot-menu nil
   "Menu for Graphviz Dot Mode.
@@ -668,7 +623,7 @@ package.")
 (define-derived-mode graphviz-dot-mode prog-mode "dot"
   "Major mode for the dot language.
 
-Functionallity specific to this mode:
+Functionality specific to this mode:
 
   `indent-for-tab-command'    \\[indent-for-tab-command]
         Indents a single line.
@@ -882,6 +837,7 @@ representing the current buffer's point where the graph definition starts
                    :buffer stdout
                    :stderr stderr
                    :connection-type 'pipe
+                   :coding 'binary
                    :sentinel
                    (lambda (_ event)
                      (cond
@@ -931,14 +887,9 @@ This creates an external process every time it is executed.  If
 saved before the command is executed."
   (interactive)
   (let ((cmd (if graphviz-dot-view-edit-command
-                 (if (fboundp 'read-shell-command)
                      (read-shell-command "View command: "
                                          (format graphviz-dot-view-command
                                                  (shell-quote-argument (buffer-file-name))))
-                   ;; read-shell-command not available in GNU Emacs 21
-                   (read-from-minibuffer "View command: "
-                                         (format graphviz-dot-view-command
-                                                 (shell-quote-argument (buffer-file-name)))))
                (format graphviz-dot-view-command
                        (shell-quote-argument (buffer-file-name))))))
     (if graphviz-dot-save-before-view
