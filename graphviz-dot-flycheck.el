@@ -11,7 +11,7 @@
 ;;; Todo:
 ;;
 ;;; Code:
-(require 'flycheck)
+(require 'flycheck nil t)
 
 (defun graphviz-dot--add-column-to-error (err)
   "Attach :column and :end-column to a ERR so we underline the exact token."
@@ -116,38 +116,38 @@ offending token mentioned in Graphviz warning MSG."
           (puthash key t seen)
           (push err out))))))
 
+(with-eval-after-load 'flycheck
+  (flycheck-define-checker graphviz-dot
+    "A Graphviz dot file syntax checker.."
+    :command ("dot"
+	      "-T" "dot"       ; No graphics, for speed
+	      "-o" "/dev/null" ; No output, for speed
+	      source-inplace)
+    :error-patterns
+    (;; line number and near message
+     (error line-start "Error: " (file-name) ": syntax error in line " line " "
+            (message)
+            line-end)
+     ;; line number and no message
+     (error   line-start "Error: " (file-name) ": syntax error in line "
+	      line line-end)
+     ;; all the rest are warnings
+     (warning line-start "Warning: " (message (one-or-more not-newline)) line-end))
+    :error-filter
+    (lambda (errors)
+      (dolist (err errors errors)
+	(unless (flycheck-error-message err)
+          (setf (flycheck-error-message err) "syntax error"))
+	(graphviz-dot--add-column-to-error    err)
+	(graphviz-dot--prettify-error-message err)
+	(graphviz-dot--add-line-and-column-to-error err))
+      (flycheck-fill-empty-line-numbers errors)
+      (flycheck-sanitize-errors errors)
+      (graphviz-dot--dedup-errors errors))
+    :modes (graphviz-dot-mode))
 
-(flycheck-define-checker graphviz-dot
-  "A Graphviz dot file syntax checker.."
-  :command ("dot"
-	    "-T" "dot"       ; No graphics, for speed
-	    "-o" "/dev/null" ; No output, for speed
-	    source-inplace)
-  :error-patterns
-  (;; line number and near message
-   (error line-start "Error: " (file-name) ": syntax error in line " line " "
-          (message)
-          line-end)
-   ;; line number and no message
-   (error   line-start "Error: " (file-name) ": syntax error in line "
-	    line line-end)
-   ;; all the rest are warnings
-   (warning line-start "Warning: " (message (one-or-more not-newline)) line-end))
-  :error-filter
-  (lambda (errors)
-    (dolist (err errors errors)
-      (unless (flycheck-error-message err)
-        (setf (flycheck-error-message err) "syntax error"))
-      (graphviz-dot--add-column-to-error    err)
-      (graphviz-dot--prettify-error-message err)
-      (graphviz-dot--add-line-and-column-to-error err))
-    (flycheck-fill-empty-line-numbers errors)
-    (flycheck-sanitize-errors errors)
-    (graphviz-dot--dedup-errors errors))
-  :modes (graphviz-dot-mode))
-
-;; And add it to flycheck's list of checkers
-(add-to-list 'flycheck-checkers 'graphviz-dot)
+  ;; And add it to flycheck's list of checkers
+  (add-to-list 'flycheck-checkers 'graphviz-dot))
 
 (provide 'graphviz-dot-flycheck)
 ;;; graphviz-dot-flycheck.el ends here
