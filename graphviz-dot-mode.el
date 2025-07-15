@@ -117,11 +117,6 @@ file.dot -o file.png'."
   :type 'boolean
   :group 'graphviz)
 
-(defcustom graphviz-dot-revert-delay 300
-  "*Amount of time to sleep before attempting to display the rendered image."
-  :type 'number
-  :group 'graphviz)
-
 (defcustom graphviz-dot-attr-keywords
   '("graph" "digraph" "subgraph" "node" "edge" "strict" "rankdir"
     "size" "page" "Damping" "Epsilon" "URL" "arrowhead" "arrowsize"
