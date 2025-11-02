@@ -117,6 +117,7 @@ offending token mentioned in Graphviz warning MSG."
           (push err out))))))
 
 (with-eval-after-load 'flycheck
+  (eval-when-compile (require 'flycheck))
   (flycheck-define-checker graphviz-dot
     "A Graphviz dot file syntax checker.."
     :command ("dot"
