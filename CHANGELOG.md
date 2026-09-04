@@ -1,5 +1,16 @@
 # History
 
+## Version 0.5.0 – Pieter Pareit (04/09/2026)
+- Add native completion-at-point support, including node and subgraph names
+- Add optional Flycheck syntax checking
+- Improve previews for remote, unsaved, and failing buffers
+- Make preview processes more reliable and reuse a dedicated preview buffer
+- Improve indentation, including leading blank lines and extra whitespace
+- Improve completion for `splines` values
+- Remove the company-mode-specific backend and dependency
+- Switch to lexical binding and require Emacs 25.0 or newer
+- Update documentation and replace obsolete Emacs APIs
+
 ## Version 0.4.2 – Pieter Pareit (25/01/2020)
 - Fix issues
 - Improve font-locking
