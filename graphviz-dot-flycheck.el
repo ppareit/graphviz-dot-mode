@@ -2,7 +2,7 @@
 
 ;; Part of graphviz-dot-mode, see https://ppareit.github.io/graphviz-dot-mode/
 
-;; Copyright (C) 2025 - 2025 Pieter Pareit <pieter.pareit@gmail.com>
+;; Copyright (C) 2025-2026 Pieter Pareit <pieter.pareit@gmail.com>
 
 ;; Package-Requires: ((emacs "25.0") (flycheck "20250527.907"))
 

@@ -1,6 +1,6 @@
 ;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).   -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2002 - 2020, 2022 Pieter Pareit <pieter.pareit@gmail.com>
+;; Copyright (C) 2002-2026 Pieter Pareit <pieter.pareit@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -23,8 +23,8 @@
 ;; Maintainer: Pieter Pareit <pieter.pareit@gmail.com>
 ;; Homepage: https://ppareit.github.io/graphviz-dot-mode/
 ;; Created: 28 Oct 2002
-;; Last modified: 25 Januari 2020
-;; Version: 0.4.2
+;; Last modified: 4 September 2026
+;; Version: 0.5.0
 ;; Package-Requires: ((emacs "25.0"))
 ;; Keywords: mode dot dot-language dotlanguage graphviz graphs att
 
@@ -57,7 +57,7 @@
 (eval-when-compile
   (require 'flycheck nil t))
 
-(defconst graphviz-dot-mode-version "0.4.2"
+(defconst graphviz-dot-mode-version "0.5.0"
   "Version of `graphviz-dot-mode.el'.")
 
 (defgroup graphviz nil
